@@ -40,7 +40,7 @@ function Header() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <span className="hover:tracking-5 tracking-1 block text-center font-serif text-xs uppercase text-slate-300 outline-none transition-all duration-500 ease-in-out">
+                <span className="xs:hover:tracking-5 tracking-1 block text-center font-serif text-xs uppercase text-slate-300 outline-none transition-all duration-500 ease-in-out">
                   Rick And Morty
                 </span>
               </a>
@@ -48,14 +48,62 @@ function Header() {
           </div>
         </div>
         <div className="flex flex-auto items-center justify-end">
+          <div className="mr-2 hidden md:block">
+            <ul className="flex gap-x-4">
+              <li className="transition-all hover:rounded-md hover:bg-slate-900/30">
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive ? "text-yellow-400" : "text-slate-300"
+                  }
+                  end
+                  to="/"
+                >
+                  <span className="block px-2 py-4">Home</span>
+                </NavLink>
+              </li>
+              <li className="transition-all hover:rounded-md hover:bg-slate-900/30">
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive ? "text-yellow-400" : "text-slate-300"
+                  }
+                  to=""
+                >
+                  <span className="block px-2 py-4">Characters</span>
+                </NavLink>
+              </li>
+              <li className="transition-all hover:rounded-md hover:bg-slate-900/30">
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive ? "text-yellow-400" : "text-slate-300"
+                  }
+                  to=""
+                >
+                  <span className="block px-2 py-4">Episodes</span>
+                </NavLink>
+              </li>
+              <li className="transition-all hover:rounded-md hover:bg-slate-900/30">
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive ? "text-yellow-400" : "text-slate-300"
+                  }
+                  to=""
+                >
+                  <span className="block px-2 py-4">Locations</span>
+                </NavLink>
+              </li>
+            </ul>
+          </div>
           {/* Favorite Component */}
-          <div className="relative mr-3 cursor-pointer font-sans font-semibold">
+          <div className="relative mr-3 cursor-pointer font-sans font-semibold md:mr-0">
             <HeartIcon className="h-8 w-8 text-red-600" />
             <span className="absolute -right-1 top-0 inline-flex h-4 w-4 items-center justify-center rounded-full bg-red-600 text-xs text-white">
               <span>3</span>
             </span>
           </div>
-          <div onClick={() => setIsOpen(!isOpen)} className="cursor-pointer">
+          <div
+            onClick={() => setIsOpen(!isOpen)}
+            className="cursor-pointer md:hidden"
+          >
             <div
               className={`bar ${
                 isOpen
@@ -74,7 +122,7 @@ function Header() {
           </div>
         </div>
         <ul
-          className={`flex w-full flex-col overflow-hidden transition-all duration-75 ease-out ${
+          className={`flex w-full flex-col overflow-hidden transition-all duration-75 ease-out md:hidden ${
             isOpen ? "mt-8 max-h-screen opacity-100" : "max-h-0 opacity-0"
           }`}
         >
