@@ -4,6 +4,6 @@
 
 @layer components {
   .bar {
-    @apply h-0.75 mx-0 my-1 w-6 rounded-lg bg-slate-300 transition-all duration-200 ease-out;
+    @apply mx-0 my-1 h-0.75 w-6 rounded-lg bg-slate-300 transition-all duration-200 ease-out;
   }
 }

@@ -12,7 +12,7 @@ function Header() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <header className="p-4">
+    <header className="mb-8 p-4">
       <nav className="flex flex-wrap gap-x-6 rounded-xl bg-slate-700 px-3 py-4">
         <div className="flex flex-auto items-center">
           <div className="transition-all duration-300 ease-linear hover:rotate-[360deg]">
@@ -40,7 +40,7 @@ function Header() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <span className="xs:hover:tracking-5 tracking-1 block text-center font-serif text-xs uppercase text-slate-300 outline-none transition-all duration-500 ease-in-out">
+                <span className="block text-center font-serif text-xs uppercase tracking-1 text-slate-300 outline-none transition-all duration-500 ease-in-out xs:hover:tracking-5">
                   Rick And Morty
                 </span>
               </a>
@@ -66,7 +66,7 @@ function Header() {
                   className={({ isActive }) =>
                     isActive ? "text-yellow-400" : "text-slate-300"
                   }
-                  to=""
+                  to="characters"
                 >
                   <span className="block px-2 py-4">Characters</span>
                 </NavLink>
@@ -76,7 +76,7 @@ function Header() {
                   className={({ isActive }) =>
                     isActive ? "text-yellow-400" : "text-slate-300"
                   }
-                  to=""
+                  to="episodes"
                 >
                   <span className="block px-2 py-4">Episodes</span>
                 </NavLink>
@@ -86,7 +86,7 @@ function Header() {
                   className={({ isActive }) =>
                     isActive ? "text-yellow-400" : "text-slate-300"
                   }
-                  to=""
+                  to="locations"
                 >
                   <span className="block px-2 py-4">Locations</span>
                 </NavLink>
@@ -107,7 +107,7 @@ function Header() {
             <div
               className={`bar ${
                 isOpen
-                  ? "rotate-129 translate-y-2.25 mx-0 my-2 translate-x-0"
+                  ? "mx-0 my-2 translate-x-0 translate-y-2.25 rotate-129 bg-red-600"
                   : ""
               }`}
             ></div>
@@ -115,7 +115,7 @@ function Header() {
             <div
               className={`bar ${
                 isOpen
-                  ? "-translate-y-3.38 translate-x-0.25 rotate-50 mx-0 my-2"
+                  ? "mx-0 my-2 -translate-y-3.38 translate-x-0.25 rotate-50 bg-red-600"
                   : ""
               }`}
             ></div>
@@ -126,14 +126,17 @@ function Header() {
             isOpen ? "mt-8 max-h-screen opacity-100" : "max-h-0 opacity-0"
           }`}
         >
-          <li className="mb-1 cursor-pointer pl-2 transition-all ease-in-out hover:rounded-md hover:bg-slate-500">
+          <li
+            onClick={() => setIsOpen(false)}
+            className="mb-1 cursor-pointer pl-2 transition-all ease-in-out hover:rounded-md hover:bg-slate-900/30"
+          >
             <NavLink end to="/">
               {({ isActive }) => (
                 <div className="flex py-3">
                   <div>
                     <HomeIcon
-                      className={`h-5 w-5 text-slate-300 ${
-                        isActive ? "text-rose-500" : ""
+                      className={`h-5 w-5 ${
+                        isActive ? "text-rose-500" : "text-slate-300"
                       }`}
                     />
                   </div>
@@ -146,14 +149,17 @@ function Header() {
               )}
             </NavLink>
           </li>
-          <li className="mb-1 cursor-pointer pl-2 transition-all ease-in-out hover:rounded-md hover:bg-slate-500">
-            <NavLink to="">
+          <li
+            onClick={() => setIsOpen(false)}
+            className="mb-1 cursor-pointer pl-2 transition-all ease-in-out hover:rounded-md hover:bg-slate-900/30"
+          >
+            <NavLink to="characters">
               {({ isActive }) => (
                 <div className="flex py-3">
                   <div>
                     <UsersIcon
-                      className={`h-5 w-5 text-slate-300 ${
-                        isActive ? "text-rose-500" : ""
+                      className={`h-5 w-5 ${
+                        isActive ? "text-rose-500" : "text-slate-300"
                       }`}
                     />
                   </div>
@@ -166,14 +172,17 @@ function Header() {
               )}
             </NavLink>
           </li>
-          <li className="mb-1 cursor-pointer pl-2 transition-all ease-in-out hover:rounded-md hover:bg-slate-500">
-            <NavLink to="">
+          <li
+            onClick={() => setIsOpen(false)}
+            className="mb-1 cursor-pointer pl-2 transition-all ease-in-out hover:rounded-md hover:bg-slate-900/30"
+          >
+            <NavLink to="episodes">
               {({ isActive }) => (
                 <div className="flex py-3">
                   <div>
                     <FilmIcon
-                      className={`h-5 w-5 text-slate-300 ${
-                        isActive ? "text-rose-500" : ""
+                      className={`h-5 w-5 ${
+                        isActive ? "text-rose-500" : "text-slate-300"
                       }`}
                     />
                   </div>
@@ -186,14 +195,17 @@ function Header() {
               )}
             </NavLink>
           </li>
-          <li className="mb-1 cursor-pointer pl-2 transition-all ease-in-out hover:rounded-md hover:bg-slate-500">
-            <NavLink to="">
+          <li
+            onClick={() => setIsOpen(false)}
+            className="mb-1 cursor-pointer pl-2 transition-all ease-in-out hover:rounded-md hover:bg-slate-900/30"
+          >
+            <NavLink to="locations">
               {({ isActive }) => (
                 <div className="flex py-3">
                   <div>
                     <MapIcon
-                      className={`h-5 w-5 text-slate-300 ${
-                        isActive ? "text-rose-500" : ""
+                      className={`h-5 w-5 ${
+                        isActive ? "text-rose-500" : "text-slate-300"
                       }`}
                     />
                   </div>
