@@ -13,8 +13,9 @@ function Introduction({ introduction }) {
           {description}
           <br />
           <br />
-          In this Application, You can Get Information about All the {firstPage}
-          of the Series. <span className="not-italic">😍</span>
+          In this Application, You can Get Information about All the{" "}
+          <span className="capitalize">{firstPage}</span>
+          &nbsp; of the Series. <span className="not-italic">😍</span>
         </p>
       </div>
     </>

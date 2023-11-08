@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 function HomePage() {
+  // *** CUSTOM_HOOK ***
   const [searchParams] = useSearchParams();
 
   const [introduction, setIntroduction] = useState(null);
@@ -23,23 +24,31 @@ function HomePage() {
       .catch((err) => console.log(err));
   }, []);
 
+  // *** CUSTOM_HOOK ***
+
   return (
     <section className="min-h-screen px-4">
       <div className="flex flex-col items-start">
         <Introduction introduction={introduction} />
-        <div>
-          <Link to="/characters">
-            <button
-              className="block w-full cursor-pointer appearance-none rounded-lg border-none bg-slate-300 px-4 py-3 text-center text-black outline-none transition-all duration-300 ease-in-out hover:-translate-y-0.5 active:translate-y-0 active:shadow-none"
-              type="button"
-            >
-              Let&apos;s Get to Know 😎
-            </button>
-          </Link>
-        </div>
+        <StartButton />
       </div>
     </section>
   );
 }
 
 export default HomePage;
+
+function StartButton() {
+  return (
+    <div>
+      <Link to="/characters">
+        <button
+          className="block w-full cursor-pointer appearance-none rounded-lg border-none bg-slate-300 px-4 py-3 text-center text-black outline-none transition-all duration-300 ease-in-out hover:-translate-y-0.5 active:translate-y-0 active:shadow-none"
+          type="button"
+        >
+          Let&apos;s Get to Know 😎
+        </button>
+      </Link>
+    </div>
+  );
+}
