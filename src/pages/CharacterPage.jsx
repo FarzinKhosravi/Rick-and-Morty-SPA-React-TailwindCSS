@@ -1,5 +1,5 @@
 function CharacterPage() {
-  return <div>CharacterPage</div>;
+  return <div>Character Page</div>;
 }
 
 export default CharacterPage;
