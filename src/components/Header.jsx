@@ -56,7 +56,7 @@ function Header() {
                     isActive ? "text-yellow-400" : "text-slate-300"
                   }
                   end
-                  to="/"
+                  to="/?type=home"
                 >
                   <span className="block px-2 py-4">Home</span>
                 </NavLink>
@@ -130,7 +130,7 @@ function Header() {
             onClick={() => setIsOpen(false)}
             className="mb-1 cursor-pointer pl-2 transition-all ease-in-out hover:rounded-md hover:bg-slate-900/30"
           >
-            <NavLink end to="/">
+            <NavLink end to="/?type=home">
               {({ isActive }) => (
                 <div className="flex py-3">
                   <div>

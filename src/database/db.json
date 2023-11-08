@@ -1672,5 +1672,16 @@
       "url": "https://rickandmortyapi.com/api/location/18",
       "created": "2017-11-18T11:46:22.933Z"
     }
-  ]
+  ],
+  "app-introduction": {
+    "home": {
+      "id": "home",
+      "title": "Rick And Morty",
+      "description": "The Emmy Award-Winning Half-Hour Animated Rick and Morty is Adult Swim's Hit Comedy Series that Follows a Sociopathic Genius Scientist who takes his Naturally Timid Grandson on Crazy, Dangerous Adventures around the World.",
+      "firstPage": "characters"
+    },
+    "characters": { "id": "characters" },
+    "episodes": { "id": "episodes" },
+    "locations": { "id": "locations" }
+  }
 }

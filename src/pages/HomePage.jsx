@@ -1,24 +1,32 @@
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
+import Introduction from "../common/Introduction";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 function HomePage() {
+  const [searchParams] = useSearchParams();
+
+  const [introduction, setIntroduction] = useState(null);
+
+  const query = searchParams.get("type");
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/app-introduction")
+      .then(({ data }) => {
+        const introData = Object.values(data).find(
+          (intro) => intro.id === query || "home"
+        );
+
+        setIntroduction(introData);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
   return (
     <section className="min-h-screen px-4">
       <div className="flex flex-col items-start">
-        <div className="mb-8 w-full text-center text-slate-300">
-          <h2 className="animate-light text-3xl font-light">Rick And Morty</h2>
-        </div>
-        <div className="mb-9">
-          <p className="font-light italic text-slate-300">
-            The Emmy Award-Winning Half-Hour Animated Rick and Morty is Adult
-            Swim&apos;s Hit Comedy Series that Follows a Sociopathic Genius
-            Scientist who takes his Naturally Timid Grandson on Crazy, Dangerous
-            Adventures around the World;
-            <br />
-            <br />
-            In this Application, You can Get Information about All the
-            Characters of the Series. <span className="not-italic">😍</span>
-          </p>
-        </div>
+        <Introduction introduction={introduction} />
         <div>
           <Link to="/characters">
             <button
