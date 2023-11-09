@@ -1,6 +1,6 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import fetchIntroductionData from "../services/getIntroductionDataService";
 
 export default function useFetchIntroductionData(defaultQuery = null) {
   const [searchParams] = useSearchParams();
@@ -10,8 +10,7 @@ export default function useFetchIntroductionData(defaultQuery = null) {
   const query = searchParams.get("type");
 
   useEffect(() => {
-    axios
-      .get("http://localhost:3000/app-introduction")
+    fetchIntroductionData()
       .then(({ data }) => {
         const introData = Object.values(data).find(
           (intro) => intro.id === query || defaultQuery
