@@ -1678,9 +1678,15 @@
       "id": "home",
       "title": "Rick And Morty",
       "description": "The Emmy Award-Winning Half-Hour Animated Rick and Morty is Adult Swim's Hit Comedy Series that Follows a Sociopathic Genius Scientist who takes his Naturally Timid Grandson on Crazy, Dangerous Adventures around the World.",
-      "firstPage": "characters"
+      "firstPage": "characters",
+      "icon": "😍"
     },
-    "characters": { "id": "characters" },
+    "characters": {
+      "id": "characters",
+      "title": "Animation Characters",
+      "description": "The Show Revolves around the Adventures of the Members of the Smith Household, which Consists of Parents Jerry and Beth, Their Children Summer and Morty, and Beth's Father, Rick Sanchez, who Lives with Them as a Guest; According to Justin Roiland, the Family Lives Outside of Seattle, Washington; The Adventures of Rick and Morty, However, Take Place Across an Infinite Number of Realities, with the Characters Traveling to Other Planets and Dimensions through Portals and Rick's Flying Saucer.",
+      "icon": "👽"
+    },
     "episodes": { "id": "episodes" },
     "locations": { "id": "locations" }
   }
