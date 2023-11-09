@@ -1,30 +1,9 @@
-import { Link, useSearchParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Introduction from "../common/Introduction";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import useFetchIntroductionData from "../hooks/useFetchIntroductionData";
 
 function HomePage() {
-  // *** CUSTOM_HOOK ***
-  const [searchParams] = useSearchParams();
-
-  const [introduction, setIntroduction] = useState(null);
-
-  const query = searchParams.get("type");
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:3000/app-introduction")
-      .then(({ data }) => {
-        const introData = Object.values(data).find(
-          (intro) => intro.id === query || "home"
-        );
-
-        setIntroduction(introData);
-      })
-      .catch((err) => console.log(err));
-  }, []);
-
-  // *** CUSTOM_HOOK ***
+  const introduction = useFetchIntroductionData("home");
 
   return (
     <section className="min-h-screen px-4">
