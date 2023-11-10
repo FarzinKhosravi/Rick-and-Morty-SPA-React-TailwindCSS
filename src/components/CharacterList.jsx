@@ -1,13 +1,13 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import useFetchAllCharacters from "./../hooks/useFetchAllCharacters";
 import {
   ChevronDownIcon,
   ArrowUpCircleIcon,
 } from "@heroicons/react/24/outline";
+import { useCharacters } from "../context/CharactersContext";
 
 function CharacterList() {
-  const [characters, setCharacters] = useState([]);
-
   const [characterDetail, setCharacterDetail] = useState(null);
 
   const [characterId, setCharacterId] = useState(null);
@@ -16,15 +16,9 @@ function CharacterList() {
 
   const [sortType, setSortType] = useState("earliest");
 
-  useEffect(() => {
-    async function fetchCharactersData() {
-      const { data } = await axios.get("http://localhost:3000/characters");
+  useFetchAllCharacters();
 
-      setCharacters(data.slice(0, 6));
-    }
-
-    fetchCharactersData();
-  }, []);
+  const { characters } = useCharacters();
 
   useEffect(() => {
     if (episodes.length) {

@@ -6,10 +6,32 @@ import {
   MapIcon,
 } from "@heroicons/react/24/outline";
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
+import { useCharacters } from "../context/CharactersContext";
 
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
+
+  const { pathname } = useLocation();
+
+  const { characters } = useCharacters();
+
+  function displayTotalItem(pathname) {
+    switch (pathname) {
+      case "/":
+        return { title: "HOME ✨", data: "HERE IS" };
+      case "/characters":
+        return { title: "Characters", data: characters.length };
+      case "/episodes":
+        return { title: "Episodes", data: 3 };
+      case "/locations":
+        return { title: "Locations", data: 5 };
+      default:
+        return;
+    }
+  }
+
+  const { title, data } = displayTotalItem(pathname);
 
   return (
     <header className="mb-8 p-4">
@@ -48,8 +70,9 @@ function Header() {
           </div>
         </div>
         <div className="flex flex-auto items-center justify-end">
-          <div className="mr-2 hidden md:block">
-            <ul className="flex gap-x-4">
+          {/* Menu in Responsive Desktop Design */}
+          <div className="mr-2 hidden md:block lg:mr-8">
+            <ul className="flex gap-x-1 lg:gap-x-4">
               <li className="transition-all hover:rounded-md hover:bg-slate-900/30">
                 <NavLink
                   className={({ isActive }) =>
@@ -58,7 +81,7 @@ function Header() {
                   end
                   to="/?type=home"
                 >
-                  <span className="block px-2 py-4">Home</span>
+                  <span className="block px-2 py-4 font-semibold">Home</span>
                 </NavLink>
               </li>
               <li className="transition-all hover:rounded-md hover:bg-slate-900/30">
@@ -68,7 +91,9 @@ function Header() {
                   }
                   to="characters?type=characters"
                 >
-                  <span className="block px-2 py-4">Characters</span>
+                  <span className="block px-2 py-4 font-semibold">
+                    Characters
+                  </span>
                 </NavLink>
               </li>
               <li className="transition-all hover:rounded-md hover:bg-slate-900/30">
@@ -78,7 +103,9 @@ function Header() {
                   }
                   to="episodes"
                 >
-                  <span className="block px-2 py-4">Episodes</span>
+                  <span className="block px-2 py-4 font-semibold">
+                    Episodes
+                  </span>
                 </NavLink>
               </li>
               <li className="transition-all hover:rounded-md hover:bg-slate-900/30">
@@ -88,10 +115,17 @@ function Header() {
                   }
                   to="locations"
                 >
-                  <span className="block px-2 py-4">Locations</span>
+                  <span className="block px-2 py-4 font-semibold">
+                    Locations
+                  </span>
                 </NavLink>
               </li>
             </ul>
+          </div>
+          <div className="mr-2 hidden sm:block lg:mr-4">
+            <span className="text-base font-normal text-slate-400">
+              {`${pathname === "/" ? "" : "Found"} ${data} ${title} `}
+            </span>
           </div>
           {/* Favorite Component */}
           <div className="relative mr-3 cursor-pointer font-sans font-semibold md:mr-0">
@@ -100,6 +134,7 @@ function Header() {
               <span>3</span>
             </span>
           </div>
+          {/* Menu in Responsive Mobile Design */}
           <div
             onClick={() => setIsOpen(!isOpen)}
             className="cursor-pointer md:hidden"

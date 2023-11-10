@@ -5,8 +5,6 @@ import CharacterList from "../components/CharacterList";
 function CharacterPage() {
   const introduction = useFetchIntroductionData();
 
-  // console.log(episodes);
-
   return (
     <section className="min-h-screen px-4">
       <div className="flex flex-col">
