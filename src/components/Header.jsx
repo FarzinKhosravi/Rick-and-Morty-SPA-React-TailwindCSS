@@ -40,7 +40,7 @@ function Header() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <span className="block text-center font-serif text-xs uppercase tracking-1 text-slate-300 outline-none transition-all duration-500 ease-in-out xs:hover:tracking-5">
+                <span className="xxs:hover:tracking-5 block text-center font-serif text-xs uppercase tracking-1 text-slate-300 outline-none transition-all duration-500 ease-in-out">
                   Rick And Morty
                 </span>
               </a>
