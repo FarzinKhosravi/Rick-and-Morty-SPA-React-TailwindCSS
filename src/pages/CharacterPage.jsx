@@ -1,6 +1,6 @@
 import Introduction from "./../common/Introduction";
 import useFetchIntroductionData from "../hooks/useFetchIntroductionData";
-import CharacterList from "../components/CharacterList";
+import CharacterList from "../components/CharacterPage/CharacterList";
 
 function CharacterPage() {
   const introduction = useFetchIntroductionData();

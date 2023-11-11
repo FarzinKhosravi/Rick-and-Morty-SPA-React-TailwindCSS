@@ -60,6 +60,7 @@ export default {
       screens: {
         xxs: "380px",
         xs: "620px",
+        "790PX": "790px",
       },
 
       letterSpacing: {

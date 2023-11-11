@@ -4,6 +4,7 @@ import HomePage from "../pages/HomePage";
 import CharacterPage from "../pages/CharacterPage";
 import EpisodePage from "../pages/EpisodePage";
 import LocationPage from "../pages/LocationPage";
+import DisplayCharacterDetail from "./../components/CharacterPage/DisplayCharacterDetail";
 
 function Routes() {
   let routes = useRoutes([
@@ -14,6 +15,10 @@ function Routes() {
         {
           path: "/",
           element: <HomePage />,
+        },
+        {
+          path: "characters/:characterId",
+          element: <DisplayCharacterDetail />,
         },
         {
           path: "characters",

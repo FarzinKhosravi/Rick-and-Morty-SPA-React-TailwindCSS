@@ -1,11 +1,13 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
-import useFetchAllCharacters from "./../hooks/useFetchAllCharacters";
+import useFetchAllCharacters from "../../hooks/useFetchAllCharacters";
 import {
   ChevronDownIcon,
   ArrowUpCircleIcon,
 } from "@heroicons/react/24/outline";
-import { useCharacters } from "../context/CharactersContext";
+import { useCharacters } from "../../context/CharactersContext";
+import Loader from "../Loader";
+import getAllEpisodes from "../../services/getAllEpisodesService";
+import { Link } from "react-router-dom";
 
 function CharacterList() {
   const [characterDetail, setCharacterDetail] = useState(null);
@@ -18,7 +20,7 @@ function CharacterList() {
 
   useFetchAllCharacters();
 
-  const { characters } = useCharacters();
+  const { loading, characters } = useCharacters();
 
   useEffect(() => {
     if (episodes.length) {
@@ -55,7 +57,7 @@ function CharacterList() {
 
   const showCharacterDataHandler = (id) => {
     async function fetchEpisodesData(selectedCharacter) {
-      const { data } = await axios.get("http://localhost:3000/episodes");
+      const { data } = await getAllEpisodes();
 
       const episodesIdList = selectedCharacter.episode.map((episode) => {
         return episode.split("/").at(-1);
@@ -85,44 +87,64 @@ function CharacterList() {
     setCharacterId(characterId === id ? null : id);
   };
 
+  function renderCharacters() {
+    return loading ? (
+      <Loader />
+    ) : (
+      characters.map((character) => {
+        return (
+          <div className="mb-4 last:mb-0" key={character.id}>
+            <Character
+              character={character}
+              onShowCharacterData={showCharacterDataHandler}
+              characterId={characterId}
+            />
+            <div
+              className={`rounded-b-xl bg-slate-800 px-3 md:hidden ${
+                character.id === characterId
+                  ? "min-h-screen py-4 opacity-100 transition-all"
+                  : "max-h-0 overflow-hidden opacity-0 transition-all duration-300"
+              }`}
+            >
+              <CharacterDetail characterDetail={characterDetail} />
+              <EpisodesList
+                episodes={episodes}
+                onSortDate={sortDateHandler}
+                sortType={sortType}
+              />
+            </div>
+          </div>
+        );
+      })
+    );
+  }
+
   return (
     <div>
       {/* Title of List : */}
       <div className="flex">
-        <h2 className="mb-4 text-xl font-semibold text-slate-300">
+        <h2 className="mb-4 text-xl font-semibold text-slate-300 md:mb-6">
           List of Characters :
         </h2>
         <div className="-mt-3 ml-3 flex items-center justify-center sm:hidden">
           <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-slate-700 text-xs text-white">
-            6
+            {characters.length}
           </span>
         </div>
       </div>
-      {/* Container of Accordions */}
-      <div>
+      {/* Container of Accordions (Characters/Mobile) */}
+      <div className="block md:hidden">{renderCharacters()}</div>
+      {/* Container of Grid Items (Characters/Web) */}
+      <div className="container mx-auto hidden grid-cols-2 gap-x-8 gap-y-6 md:grid xl:grid-cols-3 2xl:grid-cols-4">
         {characters.map((character) => {
           return (
-            <div className="mb-4 last:mb-0" key={character.id}>
-              <Character
-                character={character}
-                onShowCharacterData={showCharacterDataHandler}
-                characterId={characterId}
-              />
-              <div
-                className={`rounded-b-xl bg-slate-800 px-3 md:hidden ${
-                  character.id === characterId
-                    ? "min-h-screen py-4 opacity-100 transition-all"
-                    : "max-h-0 overflow-hidden opacity-0 transition-all duration-300"
-                }`}
-              >
-                <CharacterDetail characterDetail={characterDetail} />
-                <EpisodesList
-                  episodes={episodes}
-                  onSortDate={sortDateHandler}
-                  sortType={sortType}
-                />
-              </div>
-            </div>
+            <Link
+              to={`/characters/${character.id}`}
+              key={character.id}
+              className="mb-4"
+            >
+              <Character character={character} />
+            </Link>
           );
         })}
       </div>
@@ -132,22 +154,22 @@ function CharacterList() {
 
 export default CharacterList;
 
-function Character({ character, onShowCharacterData, characterId }) {
+function Character({ character, onShowCharacterData, characterId = null }) {
   return (
     <div
-      className={`flex cursor-pointer items-center justify-between rounded-xl bg-slate-800 p-3 transition-all duration-200 hover:bg-slate-700 md:rounded-xl ${
+      className={`flex cursor-pointer items-center justify-between rounded-xl bg-slate-800 p-3 transition-all duration-200 hover:bg-slate-700 md:rounded-xl md:p-5 ${
         characterId === character.id ? "rounded-b-none" : ""
       }`}
     >
-      <div className="flex gap-x-4">
-        <div>
+      <div className="flex gap-x-4 md:w-full md:flex-col">
+        <div className="md:mb-6">
           <img
-            className="block h-14 w-14 rounded-2xl"
+            className="block h-14 w-14 rounded-2xl md:h-72 md:w-full lg:h-60"
             src={character.image}
             alt={character.name}
           />
         </div>
-        <div className="flex flex-col justify-between">
+        <div className="flex flex-col justify-between md:flex-row md:pb-2">
           <div>
             <span>{character.gender === "Male" ? "👨🏼" : "👱🏼‍♀️"}</span>
             <span className="ml-1 text-base font-medium text-slate-300">
@@ -170,7 +192,7 @@ function Character({ character, onShowCharacterData, characterId }) {
           </div>
         </div>
       </div>
-      <div>
+      <div className="block md:hidden">
         <ChevronDownIcon
           onClick={() => onShowCharacterData(character.id)}
           className={`h-5 w-5 text-red-600 transition-all duration-300 ${
@@ -182,7 +204,7 @@ function Character({ character, onShowCharacterData, characterId }) {
   );
 }
 
-function CharacterDetail({ characterDetail }) {
+export function CharacterDetail({ characterDetail }) {
   if (!characterDetail)
     return (
       <div>
@@ -265,7 +287,7 @@ function CharacterDetail({ characterDetail }) {
   );
 }
 
-function EpisodesList({ episodes, onSortDate, sortType }) {
+export function EpisodesList({ episodes, onSortDate, sortType }) {
   function renderEpisodesList() {
     return episodes.map((episode, index) => {
       return <Episode index={index} key={episode.id} episode={episode} />;
@@ -294,7 +316,7 @@ function EpisodesList({ episodes, onSortDate, sortType }) {
   );
 }
 
-function Episode({ episode, index }) {
+export function Episode({ episode, index }) {
   return (
     <div className="mb-8 flex justify-between">
       <div className="">

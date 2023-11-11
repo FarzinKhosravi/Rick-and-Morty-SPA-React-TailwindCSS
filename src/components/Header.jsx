@@ -19,19 +19,19 @@ function Header() {
   function displayTotalItem(pathname) {
     switch (pathname) {
       case "/":
-        return { title: "HOME ✨", data: "HERE IS" };
+        return { title: "HOME", icon: "✨", data: "HERE IS" };
       case "/characters":
-        return { title: "Characters", data: characters.length };
+        return { title: "Characters", icon: "😎", data: characters.length };
       case "/episodes":
-        return { title: "Episodes", data: 3 };
+        return { title: "Episodes", icon: "🎬", data: 3 };
       case "/locations":
-        return { title: "Locations", data: 5 };
+        return { title: "Locations", icon: "🗺️", data: 5 };
       default:
-        return;
+        return { title: "", icon: "👽", data: "Detail" };
     }
   }
 
-  const { title, data } = displayTotalItem(pathname);
+  const { title, data, icon } = displayTotalItem(pathname);
 
   return (
     <header className="mb-8 p-4">
@@ -62,7 +62,7 @@ function Header() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <span className="xxs:hover:tracking-5 block text-center font-serif text-xs uppercase tracking-1 text-slate-300 outline-none transition-all duration-500 ease-in-out">
+                <span className="block text-center font-serif text-xs uppercase tracking-1 text-slate-300 outline-none transition-all duration-500 ease-in-out xxs:hover:tracking-5">
                   Rick And Morty
                 </span>
               </a>
@@ -124,7 +124,10 @@ function Header() {
           </div>
           <div className="mr-2 hidden sm:block lg:mr-4">
             <span className="text-base font-normal text-slate-400">
-              {`${pathname === "/" ? "" : "Found"} ${data} ${title} `}
+              <span>{`${pathname === "/" ? "" : "Found "}`}</span>
+              <span>{data} </span>
+              <span>{title} </span>
+              <span className="790PX:inline hidden">{icon}</span>
             </span>
           </div>
           {/* Favorite Component */}
