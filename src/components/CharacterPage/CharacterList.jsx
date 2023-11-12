@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import useFetchAllCharacters from "../../hooks/useFetchAllCharacters";
 import {
   ChevronDownIcon,
@@ -7,53 +7,28 @@ import {
 import { useCharacters } from "../../context/CharactersContext";
 import Loader from "../Loader";
 import getAllEpisodes from "../../services/getAllEpisodesService";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import {
+  useEpisodes,
+  useEpisodesDispatch,
+} from "../../context/EpisodesContext";
+import {
+  useCharacterDetail,
+  useCharacterDetailDispatch,
+} from "../../context/CharacterDetailContext";
+import useSortEpisodes from "../../hooks/useSortEpisodes";
 
 function CharacterList() {
-  const [characterDetail, setCharacterDetail] = useState(null);
-
   const [characterId, setCharacterId] = useState(null);
-
-  const [episodes, setEpisodes] = useState([]);
-
-  const [sortType, setSortType] = useState("earliest");
-
-  useFetchAllCharacters();
-
+  const setCharacterDetail = useCharacterDetailDispatch();
+  const setEpisodes = useEpisodesDispatch();
   const { loading, characters } = useCharacters();
 
-  useEffect(() => {
-    if (episodes.length) {
-      switch (sortType) {
-        case "earliest":
-          {
-            const sortedEpisodes = [...episodes].sort((a, b) => {
-              return new Date(a.created) > new Date(b.created) ? 1 : -1;
-            });
+  const { pathname } = useLocation();
 
-            setEpisodes(sortedEpisodes);
-          }
-          break;
+  console.log(pathname);
 
-        case "latest":
-          {
-            const sortedEpisodes = [...episodes].sort((a, b) => {
-              return new Date(a.created) > new Date(b.created) ? -1 : 1;
-            });
-
-            setEpisodes(sortedEpisodes);
-          }
-          break;
-
-        default:
-          break;
-      }
-    }
-  }, [sortType]);
-
-  const sortDateHandler = () => {
-    setSortType(sortType === "earliest" ? "latest" : "earliest");
-  };
+  useFetchAllCharacters();
 
   const showCharacterDataHandler = (id) => {
     async function fetchEpisodesData(selectedCharacter) {
@@ -87,7 +62,7 @@ function CharacterList() {
     setCharacterId(characterId === id ? null : id);
   };
 
-  function renderCharacters() {
+  function renderCharactersInMobile() {
     return loading ? (
       <Loader />
     ) : (
@@ -106,17 +81,27 @@ function CharacterList() {
                   : "max-h-0 overflow-hidden opacity-0 transition-all duration-300"
               }`}
             >
-              <CharacterDetail characterDetail={characterDetail} />
-              <EpisodesList
-                episodes={episodes}
-                onSortDate={sortDateHandler}
-                sortType={sortType}
-              />
+              <CharacterDetail pathname={pathname} />
+              <EpisodesList />
             </div>
           </div>
         );
       })
     );
+  }
+
+  function renderCharactersInWeb() {
+    return characters.map((character) => {
+      return (
+        <Link
+          to={`/characters/${character.id}`}
+          key={character.id}
+          className="mb-4"
+        >
+          <Character character={character} />
+        </Link>
+      );
+    });
   }
 
   return (
@@ -133,20 +118,10 @@ function CharacterList() {
         </div>
       </div>
       {/* Container of Accordions (Characters/Mobile) */}
-      <div className="block md:hidden">{renderCharacters()}</div>
+      <div className="block md:hidden">{renderCharactersInMobile()}</div>
       {/* Container of Grid Items (Characters/Web) */}
       <div className="container mx-auto hidden grid-cols-2 gap-x-8 gap-y-6 md:grid xl:grid-cols-3 2xl:grid-cols-4">
-        {characters.map((character) => {
-          return (
-            <Link
-              to={`/characters/${character.id}`}
-              key={character.id}
-              className="mb-4"
-            >
-              <Character character={character} />
-            </Link>
-          );
-        })}
+        {renderCharactersInWeb()}
       </div>
     </div>
   );
@@ -204,17 +179,10 @@ function Character({ character, onShowCharacterData, characterId = null }) {
   );
 }
 
-export function CharacterDetail({ characterDetail }) {
-  if (!characterDetail)
-    return (
-      <div>
-        <span className="text-lg font-black italic">
-          Please Select a Character
-        </span>
-        &nbsp;
-        <span className="text-xl">😊</span>
-      </div>
-    );
+export function CharacterDetail({ pathname }) {
+  const characterDetail = useCharacterDetail();
+
+  if (!characterDetail) return;
 
   return (
     <div className="mb-8 ">
@@ -230,28 +198,49 @@ export function CharacterDetail({ characterDetail }) {
           />
         </div>
         <div className="flex flex-col md:ml-4 md:w-full md:py-4">
-          <div className="mb-4 flex flex-col">
-            <div className="mb-1">
-              <span className="md:text-lg">
-                {characterDetail.gender === "Male" ? "👨🏼" : "👱🏼‍♀️"}
-              </span>
-              <span className="ml-1 text-sm font-medium text-slate-300 md:text-lg md:font-semibold">
-                {characterDetail.name}
-              </span>
+          <div
+            className={`flex md:mb-0 ${
+              pathname === "/characters" ? "" : "mb-3"
+            }`}
+          >
+            <div
+              className={`md:hidden ${
+                pathname === "/characters" ? "hidden" : "block"
+              }`}
+            >
+              <img
+                className="block h-14 w-14 rounded-2xl"
+                src={characterDetail.image}
+                alt={characterDetail.name}
+              />
             </div>
-            <div>
-              <span
-                className={`inline-block h-3 w-3 rounded-full ${
-                  characterDetail.status === "Alive"
-                    ? "bg-green-600"
-                    : characterDetail.status === "Dead"
-                    ? "bg-red-600"
-                    : "bg-yellow-400"
-                }`}
-              ></span>
-              <span className="ml-2 text-sm font-normal text-slate-300 md:text-base">
-                {`${characterDetail.status} - ${characterDetail.species}`}
-              </span>
+            <div
+              className={`mb-4 flex flex-col md:ml-0 ${
+                pathname === "/characters" ? "" : "ml-3"
+              }`}
+            >
+              <div className="mb-1">
+                <span className="md:text-lg">
+                  {characterDetail.gender === "Male" ? "👨🏼" : "👱🏼‍♀️"}
+                </span>
+                <span className="ml-1 text-sm font-medium text-slate-300 md:text-lg md:font-semibold">
+                  {characterDetail.name}
+                </span>
+              </div>
+              <div>
+                <span
+                  className={`inline-block h-3 w-3 rounded-full ${
+                    characterDetail.status === "Alive"
+                      ? "bg-green-600"
+                      : characterDetail.status === "Dead"
+                      ? "bg-red-600"
+                      : "bg-yellow-400"
+                  }`}
+                ></span>
+                <span className="ml-2 text-sm font-normal text-slate-300 md:text-base">
+                  {`${characterDetail.status} - ${characterDetail.species}`}
+                </span>
+              </div>
             </div>
           </div>
           <div className="flex flex-col">
@@ -287,7 +276,11 @@ export function CharacterDetail({ characterDetail }) {
   );
 }
 
-export function EpisodesList({ episodes, onSortDate, sortType }) {
+export function EpisodesList() {
+  const episodes = useEpisodes();
+
+  const { sortType, sortDateHandler } = useSortEpisodes();
+
   function renderEpisodesList() {
     return episodes.map((episode, index) => {
       return <Episode index={index} key={episode.id} episode={episode} />;
@@ -296,7 +289,7 @@ export function EpisodesList({ episodes, onSortDate, sortType }) {
 
   return (
     <div className="md:rounded-xl md:bg-slate-800 md:p-4">
-      <div className="mb-6 flex items-center justify-between">
+      <div className="mb-6 flex items-center justify-between md:mb-9">
         <div>
           <h2 className="text-xl font-semibold text-slate-300">
             List of Episodes :
@@ -304,7 +297,7 @@ export function EpisodesList({ episodes, onSortDate, sortType }) {
         </div>
         <div>
           <ArrowUpCircleIcon
-            onClick={onSortDate}
+            onClick={sortDateHandler}
             className={`h-6 w-6 cursor-pointer text-red-600 transition-all duration-200 ${
               sortType === "latest" ? "rotate-180" : ""
             }`}
