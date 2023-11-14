@@ -26,8 +26,6 @@ function CharacterList() {
 
   const { pathname } = useLocation();
 
-  console.log(pathname);
-
   useFetchAllCharacters();
 
   const showCharacterDataHandler = (id) => {

@@ -11,7 +11,7 @@ const charactersReducer = (state, action) => {
       return { loading: true, characters: [] };
 
     case "CHARACTERS_SUCCESS":
-      return { loading: false, characters: [...action.payload.slice(0, 6)] };
+      return { loading: false, characters: [...action.payload] };
 
     case "CHARACTERS_REJECTED":
       return { loading: false, characters: [] };
