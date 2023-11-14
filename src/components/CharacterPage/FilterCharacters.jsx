@@ -2,6 +2,7 @@ import { useFormik } from "formik";
 import { useCharactersDispatch } from "../../context/CharactersContext";
 import getAllCharacters from "../../services/getAllCharactersService";
 import { useEffect } from "react";
+import toast from "react-hot-toast";
 
 const initialValues = {
   userSearch: "",
@@ -30,6 +31,10 @@ function FilterCharacters() {
             .toLowerCase()
             .includes(formik.values.userSearch.toLowerCase())
         );
+
+        if (charactersData.length === 0) {
+          toast.error("Your Character Not Found 🧐");
+        }
 
         charactersDispatch({
           type: "CHARACTERS_SUCCESS",

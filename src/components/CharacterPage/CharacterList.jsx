@@ -23,7 +23,6 @@ function CharacterList() {
   const setCharacterDetail = useCharacterDetailDispatch();
   const setEpisodes = useEpisodesDispatch();
   const { loading, characters } = useCharacters();
-
   const { pathname } = useLocation();
 
   useFetchAllCharacters();
@@ -61,7 +60,27 @@ function CharacterList() {
   };
 
   function renderCharactersInMobile() {
-    return loading ? (
+    return !characters.length ? (
+      <div>
+        <div className="w-28 -translate-y-4 translate-x-44 -rotate-45">
+          <span className="block text-3xl font-black text-yellow-400">
+            Haaa...
+          </span>
+        </div>
+        <div>
+          <img
+            className="block w-full"
+            src="../../../public/00.png"
+            alt="Not Found"
+          />
+        </div>
+        <div className="w-24 -translate-x-4 -translate-y-12 -rotate-45">
+          <span className="block text-3xl font-black text-yellow-400">
+            Nooo
+          </span>
+        </div>
+      </div>
+    ) : loading ? (
       <Loader />
     ) : (
       characters.map((character) => {
@@ -89,21 +108,27 @@ function CharacterList() {
   }
 
   function renderCharactersInWeb() {
-    return characters.map((character) => {
-      return (
-        <Link
-          to={`/characters/${character.id}`}
-          key={character.id}
-          className="mb-4"
-        >
-          <Character character={character} />
-        </Link>
-      );
-    });
+    return !characters.length ? (
+      <div>xxx</div>
+    ) : loading ? (
+      <Loader />
+    ) : (
+      characters.map((character) => {
+        return (
+          <Link
+            to={`/characters/${character.id}`}
+            key={character.id}
+            className="mb-4"
+          >
+            <Character character={character} />
+          </Link>
+        );
+      })
+    );
   }
 
   return (
-    <div>
+    <div className="">
       {/* Title of List : */}
       <div className="flex">
         <h2 className="mb-4 text-xl font-semibold text-slate-300 md:mb-6">
