@@ -57,6 +57,11 @@ export default {
         light: "lights 5s 750ms linear infinite",
       },
 
+      maxWidth: {
+        72: "288px",
+        100: "400px",
+      },
+
       screens: {
         xxs: "380px",
         xs: "620px",

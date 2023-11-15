@@ -61,21 +61,21 @@ function CharacterList() {
 
   function renderCharactersInMobile() {
     return !characters.length ? (
-      <div>
-        <div className="w-28 -translate-y-4 translate-x-44 -rotate-45">
-          <span className="block text-3xl font-black text-yellow-400">
+      <div className="flex flex-col items-center justify-center">
+        <div className="w-24 translate-x-16 translate-y-0 -rotate-45">
+          <span className="block text-2xl font-black text-yellow-400">
             Haaa...
           </span>
         </div>
-        <div>
+        <div className="max-w-72">
           <img
             className="block w-full"
             src="../../../public/00.png"
             alt="Not Found"
           />
         </div>
-        <div className="w-24 -translate-x-4 -translate-y-12 -rotate-45">
-          <span className="block text-3xl font-black text-yellow-400">
+        <div className="w-20 -translate-x-16 -translate-y-8 -rotate-45">
+          <span className="block text-2xl font-black text-yellow-400">
             Nooo
           </span>
         </div>
@@ -109,7 +109,25 @@ function CharacterList() {
 
   function renderCharactersInWeb() {
     return !characters.length ? (
-      <div>xxx</div>
+      <div className="flex flex-col items-center justify-center">
+        <div className="w-28 translate-x-8 translate-y-0 -rotate-45">
+          <span className="block text-3xl font-black text-yellow-400">
+            Haaa...
+          </span>
+        </div>
+        <div className="max-w-100">
+          <img
+            className="block w-full"
+            src="../../../public/00.png"
+            alt="Not Found"
+          />
+        </div>
+        <div className="w-24 -translate-x-16 -translate-y-12 -rotate-45">
+          <span className="block text-3xl font-black text-yellow-400">
+            Nooo
+          </span>
+        </div>
+      </div>
     ) : loading ? (
       <Loader />
     ) : (
@@ -128,7 +146,7 @@ function CharacterList() {
   }
 
   return (
-    <div className="">
+    <div className="mb-8">
       {/* Title of List : */}
       <div className="flex">
         <h2 className="mb-4 text-xl font-semibold text-slate-300 md:mb-6">
@@ -143,7 +161,13 @@ function CharacterList() {
       {/* Container of Accordions (Characters/Mobile) */}
       <div className="block md:hidden">{renderCharactersInMobile()}</div>
       {/* Container of Grid Items (Characters/Web) */}
-      <div className="container mx-auto hidden grid-cols-2 gap-x-8 gap-y-6 md:grid xl:grid-cols-3 2xl:grid-cols-4">
+      <div
+        className={`container mx-auto hidden grid-cols-2 gap-x-8 gap-y-6 xl:grid-cols-3 2xl:grid-cols-4 ${
+          !characters.length
+            ? "md:flex md:items-center md:justify-center"
+            : "md:grid"
+        }`}
+      >
         {renderCharactersInWeb()}
       </div>
     </div>

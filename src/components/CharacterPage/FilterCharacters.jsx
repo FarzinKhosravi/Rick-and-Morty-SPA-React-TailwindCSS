@@ -109,6 +109,8 @@ function FilterCharacters() {
     };
   }, [formik.values]);
 
+  const { gender, species, status, userSearch } = formik.values;
+
   return (
     <div className="mb-8">
       <div>
@@ -255,8 +257,11 @@ function FilterCharacters() {
           </div>
           <div>
             <button
-              className="block w-full cursor-pointer appearance-none rounded-xl border-none bg-red-600 px-4 py-3 text-center text-slate-200 outline-none transition-all duration-300 ease-in-out hover:-translate-y-0.5 active:translate-y-0 active:shadow-none"
+              className="block w-full cursor-pointer appearance-none rounded-xl border-none bg-red-600 px-4 py-3 text-center text-slate-200 outline-none transition-all duration-300 ease-in-out hover:-translate-y-0.5 active:translate-y-0 active:shadow-none disabled:bg-gray-600"
               type="submit"
+              disabled={
+                gender || species || status.length || userSearch ? false : true
+              }
             >
               Reset
             </button>
