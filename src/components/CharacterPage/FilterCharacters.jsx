@@ -3,6 +3,7 @@ import { useCharactersDispatch } from "../../context/CharactersContext";
 import getAllCharacters from "../../services/getAllCharactersService";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
+import { usePageId } from "../../context/PageIdContext";
 
 const initialValues = {
   userSearch: "",
@@ -20,13 +21,15 @@ function FilterCharacters() {
 
   const charactersDispatch = useCharactersDispatch();
 
-  useEffect(() => {
+  const pageId = usePageId();
+
+  function filterCharacters(page) {
     const controller = new AbortController();
     const signal = controller.signal;
 
     getAllCharacters({ signal })
       .then(({ data }) => {
-        const charactersData = data.filter((character) =>
+        const charactersData = data[page].characters.filter((character) =>
           character.name
             .toLowerCase()
             .includes(formik.values.userSearch.toLowerCase())
@@ -49,18 +52,16 @@ function FilterCharacters() {
           let charactersData = [];
 
           formik.values.status.forEach((status) => {
-            const matchedCharactersList = data.filter((character) => {
-              return character.status.toLowerCase() === status.toLowerCase();
-            });
+            const matchedCharactersList = data[page].characters.filter(
+              (character) => {
+                return character.status.toLowerCase() === status.toLowerCase();
+              }
+            );
 
             charactersData.push(matchedCharactersList);
           });
 
-          // console.log(charactersData);
-
           charactersData = charactersData.flat();
-
-          // console.log(x);
 
           charactersDispatch({
             type: "CHARACTERS_SUCCESS",
@@ -73,7 +74,7 @@ function FilterCharacters() {
     if (formik.values.species !== "") {
       getAllCharacters()
         .then(({ data }) => {
-          const charactersData = data.filter(
+          const charactersData = data[page].characters.filter(
             (character) =>
               character.species.toLowerCase() ===
               formik.values.species.toLowerCase()
@@ -90,7 +91,7 @@ function FilterCharacters() {
     if (formik.values.gender !== "") {
       getAllCharacters()
         .then(({ data }) => {
-          const charactersData = data.filter(
+          const charactersData = data[page].characters.filter(
             (character) =>
               character.gender.toLowerCase() ===
               formik.values.gender.toLowerCase()
@@ -107,7 +108,26 @@ function FilterCharacters() {
     return () => {
       controller.abort();
     };
-  }, [formik.values]);
+  }
+
+  useEffect(() => {
+    switch (pageId) {
+      case 1:
+        filterCharacters("pageOne");
+        break;
+
+      case 2:
+        filterCharacters("pageTwo");
+        break;
+
+      case 3:
+        filterCharacters("pageThree");
+        break;
+
+      default:
+        return;
+    }
+  }, [formik.values, pageId]);
 
   const { gender, species, status, userSearch } = formik.values;
 

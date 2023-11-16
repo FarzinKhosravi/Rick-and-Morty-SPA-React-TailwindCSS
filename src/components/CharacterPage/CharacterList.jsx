@@ -60,7 +60,9 @@ function CharacterList() {
   };
 
   function renderCharactersInMobile() {
-    return !characters.length ? (
+    return loading ? (
+      <Loader />
+    ) : !characters.length ? (
       <div className="flex flex-col items-center justify-center">
         <div className="w-24 translate-x-16 translate-y-0 -rotate-45">
           <span className="block text-2xl font-black text-yellow-400">
@@ -80,8 +82,6 @@ function CharacterList() {
           </span>
         </div>
       </div>
-    ) : loading ? (
-      <Loader />
     ) : (
       characters.map((character) => {
         return (
@@ -108,7 +108,9 @@ function CharacterList() {
   }
 
   function renderCharactersInWeb() {
-    return !characters.length ? (
+    return loading ? (
+      <Loader />
+    ) : !characters.length ? (
       <div className="flex flex-col items-center justify-center">
         <div className="w-28 translate-x-8 translate-y-0 -rotate-45">
           <span className="block text-3xl font-black text-yellow-400">
@@ -128,8 +130,6 @@ function CharacterList() {
           </span>
         </div>
       </div>
-    ) : loading ? (
-      <Loader />
     ) : (
       characters.map((character) => {
         return (
