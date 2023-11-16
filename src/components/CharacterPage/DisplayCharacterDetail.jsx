@@ -5,10 +5,7 @@ import {
   useCharacterDetail,
   useCharacterDetailDispatch,
 } from "../../context/CharacterDetailContext";
-import {
-  useEpisodes,
-  useEpisodesDispatch,
-} from "../../context/EpisodesContext";
+import { useEpisodesDispatch } from "../../context/EpisodesContext";
 import getAllEpisodes from "../../services/getAllEpisodesService";
 import useFetchAllCharacters from "../../hooks/useFetchAllCharacters";
 import { CharacterDetail, EpisodesList } from "./CharacterList";
@@ -17,13 +14,10 @@ function DisplayCharacterDetail() {
   const { characterId } = useParams();
   const { characters } = useCharacters();
   const characterDetail = useCharacterDetail();
-  const episodes = useEpisodes();
   const setCharacterDetail = useCharacterDetailDispatch();
   const setEpisodes = useEpisodesDispatch();
 
   const { pathname } = useLocation();
-
-  console.log(pathname);
 
   useFetchAllCharacters();
 
@@ -59,9 +53,6 @@ function DisplayCharacterDetail() {
 
   if (!characterDetail) return;
 
-  console.log(episodes);
-  console.log(characterDetail);
-
   return (
     <section className="min-h-screen px-4">
       <div className="flex flex-col items-start">
@@ -71,7 +62,7 @@ function DisplayCharacterDetail() {
           </h2>
         </div>
         <div className="flex w-full flex-col">
-          <CharacterDetail pathname={pathname} />
+          <CharacterDetail pathname={pathname} characterId={characterId} />
           <EpisodesList />
         </div>
       </div>

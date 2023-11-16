@@ -17,6 +17,10 @@ import {
   useCharacterDetailDispatch,
 } from "../../context/CharacterDetailContext";
 import useSortEpisodes from "../../hooks/useSortEpisodes";
+import {
+  useFavorites,
+  useFavoritesDispatch,
+} from "../../context/FavoritesContext";
 
 function CharacterList() {
   const [characterId, setCharacterId] = useState(null);
@@ -86,11 +90,14 @@ function CharacterList() {
       characters.map((character) => {
         return (
           <div className="mb-4 last:mb-0" key={character.id}>
-            <Character
-              character={character}
-              onShowCharacterData={showCharacterDataHandler}
-              characterId={characterId}
-            />
+            <Character character={character} characterId={characterId}>
+              <ChevronDownIcon
+                onClick={() => showCharacterDataHandler(character.id)}
+                className={`h-5 w-5 text-red-600 transition-all duration-300 ${
+                  characterId === character.id ? "rotate-180" : ""
+                }`}
+              />
+            </Character>
             <div
               className={`rounded-b-xl bg-slate-800 px-3 md:hidden ${
                 character.id === characterId
@@ -98,7 +105,7 @@ function CharacterList() {
                   : "max-h-0 overflow-hidden opacity-0 transition-all duration-300"
               }`}
             >
-              <CharacterDetail pathname={pathname} />
+              <CharacterDetail pathname={pathname} characterId={characterId} />
               <EpisodesList />
             </div>
           </div>
@@ -138,7 +145,14 @@ function CharacterList() {
             key={character.id}
             className="mb-4"
           >
-            <Character character={character} />
+            <Character character={character}>
+              <ChevronDownIcon
+                onClick={() => showCharacterDataHandler(character.id)}
+                className={`h-5 w-5 text-red-600 transition-all duration-300 md:hidden ${
+                  characterId === character.id ? "rotate-180" : ""
+                }`}
+              />
+            </Character>
           </Link>
         );
       })
@@ -176,7 +190,7 @@ function CharacterList() {
 
 export default CharacterList;
 
-function Character({ character, onShowCharacterData, characterId = null }) {
+export function Character({ character, children, characterId = null }) {
   return (
     <div
       className={`flex cursor-pointer items-center justify-between rounded-xl bg-slate-800 p-3 transition-all duration-200 hover:bg-slate-700 md:rounded-xl md:p-5 ${
@@ -214,22 +228,36 @@ function Character({ character, onShowCharacterData, characterId = null }) {
           </div>
         </div>
       </div>
-      <div className="block md:hidden">
-        <ChevronDownIcon
-          onClick={() => onShowCharacterData(character.id)}
-          className={`h-5 w-5 text-red-600 transition-all duration-300 ${
-            characterId === character.id ? "rotate-180" : ""
-          }`}
-        />
-      </div>
+      <div className="block">{children}</div>
     </div>
   );
 }
 
-export function CharacterDetail({ pathname }) {
+export function CharacterDetail({ pathname, characterId }) {
   const characterDetail = useCharacterDetail();
+  const { characters } = useCharacters();
+  const favorites = useFavorites();
+  const { addFavoriteCharacter } = useFavoritesDispatch();
 
   if (!characterDetail) return;
+
+  console.log("id:", characterId);
+  console.log("characters:", characters);
+
+  function favoriteLogic() {
+    return favorites.find((favorite) => favorite.id === characterDetail.id) ? (
+      <div className="text-sm font-semibold text-slate-300">
+        Already Added To Favorites 😎
+      </div>
+    ) : (
+      <button
+        onClick={() => addFavoriteCharacter(characters, Number(characterId))}
+        className="inline-flex cursor-pointer items-center justify-center rounded-3xl bg-slate-500 px-3 py-2 text-sm font-medium text-slate-100 transition-all duration-200 hover:bg-slate-700 md:px-4 md:text-base md:font-semibold"
+      >
+        Add to Favorite
+      </button>
+    );
+  }
 
   return (
     <div className="mb-8 ">
@@ -311,11 +339,7 @@ export function CharacterDetail({ pathname }) {
                 {characterDetail.location.name}
               </span>
             </div>
-            <div>
-              <button className="inline-flex cursor-pointer items-center justify-center rounded-3xl bg-slate-500 px-3 py-2 text-sm font-medium text-slate-100 transition-all duration-200 hover:bg-slate-700 md:px-4 md:text-base md:font-semibold">
-                Add to Favorite
-              </button>
-            </div>
+            <div>{favoriteLogic()}</div>
           </div>
         </div>
       </div>

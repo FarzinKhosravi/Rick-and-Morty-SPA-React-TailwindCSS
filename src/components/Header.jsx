@@ -1,5 +1,4 @@
 import {
-  HeartIcon,
   HomeIcon,
   FilmIcon,
   UsersIcon,
@@ -8,6 +7,7 @@ import {
 import { useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { useCharacters } from "../context/CharactersContext";
+import Favorites from "./Favorites";
 
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -127,16 +127,10 @@ function Header() {
               <span>{`${pathname === "/" ? "" : "Found "}`}</span>
               <span>{data} </span>
               <span>{title} </span>
-              <span className="790PX:inline hidden">{icon}</span>
+              <span className="hidden 790PX:inline">{icon}</span>
             </span>
           </div>
-          {/* Favorite Component */}
-          <div className="relative mr-3 cursor-pointer font-sans font-semibold md:mr-0">
-            <HeartIcon className="h-8 w-8 text-red-600" />
-            <span className="absolute -right-1 top-0 inline-flex h-4 w-4 items-center justify-center rounded-full bg-red-600 text-xs text-white">
-              <span>3</span>
-            </span>
-          </div>
+          <Favorites />
           {/* Menu in Responsive Mobile Design */}
           <div
             onClick={() => setIsOpen(!isOpen)}
