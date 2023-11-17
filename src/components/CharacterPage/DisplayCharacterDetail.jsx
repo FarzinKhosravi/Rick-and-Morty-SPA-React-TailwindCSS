@@ -56,8 +56,8 @@ function DisplayCharacterDetail() {
   return (
     <section className="min-h-screen px-4">
       <div className="flex flex-col items-start">
-        <div className="mb-8 w-full text-center text-slate-300">
-          <h2 className="text-2xl font-semibold">
+        <div className="mb-8 flex w-full items-center justify-center text-slate-300">
+          <h2 className="pb-0.25 border-b-2 border-red-600 text-2xl font-semibold">
             {characterDetail.name} Character
           </h2>
         </div>

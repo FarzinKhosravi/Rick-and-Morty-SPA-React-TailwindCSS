@@ -1,10 +1,11 @@
 import { createContext, useContext, useState } from "react";
+import getLocalStorage from "./../localStorage/getLocalStorage";
 
 const PageIdContext = createContext();
 const PageIdDispatcherContext = createContext();
 
 function PageIdProvider({ children }) {
-  const [pageId, setPageId] = useState(1);
+  const [pageId, setPageId] = useState(getLocalStorage("PAGE_ID") || 1);
 
   return (
     <PageIdContext.Provider value={pageId}>

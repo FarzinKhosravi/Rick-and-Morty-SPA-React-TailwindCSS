@@ -73,6 +73,10 @@ export default {
         5: "5px",
       },
 
+      padding: {
+        0.25: "1px",
+      },
+
       height: {
         0.75: "3px",
       },
