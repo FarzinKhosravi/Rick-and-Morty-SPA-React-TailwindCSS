@@ -31,6 +31,8 @@ export const useFavoritesDispatch = () => {
       (character) => character.id === id
     );
 
+    selectedFavoriteCharacter.favorite = true;
+
     const favoritesData = [...favorites, selectedFavoriteCharacter];
 
     saveLocalStorage("FAVORITES", favoritesData);
