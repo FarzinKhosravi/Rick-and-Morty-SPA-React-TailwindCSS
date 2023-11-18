@@ -1,12 +1,11 @@
 import { useState } from "react";
-import useFetchAllCharacters from "../../hooks/useFetchAllCharacters";
 import {
   ChevronDownIcon,
   ArrowUpCircleIcon,
 } from "@heroicons/react/24/outline";
 import { useCharacters } from "../../context/CharactersContext";
 import Loader from "../Loader";
-import getAllEpisodes from "../../services/getAllEpisodesService";
+import getAllEpisodes from "../../services/EpisodePage/getAllEpisodesService";
 import { Link, useLocation } from "react-router-dom";
 import {
   useEpisodes,
@@ -21,6 +20,7 @@ import {
   useFavorites,
   useFavoritesDispatch,
 } from "../../context/FavoritesContext";
+import useFetchCharactersPagination from "../../hooks/useFetchCharactersPagination";
 
 function CharacterList() {
   const [characterId, setCharacterId] = useState(null);
@@ -29,7 +29,7 @@ function CharacterList() {
   const { loading, characters } = useCharacters();
   const { pathname } = useLocation();
 
-  useFetchAllCharacters();
+  useFetchCharactersPagination();
 
   const showCharacterDataHandler = (id) => {
     async function fetchEpisodesData(selectedCharacter) {

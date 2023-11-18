@@ -1,20 +1,20 @@
 import { useEffect } from "react";
-import { useCharactersDispatch } from "./../context/CharactersContext";
-import getAllCharacters from "./../services/getAllCharactersService";
+import { useCharactersDispatch } from "../context/CharactersContext";
 import toast from "react-hot-toast";
-import { usePageId, usePageIdDispatch } from "./../context/PageIdContext";
+import { usePageId, usePageIdDispatch } from "../context/PageIdContext";
+import getCharactersPagination from "../services/getCharactersPaginationService";
 
-function useFetchAllCharacters() {
+function useFetchCharactersPagination() {
   const charactersDispatch = useCharactersDispatch();
   const setPageId = usePageIdDispatch();
   const pageId = usePageId();
 
   useEffect(() => {
-    const fetchAllCharacters = async (page) => {
+    const fetchCharactersPagination = async (page) => {
       try {
         charactersDispatch({ type: "CHARACTERS_PENDING" });
 
-        const { data } = await getAllCharacters();
+        const { data } = await getCharactersPagination();
 
         const { id, characters } = data[page];
 
@@ -35,15 +35,15 @@ function useFetchAllCharacters() {
 
     switch (pageId) {
       case 1:
-        fetchAllCharacters("pageOne");
+        fetchCharactersPagination("pageOne");
         break;
 
       case 2:
-        fetchAllCharacters("pageTwo");
+        fetchCharactersPagination("pageTwo");
         break;
 
       case 3:
-        fetchAllCharacters("pageThree");
+        fetchCharactersPagination("pageThree");
         break;
 
       default:
@@ -52,4 +52,4 @@ function useFetchAllCharacters() {
   }, [pageId]);
 }
 
-export default useFetchAllCharacters;
+export default useFetchCharactersPagination;

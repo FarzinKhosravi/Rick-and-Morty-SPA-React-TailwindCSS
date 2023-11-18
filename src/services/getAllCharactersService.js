@@ -1,7 +1,7 @@
 import http from "./httpService";
 
-function getAllCharacters(data) {
-  return http.get("/characters-pagination", data);
+function getAllCharacters() {
+  return http.get("/characters");
 }
 
 export default getAllCharacters;

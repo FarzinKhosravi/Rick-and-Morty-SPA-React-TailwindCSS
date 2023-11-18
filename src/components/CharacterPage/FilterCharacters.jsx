@@ -1,9 +1,9 @@
 import { useFormik } from "formik";
 import { useCharactersDispatch } from "../../context/CharactersContext";
-import getAllCharacters from "../../services/getAllCharactersService";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { usePageId } from "../../context/PageIdContext";
+import getCharactersPagination from "../../services/getCharactersPaginationService";
 
 const initialValues = {
   userSearch: "",
@@ -27,7 +27,7 @@ function FilterCharacters() {
     const controller = new AbortController();
     const signal = controller.signal;
 
-    getAllCharacters({ signal })
+    getCharactersPagination({ signal })
       .then(({ data }) => {
         const charactersData = data[page].characters.filter((character) =>
           character.name
@@ -47,7 +47,7 @@ function FilterCharacters() {
       .catch((err) => console.log(err));
 
     if (formik.values.status.length) {
-      getAllCharacters()
+      getCharactersPagination()
         .then(({ data }) => {
           let charactersData = [];
 
@@ -72,7 +72,7 @@ function FilterCharacters() {
     }
 
     if (formik.values.species !== "") {
-      getAllCharacters()
+      getCharactersPagination()
         .then(({ data }) => {
           const charactersData = data[page].characters.filter(
             (character) =>
@@ -89,7 +89,7 @@ function FilterCharacters() {
     }
 
     if (formik.values.gender !== "") {
-      getAllCharacters()
+      getCharactersPagination()
         .then(({ data }) => {
           const charactersData = data[page].characters.filter(
             (character) =>

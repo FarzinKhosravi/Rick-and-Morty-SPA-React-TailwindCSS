@@ -6,9 +6,9 @@ import {
   useCharacterDetailDispatch,
 } from "../../context/CharacterDetailContext";
 import { useEpisodesDispatch } from "../../context/EpisodesContext";
-import getAllEpisodes from "../../services/getAllEpisodesService";
-import useFetchAllCharacters from "../../hooks/useFetchAllCharacters";
 import { CharacterDetail, EpisodesList } from "./CharacterList";
+import useFetchCharactersPagination from "../../hooks/useFetchCharactersPagination";
+import getAllEpisodes from "./../../services/EpisodePage/getAllEpisodesService";
 
 function DisplayCharacterDetail() {
   const { characterId } = useParams();
@@ -19,7 +19,7 @@ function DisplayCharacterDetail() {
 
   const { pathname } = useLocation();
 
-  useFetchAllCharacters();
+  useFetchCharactersPagination();
 
   useEffect(() => {
     async function fetchEpisodesData(selectedCharacter) {
@@ -57,7 +57,7 @@ function DisplayCharacterDetail() {
     <section className="min-h-screen px-4">
       <div className="flex flex-col items-start">
         <div className="mb-8 flex w-full items-center justify-center text-slate-300">
-          <h2 className="pb-0.25 border-b-2 border-red-600 text-2xl font-semibold">
+          <h2 className="border-b-2 border-red-600 pb-0.25 text-2xl font-semibold">
             {characterDetail.name} Character
           </h2>
         </div>

@@ -3,6 +3,7 @@ import PageIdProvider from "../context/PageIdContext";
 import CharacterDetailProvider from "./../context/CharacterDetailContext";
 import EpisodesProvider from "./../context/EpisodesContext";
 import FavoritesProvider from "./../context/FavoritesContext";
+import EpisodeDetailProvider from "./../context/EpisodePage/EpisodeDetailContext";
 
 function Providers({ children }) {
   return (
@@ -10,7 +11,9 @@ function Providers({ children }) {
       <CharacterDetailProvider>
         <EpisodesProvider>
           <PageIdProvider>
-            <FavoritesProvider>{children}</FavoritesProvider>
+            <FavoritesProvider>
+              <EpisodeDetailProvider>{children}</EpisodeDetailProvider>
+            </FavoritesProvider>
           </PageIdProvider>
         </EpisodesProvider>
       </CharacterDetailProvider>
