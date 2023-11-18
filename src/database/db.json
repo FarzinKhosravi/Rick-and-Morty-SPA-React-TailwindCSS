@@ -1548,7 +1548,12 @@
       "description": "The Show Revolves around the Adventures of the Members of the Smith Household, which Consists of Parents Jerry and Beth, Their Children Summer and Morty, and Beth's Father, Rick Sanchez, who Lives with Them as a Guest; According to Justin Roiland, the Family Lives Outside of Seattle, Washington; The Adventures of Rick and Morty, However, Take Place Across an Infinite Number of Realities, with the Characters Traveling to Other Planets and Dimensions through Portals and Rick's Flying Saucer.",
       "icon": "👽"
     },
-    "episodes": { "id": "episodes" },
+    "episodes": {
+      "id": "episodes",
+      "title": "Animation Episodes",
+      "description": "Rick and Morty is an American Animated Science Fiction Sitcom Created by Justin Roiland and Dan Harmon; The Series Follows Rick Sanchez, an Alcoholic, Nihilistic Super-Scientist, and his Easily Distressed Grandson, Morty Smith to Parallel Dimensions and Exotic Planets with Extraterrestrials; These Adventures Commonly Cause Trouble for Morty's Family—Jerry, Beth, and Summer—who are Often Dragged along as Well.",
+      "icon": "📽️"
+    },
     "locations": { "id": "locations" }
   }
 }

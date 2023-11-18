@@ -101,7 +101,7 @@ function Header() {
                   className={({ isActive }) =>
                     isActive ? "text-yellow-400" : "text-slate-300"
                   }
-                  to="episodes"
+                  to="episodes?type=episodes"
                 >
                   <span className="block px-2 py-4 font-semibold">
                     Episodes
@@ -164,7 +164,7 @@ function Header() {
           >
             <NavLink end to="/?type=home">
               {({ isActive }) => (
-                <div className="flex py-3">
+                <div className="flex items-center py-3">
                   <div>
                     <HomeIcon
                       className={`h-5 w-5 ${
@@ -187,7 +187,7 @@ function Header() {
           >
             <NavLink to="characters?type=characters">
               {({ isActive }) => (
-                <div className="flex py-3">
+                <div className="flex items-center py-3">
                   <div>
                     <UsersIcon
                       className={`h-5 w-5 ${
@@ -208,9 +208,9 @@ function Header() {
             onClick={() => setIsOpen(false)}
             className="mb-1 cursor-pointer pl-2 transition-all ease-in-out hover:rounded-md hover:bg-slate-900/30"
           >
-            <NavLink to="episodes">
+            <NavLink to="episodes?type=episodes">
               {({ isActive }) => (
-                <div className="flex py-3">
+                <div className="flex items-center py-3">
                   <div>
                     <FilmIcon
                       className={`h-5 w-5 ${
@@ -233,7 +233,7 @@ function Header() {
           >
             <NavLink to="locations">
               {({ isActive }) => (
-                <div className="flex py-3">
+                <div className="flex items-center py-3">
                   <div>
                     <MapIcon
                       className={`h-5 w-5 ${
