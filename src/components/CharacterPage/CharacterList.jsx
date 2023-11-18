@@ -193,9 +193,9 @@ export default CharacterList;
 export function Character({ character, children, characterId = null }) {
   return (
     <div
-      className={`flex cursor-pointer items-center justify-between rounded-xl bg-slate-800 p-3 transition-all duration-200 hover:bg-slate-700 md:p-5 ${
+      className={`flex cursor-pointer items-center justify-between rounded-xl bg-slate-800 p-3 transition-all duration-200 hover:bg-slate-700 ${
         characterId === character.id ? "rounded-b-none" : ""
-      } ${character.favorite ? "md:p-3" : ""}`}
+      } ${character.favorite ? "md:p-3" : "md:p-5"}`}
     >
       <div
         className={`flex gap-x-4 md:w-full ${
@@ -204,16 +204,18 @@ export function Character({ character, children, characterId = null }) {
       >
         <div className={`${character.favorite ? "md:mb-0" : "md:mb-6"}`}>
           <img
-            className={`block h-14 w-14 rounded-2xl md:h-72 md:w-full ${
-              character.favorite ? "md:h-14 md:w-14" : "lg:h-60"
+            className={`block h-14 w-14 rounded-2xl ${
+              character.favorite
+                ? "md:h-14 md:w-14"
+                : "md:h-72 md:w-full lg:h-60"
             }`}
             src={character.image}
             alt={character.name}
           />
         </div>
         <div
-          className={`flex flex-col justify-between md:flex-row md:pb-2 ${
-            character.favorite ? "md:flex-col md:pb-0" : ""
+          className={`flex flex-col justify-between md:flex-row ${
+            character.favorite ? "md:flex-col md:pb-0" : "md:pb-2"
           }`}
         >
           <div>

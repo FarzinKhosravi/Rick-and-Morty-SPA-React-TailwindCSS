@@ -2,15 +2,27 @@ import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import { useEpisodes } from "../../context/EpisodesContext";
 import useFetchEpisodesPagination from "../../hooks/EpisodePage/useFetchEpisodesPagination";
 import { useState } from "react";
-import { useEpisodeDetailDispatch } from "./../../context/EpisodePage/EpisodeDetailContext";
+import {
+  useEpisodeDetail,
+  useEpisodeDetailDispatch,
+} from "./../../context/EpisodePage/EpisodeDetailContext";
 import getAllCharacters from "./../../services/getAllCharactersService";
-import { useCharactersDispatch } from "../../context/CharactersContext";
+import {
+  useCharacters,
+  useCharactersDispatch,
+} from "../../context/CharactersContext";
 
 function EpisodeList() {
   const [episodeId, setEpisodeId] = useState(null);
   const setEpisodeDetail = useEpisodeDetailDispatch();
   const charactersDispatch = useCharactersDispatch();
   const episodes = useEpisodes();
+
+  const { characters } = useCharacters();
+  const episodeDetail = useEpisodeDetail();
+
+  console.log("epi detail:", episodeDetail);
+  console.log("actors:", characters);
 
   useFetchEpisodesPagination();
 
