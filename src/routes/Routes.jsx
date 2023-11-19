@@ -5,6 +5,7 @@ import CharacterPage from "../pages/CharacterPage";
 import EpisodePage from "../pages/EpisodePage";
 import LocationPage from "../pages/LocationPage";
 import DisplayCharacterDetail from "./../components/CharacterPage/DisplayCharacterDetail";
+import DisplayEpisodeDetail from "../components/EpisodePage/DisplayEpisodeDetail";
 
 function Routes() {
   let routes = useRoutes([
@@ -23,6 +24,10 @@ function Routes() {
         {
           path: "characters",
           element: <CharacterPage />,
+        },
+        {
+          path: "episodes/:episodeId",
+          element: <DisplayEpisodeDetail />,
         },
         {
           path: "episodes",

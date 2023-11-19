@@ -11,7 +11,7 @@ import {
   useCharacters,
   useCharactersDispatch,
 } from "../../context/CharactersContext";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 function EpisodeList() {
   const [episodeId, setEpisodeId] = useState(null);
@@ -97,6 +97,42 @@ function EpisodeList() {
     );
   }
 
+  function renderEpisodesInWeb() {
+    return !episodes.length ? (
+      <div className="flex flex-col items-center justify-center">
+        <div className="w-28 translate-x-8 translate-y-0 -rotate-45">
+          <span className="block text-3xl font-black text-yellow-400">
+            Haaa...
+          </span>
+        </div>
+        <div className="max-w-100">
+          <img
+            className="block w-full"
+            src="../../../public/00.png"
+            alt="Not Found"
+          />
+        </div>
+        <div className="w-24 -translate-x-16 -translate-y-12 -rotate-45">
+          <span className="block text-3xl font-black text-yellow-400">
+            Nooo
+          </span>
+        </div>
+      </div>
+    ) : (
+      episodes.map((episode) => {
+        return (
+          <Link
+            to={`/episodes/${episode.id}`}
+            key={episode.id}
+            className="mb-4"
+          >
+            <Episode episode={episode} />
+          </Link>
+        );
+      })
+    );
+  }
+
   return (
     <div className="mb-8">
       {/* Title of List : */}
@@ -110,8 +146,18 @@ function EpisodeList() {
           </span>
         </div>
       </div>
-      {/* Container of Accordions (Characters/Mobile) */}
+      {/* Container of Accordions (Episodes/Mobile) */}
       <div className="block md:hidden">{renderEpisodesInMobile()}</div>
+      {/* Container of Grid Items (Episodes/Web) */}
+      <div
+        className={`container mx-auto hidden grid-cols-2 gap-x-8 gap-y-6 xl:grid-cols-3 2xl:grid-cols-4 ${
+          !episodes.length
+            ? "md:flex md:items-center md:justify-center"
+            : "md:grid"
+        }`}
+      >
+        {renderEpisodesInWeb()}
+      </div>
     </div>
   );
 }
@@ -152,7 +198,7 @@ function Episode({ episode, onShowEpisodeData, episodeId = null }) {
       <div className="block">
         <ChevronDownIcon
           onClick={() => onShowEpisodeData(episode.id)}
-          className={`h-5 w-5 text-red-600 transition-all duration-300 ${
+          className={`h-5 w-5 text-red-600 transition-all duration-300 md:hidden ${
             episodeId === episode.id ? "rotate-180" : ""
           }`}
         />
