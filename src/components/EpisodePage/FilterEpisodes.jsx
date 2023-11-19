@@ -7,7 +7,7 @@ import { useEpisodesDispatch } from "./../../context/EpisodesContext";
 
 const initialValues = {
   userSearch: "",
-  //   season: "",
+  season: "",
 };
 
 const onSubmit = (values, { resetForm }) => {
@@ -41,22 +41,19 @@ function FilterEpisodes() {
       })
       .catch((err) => console.log(err));
 
-    // if (formik.values.gender !== "") {
-    //   getCharactersPagination()
-    //     .then(({ data }) => {
-    //       const charactersData = data[page].characters.filter(
-    //         (character) =>
-    //           character.gender.toLowerCase() ===
-    //           formik.values.gender.toLowerCase()
-    //       );
+    if (formik.values.season !== "") {
+      getEpisodesPagination()
+        .then(({ data }) => {
+          const episodesData = data[page].episodes.filter(
+            (episode) =>
+              episode.episode.slice(0, 3).toLowerCase() ===
+              formik.values.season.toLowerCase()
+          );
 
-    //       charactersDispatch({
-    //         type: "CHARACTERS_SUCCESS",
-    //         payload: charactersData,
-    //       });
-    //     })
-    //     .catch((err) => console.log(err));
-    // }
+          setEpisodes(episodesData);
+        })
+        .catch((err) => console.log(err));
+    }
 
     return () => {
       controller.abort();
@@ -82,7 +79,7 @@ function FilterEpisodes() {
     }
   }, [formik.values, pageId]);
 
-  const { userSearch } = formik.values;
+  const { season, userSearch } = formik.values;
 
   return (
     <div className="mb-8">
@@ -111,7 +108,7 @@ function FilterEpisodes() {
               />
             </div>
           </div>
-          {/* <div className="mb-6">
+          <div className="mb-6">
             <div className="mb-2">
               <h3 className="text-lg font-semibold text-slate-300">Season:</h3>
             </div>
@@ -124,16 +121,16 @@ function FilterEpisodes() {
               >
                 <option value="">Select Season:</option>
                 <option value="s01">Season 01</option>
-                <option value="s02">Season02</option>
+                <option value="s02">Season 02</option>
                 <option value="s03">Season 03</option>
               </select>
             </div>
-          </div> */}
+          </div>
           <div>
             <button
               className="block w-full cursor-pointer appearance-none rounded-xl border-none bg-red-600 px-4 py-3 text-center text-slate-200 outline-none transition-all duration-300 ease-in-out hover:-translate-y-0.5 active:translate-y-0 active:shadow-none disabled:bg-gray-600"
               type="submit"
-              disabled={userSearch ? false : true}
+              disabled={season || userSearch ? false : true}
             >
               Reset
             </button>
