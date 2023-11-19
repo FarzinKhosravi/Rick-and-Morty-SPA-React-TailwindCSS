@@ -7,10 +7,8 @@ import {
   useEpisodeDetailDispatch,
 } from "./../../context/EpisodePage/EpisodeDetailContext";
 import getAllCharacters from "./../../services/getAllCharactersService";
-import {
-  useCharacters,
-  useCharactersDispatch,
-} from "../../context/CharactersContext";
+import { useCharactersDispatch } from "../../context/CharactersContext";
+import { useLocation } from "react-router-dom";
 
 function EpisodeList() {
   const [episodeId, setEpisodeId] = useState(null);
@@ -18,11 +16,7 @@ function EpisodeList() {
   const charactersDispatch = useCharactersDispatch();
   const episodes = useEpisodes();
 
-  const { characters } = useCharacters();
-  const episodeDetail = useEpisodeDetail();
-
-  console.log("epi detail:", episodeDetail);
-  console.log("actors:", characters);
+  const { pathname } = useLocation();
 
   useFetchEpisodesPagination();
 
@@ -91,7 +85,7 @@ function EpisodeList() {
                   : "max-h-0 overflow-hidden opacity-0 transition-all duration-300"
               }`}
             >
-              {/* <CharacterDetail pathname={pathname} characterId={characterId} /> */}
+              <EpisodeDetail pathname={pathname} />
               {/* <EpisodesList /> */}
             </div>
           </div>
@@ -140,13 +134,13 @@ function Episode({ episode, onShowEpisodeData, episodeId = null }) {
         </div> */}
 
         <div className="flex flex-col justify-between md:flex-row md:pb-2">
-          <div>
-            <span className="ml-1 text-base font-medium text-slate-300">
+          <div className="mb-1">
+            <span className="text-base font-medium text-slate-300">
               {episode.name}
             </span>
           </div>
           <div>
-            <span className="ml-2 text-base font-normal text-slate-300">
+            <span className="text-base font-normal text-slate-300">
               {episode.episode}
             </span>
           </div>
@@ -159,6 +153,52 @@ function Episode({ episode, onShowEpisodeData, episodeId = null }) {
             episodeId === episode.id ? "rotate-180" : ""
           }`}
         />
+      </div>
+    </div>
+  );
+}
+
+export function EpisodeDetail({ pathname }) {
+  const episodeDetail = useEpisodeDetail();
+
+  if (!episodeDetail) return;
+
+  return (
+    <div className="mb-8 ">
+      <h2 className="mb-4 text-xl font-semibold text-slate-300">
+        Episode Detail :
+      </h2>
+      <div className="md:flex md:overflow-hidden md:rounded-xl md:bg-slate-800">
+        <div className="flex flex-col md:ml-4 md:w-full md:py-4">
+          <div
+            className={`mb-4 flex flex-col md:ml-0 ${
+              pathname === "/episodes" ? "" : "ml-3"
+            }`}
+          >
+            <div className="mb-1">
+              <span className="block text-sm text-slate-500">
+                Episode Name:
+              </span>
+            </div>
+            <div className="mb-1">
+              <span className="text-sm font-medium text-slate-300 md:text-lg md:font-semibold">
+                {episodeDetail.name}
+              </span>
+            </div>
+          </div>
+          <div className="flex flex-col">
+            <div className="mb-1">
+              <span className="block text-sm text-slate-500 md:text-base">
+                Episode Air-Date:
+              </span>
+            </div>
+            <div className="mb-5">
+              <span className="block text-sm font-medium text-slate-300 md:text-base md:font-semibold">
+                {episodeDetail.air_date}
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
