@@ -7,7 +7,10 @@ import {
   useEpisodeDetailDispatch,
 } from "./../../context/EpisodePage/EpisodeDetailContext";
 import getAllCharacters from "./../../services/getAllCharactersService";
-import { useCharactersDispatch } from "../../context/CharactersContext";
+import {
+  useCharacters,
+  useCharactersDispatch,
+} from "../../context/CharactersContext";
 import { useLocation } from "react-router-dom";
 
 function EpisodeList() {
@@ -86,7 +89,7 @@ function EpisodeList() {
               }`}
             >
               <EpisodeDetail pathname={pathname} />
-              {/* <EpisodesList /> */}
+              <ActorsList />
             </div>
           </div>
         );
@@ -199,6 +202,42 @@ export function EpisodeDetail({ pathname }) {
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  );
+}
+
+export function ActorsList() {
+  const { characters } = useCharacters();
+
+  function renderActorsList() {
+    return characters.map((actor, index) => {
+      return <Actor index={index} key={actor.id} actor={actor} />;
+    });
+  }
+
+  return (
+    <div className="md:rounded-xl md:bg-slate-800 md:p-4">
+      <div className="mb-6 flex md:mb-9">
+        <div>
+          <h2 className="text-xl font-semibold text-slate-300">
+            List of Actors :
+          </h2>
+        </div>
+      </div>
+      <div>{renderActorsList()}</div>
+    </div>
+  );
+}
+
+export function Actor({ actor, index }) {
+  return (
+    <div className="mb-8 flex">
+      <div className="">
+        <span className="mb-3 block w-full font-normal text-slate-300">
+          {String(index + 1).padStart(2, "0")}.
+          <span className="ml-1 font-bold">{actor.name}</span>
+        </span>
       </div>
     </div>
   );
