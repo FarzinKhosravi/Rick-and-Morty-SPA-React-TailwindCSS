@@ -2132,7 +2132,7 @@
         },
         {
           "id": 9,
-          "name": "Something Ricked This Way Comes",
+          "name": "Something Ricked",
           "air_date": "March 24, 2014",
           "episode": "S02E09",
           "characters": [
@@ -2142,7 +2142,7 @@
             "https://rickandmortyapi.com/api/character/4",
             "https://rickandmortyapi.com/api/character/5",
             "https://rickandmortyapi.com/api/character/8",
-            "https://rickandmortyapi.com/api/character/19",
+            "https://rickandmortyapi.com/api/character/18",
             "https://rickandmortyapi.com/api/character/16",
             "https://rickandmortyapi.com/api/character/14",
             "https://rickandmortyapi.com/api/character/13"
@@ -2152,7 +2152,7 @@
         },
         {
           "id": 10,
-          "name": "Close Rick-counters of the Rick Kind",
+          "name": "Close Rick-counters",
           "air_date": "April 7, 2014",
           "episode": "S03E10",
           "characters": [

@@ -1,9 +1,9 @@
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
-import { usePageId, usePageIdDispatch } from "../../context/PageIdContext";
-import saveLocalStorage from "./../../localStorage/saveLocalStorage";
 import { useEffect } from "react";
+import { usePageId, usePageIdDispatch } from "../context/PageIdContext";
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
+import saveLocalStorage from "../localStorage/saveLocalStorage";
 
-function CharactersPagination() {
+function Pagination() {
   const pageId = usePageId();
   const setPageId = usePageIdDispatch();
 
@@ -82,4 +82,4 @@ function CharactersPagination() {
   );
 }
 
-export default CharactersPagination;
+export default Pagination;

@@ -1,4 +1,5 @@
 import Introduction from "../common/Introduction";
+import Pagination from "../common/Pagination";
 import EpisodeList from "../components/EpisodePage/EpisodeList";
 import FilterEpisodes from "../components/EpisodePage/FilterEpisodes";
 import useFetchIntroductionData from "../hooks/useFetchIntroductionData";
@@ -12,6 +13,7 @@ function EpisodePage() {
         <Introduction introduction={introduction} />
         <FilterEpisodes />
         <EpisodeList />
+        <Pagination />
       </div>
     </section>
   );
