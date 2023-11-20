@@ -2,7 +2,6 @@ import Introduction from "./../common/Introduction";
 import useFetchIntroductionData from "../hooks/useFetchIntroductionData";
 import CharacterList from "../components/CharacterPage/CharacterList";
 import FilterCharacters from "../components/CharacterPage/FilterCharacters";
-// import CharactersPagination from "../components/CharacterPage/CharactersPagination";
 import Pagination from "../common/Pagination";
 
 function CharacterPage() {
@@ -14,7 +13,6 @@ function CharacterPage() {
         <Introduction introduction={introduction} />
         <FilterCharacters />
         <CharacterList />
-        {/* <CharactersPagination /> */}
         <Pagination />
       </div>
     </section>
