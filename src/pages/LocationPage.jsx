@@ -2,6 +2,7 @@ import Introduction from "../common/Introduction";
 import FilterLocations from "../components/LocationPage/FilterLocations";
 import LocationList from "../components/LocationPage/LocationList";
 import useFetchIntroductionData from "../hooks/useFetchIntroductionData";
+import Pagination from "./../common/Pagination";
 
 function LocationPage() {
   const introduction = useFetchIntroductionData();
@@ -12,6 +13,7 @@ function LocationPage() {
         <Introduction introduction={introduction} />
         <FilterLocations />
         <LocationList />
+        <Pagination />
       </div>
     </section>
   );
