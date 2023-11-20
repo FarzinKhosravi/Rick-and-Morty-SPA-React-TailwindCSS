@@ -8,6 +8,9 @@ import { useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { useCharacters } from "../context/CharactersContext";
 import Favorites from "./Favorites";
+import { useEpisodes } from "../context/EpisodesContext";
+import { useLocations } from "../context/LocationPage/LocationsContext";
+import { useNotFound } from "../context/NotFoundPage/NotFoundContext";
 
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,6 +18,12 @@ function Header() {
   const { pathname } = useLocation();
 
   const { characters } = useCharacters();
+  const episodes = useEpisodes();
+  const locations = useLocations();
+
+  const notFound = useNotFound();
+
+  // console.log("Not:", notFound);
 
   function displayTotalItem(pathname) {
     switch (pathname) {
@@ -23,9 +32,11 @@ function Header() {
       case "/characters":
         return { title: "Characters", icon: "😎", data: characters.length };
       case "/episodes":
-        return { title: "Episodes", icon: "🎬", data: 3 };
+        return { title: "Episodes", icon: "🎬", data: episodes.length };
       case "/locations":
-        return { title: "Locations", icon: "🗺️", data: 5 };
+        return { title: "Locations", icon: "🗺️", data: locations.length };
+      case notFound:
+        return { title: "", icon: "", data: "404 ERROR" };
       default:
         return { title: "", icon: "👽", data: "Detail" };
     }
@@ -124,8 +135,18 @@ function Header() {
           </div>
           <div className="mr-2 hidden sm:block lg:mr-4">
             <span className="text-base font-normal text-slate-400">
-              <span>{`${pathname === "/" ? "" : "Found "}`}</span>
-              <span>{data} </span>
+              <span>{`${
+                pathname === "/" || pathname === notFound ? "" : "Found "
+              }`}</span>
+              <span
+                className={`${
+                  pathname === notFound
+                    ? "block -rotate-45 text-xs font-semibold text-red-600"
+                    : ""
+                }`}
+              >
+                {data}{" "}
+              </span>
               <span>{title} </span>
               <span className="hidden 790PX:inline">{icon}</span>
             </span>

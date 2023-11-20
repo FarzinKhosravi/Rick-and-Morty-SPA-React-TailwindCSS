@@ -443,6 +443,7 @@
       "created": "2017-11-04T22:25:29.008Z"
     }
   ],
+
   "episodes": [
     {
       "id": 1,
@@ -1085,6 +1086,7 @@
       "created": "2017-11-10T12:56:35.569Z"
     }
   ],
+
   "locations": [
     {
       "id": 1,
@@ -1331,6 +1333,7 @@
       "created": "2017-11-18T11:46:22.933Z"
     }
   ],
+
   "characters-pagination": {
     "pageOne": {
       "id": 1,
@@ -1790,6 +1793,7 @@
       ]
     }
   },
+
   "episodes-pagination": {
     "pageOne": {
       "id": 1,

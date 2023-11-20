@@ -7,6 +7,7 @@ import LocationPage from "../pages/LocationPage";
 import DisplayCharacterDetail from "./../components/CharacterPage/DisplayCharacterDetail";
 import DisplayEpisodeDetail from "../components/EpisodePage/DisplayEpisodeDetail";
 import DisplayLocationDetail from "../components/LocationPage/DisplayLocationDetail";
+import NotFoundPage from "../pages/NotFoundPage";
 
 function Routes() {
   let routes = useRoutes([
@@ -41,6 +42,10 @@ function Routes() {
         {
           path: "locations",
           element: <LocationPage />,
+        },
+        {
+          path: "*",
+          element: <NotFoundPage />,
         },
       ],
     },

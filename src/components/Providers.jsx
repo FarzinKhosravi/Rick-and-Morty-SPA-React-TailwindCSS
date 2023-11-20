@@ -6,6 +6,7 @@ import FavoritesProvider from "./../context/FavoritesContext";
 import EpisodeDetailProvider from "./../context/EpisodePage/EpisodeDetailContext";
 import LocationsProvider from "../context/LocationPage/LocationsContext";
 import LocationDetailProvider from "../context/LocationPage/LocationDetailContext";
+import NotFoundProvider from "../context/NotFoundPage/NotFoundContext";
 
 function Providers({ children }) {
   return (
@@ -16,7 +17,9 @@ function Providers({ children }) {
             <FavoritesProvider>
               <EpisodeDetailProvider>
                 <LocationsProvider>
-                  <LocationDetailProvider>{children}</LocationDetailProvider>
+                  <LocationDetailProvider>
+                    <NotFoundProvider>{children}</NotFoundProvider>
+                  </LocationDetailProvider>
                 </LocationsProvider>
               </EpisodeDetailProvider>
             </FavoritesProvider>
