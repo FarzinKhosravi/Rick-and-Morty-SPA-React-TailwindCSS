@@ -226,7 +226,10 @@ export function LocationDetail({ pathname }) {
         <div className="flex flex-col md:ml-4 md:w-full md:py-4">
           <div
             className={`mb-4 flex flex-col md:ml-0 ${
-              pathname === "/locations" ? "" : "ml-3"
+              pathname === "/locations" ||
+              pathname === `/locations/${locationDetail.id}`
+                ? ""
+                : "ml-3"
             }`}
           >
             <div className="mb-1">

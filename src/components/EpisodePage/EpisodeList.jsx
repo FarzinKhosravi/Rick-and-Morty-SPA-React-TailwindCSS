@@ -221,7 +221,10 @@ export function EpisodeDetail({ pathname }) {
         <div className="flex flex-col md:ml-4 md:w-full md:py-4">
           <div
             className={`mb-4 flex flex-col md:ml-0 ${
-              pathname === "/episodes" ? "" : "ml-3"
+              pathname === "/episodes" ||
+              pathname === `/episodes/${episodeDetail.id}`
+                ? ""
+                : "ml-3"
             }`}
           >
             <div className="mb-1">
