@@ -42,21 +42,24 @@ function Pagination() {
           </div>
           <div className="flex w-full items-center justify-evenly">
             <span
-              className={`block h-7 w-7 rounded-full bg-slate-900/50 text-center font-semibold text-slate-300 ${
+              onClick={() => setPageId(1)}
+              className={`block h-7 w-7 cursor-pointer rounded-full bg-slate-900/50 text-center font-semibold text-slate-300 ${
                 pageId === 1 ? "text-yellow-400" : ""
               }`}
             >
               1
             </span>
             <span
-              className={`block h-7 w-7 rounded-full bg-slate-900/50 text-center font-semibold text-slate-300 ${
+              onClick={() => setPageId(2)}
+              className={`block h-7 w-7 cursor-pointer rounded-full bg-slate-900/50 text-center font-semibold text-slate-300 ${
                 pageId === 2 ? "text-yellow-400" : ""
               }`}
             >
               2
             </span>
             <span
-              className={`block h-7 w-7 rounded-full bg-slate-900/50 text-center font-semibold text-slate-300 ${
+              onClick={() => setPageId(3)}
+              className={`block h-7 w-7 cursor-pointer rounded-full bg-slate-900/50 text-center font-semibold text-slate-300 ${
                 pageId === 3 ? "text-yellow-400" : ""
               }`}
             >
