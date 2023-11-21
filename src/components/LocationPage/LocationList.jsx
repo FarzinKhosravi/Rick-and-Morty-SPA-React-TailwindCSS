@@ -6,7 +6,10 @@ import {
 } from "./../../context/LocationPage/LocationDetailContext";
 import { useState } from "react";
 import useFetchLocationsPagination from "./../../hooks/LocationPage/useFetchLocationsPagination";
-import { ChevronDownIcon } from "@heroicons/react/24/outline";
+import {
+  ArrowSmallRightIcon,
+  ChevronDownIcon,
+} from "@heroicons/react/24/outline";
 import getAllCharacters from "./../../services/CharacterPage/getAllCharactersService";
 import {
   useCharacters,
@@ -219,9 +222,21 @@ export function LocationDetail({ pathname }) {
 
   return (
     <div className="mb-8 ">
-      <h2 className="mb-4 text-xl font-semibold text-slate-300">
-        Location Detail :
-      </h2>
+      <div className="mb-4 flex items-center justify-between">
+        <h2 className="text-xl font-semibold text-slate-300">
+          Location Detail :
+        </h2>
+        <div
+          className={`mr-1 h-7 w-7 items-center justify-center rounded-full bg-slate-200 ${
+            pathname === `/locations/${locationDetail.id}` ? "flex" : "hidden"
+          }`}
+        >
+          <Link to="/locations/?type=locations">
+            <ArrowSmallRightIcon className="h-5 w-5 text-red-600" />
+          </Link>
+        </div>
+      </div>
+
       <div className="md:flex md:overflow-hidden md:rounded-xl md:bg-slate-800">
         <div className="flex flex-col md:ml-4 md:w-full md:py-4">
           <div
