@@ -1,12 +1,11 @@
-import { TrashIcon, XCircleIcon } from "@heroicons/react/24/outline";
-import {
-  useFavorites,
-  useFavoritesDispatch,
-} from "../context/FavoritesContext";
+import { TrashIcon, XCircleIcon, FireIcon } from "@heroicons/react/24/outline";
 import { Character } from "./CharacterPage/CharacterList";
+import { useFavorites } from "../context/CharacterPage/FavoritesContext";
+import { useFavoritesDispatch } from "./../context/CharacterPage/FavoritesContext";
 
 function Modal({ isShowModal, onHideModal }) {
   const favorites = useFavorites();
+  const { removeAllFavoritesHandler } = useFavoritesDispatch();
   const { removeFavoriteCharacter } = useFavoritesDispatch();
 
   function renderFavoriteCharacters() {
@@ -42,11 +41,19 @@ function Modal({ isShowModal, onHideModal }) {
               <h2 className="text-lg font-semibold text-slate-300">
                 List of Favorites
               </h2>
-              <div>
-                <XCircleIcon
-                  onClick={onHideModal}
-                  className="h-6 w-6 cursor-pointer text-red-600"
-                />
+              <div className="flex items-center justify-end">
+                <div className="mr-2">
+                  <FireIcon
+                    onClick={removeAllFavoritesHandler}
+                    className="h-6 w-6 cursor-pointer text-yellow-500"
+                  />
+                </div>
+                <div>
+                  <XCircleIcon
+                    onClick={onHideModal}
+                    className="h-6 w-6 cursor-pointer text-red-600"
+                  />
+                </div>
               </div>
             </div>
             <hr className="mb-6 h-px border-0 bg-slate-600" />

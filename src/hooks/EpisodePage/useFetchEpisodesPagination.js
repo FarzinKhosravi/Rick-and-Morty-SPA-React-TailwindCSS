@@ -1,8 +1,8 @@
 import { useEffect } from "react";
-import { useEpisodesDispatch } from "../../context/EpisodesContext";
 import { usePageId, usePageIdDispatch } from "../../context/PageIdContext";
 import toast from "react-hot-toast";
 import getEpisodesPagination from "../../services/EpisodePage/getEpisodesPaginationService";
+import { useEpisodesDispatch } from "./../../context/EpisodePage/EpisodesContext";
 
 function useFetchEpisodesPagination() {
   const setEpisodes = useEpisodesDispatch();

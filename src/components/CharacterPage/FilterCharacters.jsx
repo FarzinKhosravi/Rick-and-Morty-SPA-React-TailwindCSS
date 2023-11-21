@@ -1,9 +1,9 @@
 import { useFormik } from "formik";
-import { useCharactersDispatch } from "../../context/CharactersContext";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { usePageId } from "../../context/PageIdContext";
-import getCharactersPagination from "../../services/getCharactersPaginationService";
+import getCharactersPagination from "./../../services/CharacterPage/getCharactersPaginationService";
+import { useCharactersDispatch } from "./../../context/CharacterPage/CharactersContext";
 
 const initialValues = {
   userSearch: "",

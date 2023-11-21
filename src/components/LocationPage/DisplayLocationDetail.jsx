@@ -3,12 +3,12 @@ import {
   useLocationDetail,
   useLocationDetailDispatch,
 } from "./../../context/LocationPage/LocationDetailContext";
-import { useCharactersDispatch } from "./../../context/CharactersContext";
 import useFetchLocationsPagination from "./../../hooks/LocationPage/useFetchLocationsPagination";
 import { useEffect } from "react";
 import { LocationDetail, ResidentsList } from "./LocationList";
-import getAllCharacters from "../../services/getAllCharactersService";
 import { useLocations } from "../../context/LocationPage/LocationsContext";
+import getAllCharacters from "./../../services/CharacterPage/getAllCharactersService";
+import { useCharactersDispatch } from "./../../context/CharacterPage/CharactersContext";
 
 function DisplayLocationDetail() {
   const { locationId } = useParams();
@@ -59,7 +59,7 @@ function DisplayLocationDetail() {
   if (!locationDetail) return;
 
   return (
-    <section className="min-h-screen px-4">
+    <section className="mb-8 min-h-screen px-4 md:mb-16">
       <div className="flex flex-col items-start">
         <div className="mb-8 flex w-full items-center justify-center text-slate-300">
           <h2 className="border-b-2 border-red-600 pb-0.25 text-2xl font-semibold">

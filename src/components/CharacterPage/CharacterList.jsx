@@ -3,24 +3,22 @@ import {
   ChevronDownIcon,
   ArrowUpCircleIcon,
 } from "@heroicons/react/24/outline";
-import { useCharacters } from "../../context/CharactersContext";
-import Loader from "../Loader";
-import getAllEpisodes from "../../services/EpisodePage/getAllEpisodesService";
-import { Link, useLocation } from "react-router-dom";
 import {
   useEpisodes,
   useEpisodesDispatch,
-} from "../../context/EpisodesContext";
+} from "./../../context/EpisodePage/EpisodesContext";
+import Loader from "../Loader";
+import getAllEpisodes from "../../services/EpisodePage/getAllEpisodesService";
+import { Link, useLocation } from "react-router-dom";
+import useSortEpisodes from "./../../hooks/EpisodePage/useSortEpisodes";
+import useFetchCharactersPagination from "./../../hooks/CharacterPage/useFetchCharactersPagination";
+import { useFavorites } from "../../context/CharacterPage/FavoritesContext";
+import { useFavoritesDispatch } from "./../../context/CharacterPage/FavoritesContext";
+import { useCharacters } from "../../context/CharacterPage/CharactersContext";
 import {
   useCharacterDetail,
   useCharacterDetailDispatch,
-} from "../../context/CharacterDetailContext";
-import useSortEpisodes from "../../hooks/useSortEpisodes";
-import {
-  useFavorites,
-  useFavoritesDispatch,
-} from "../../context/FavoritesContext";
-import useFetchCharactersPagination from "../../hooks/useFetchCharactersPagination";
+} from "./../../context/CharacterPage/CharacterDetailContext";
 
 function CharacterList() {
   const [characterId, setCharacterId] = useState(null);

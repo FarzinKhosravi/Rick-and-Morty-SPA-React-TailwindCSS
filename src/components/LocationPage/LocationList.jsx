@@ -1,10 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import getAllCharacters from "../../services/getAllCharactersService";
 import { useLocations } from "../../context/LocationPage/LocationsContext";
-import {
-  useCharacters,
-  useCharactersDispatch,
-} from "../../context/CharactersContext";
 import {
   useLocationDetail,
   useLocationDetailDispatch,
@@ -12,6 +7,11 @@ import {
 import { useState } from "react";
 import useFetchLocationsPagination from "./../../hooks/LocationPage/useFetchLocationsPagination";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
+import getAllCharacters from "./../../services/CharacterPage/getAllCharactersService";
+import {
+  useCharacters,
+  useCharactersDispatch,
+} from "./../../context/CharacterPage/CharactersContext";
 
 function LocationList() {
   const [locationId, setLocationId] = useState(null);

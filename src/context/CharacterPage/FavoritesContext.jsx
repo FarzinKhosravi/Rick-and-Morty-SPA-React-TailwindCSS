@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from "react";
-import getLocalStorage from "./../localStorage/getLocalStorage";
-import saveLocalStorage from "./../localStorage/saveLocalStorage";
+import getLocalStorage from "../../localStorage/getLocalStorage";
+import saveLocalStorage from "../../localStorage/saveLocalStorage";
 
 const FavoritesContext = createContext();
 const FavoritesDispatcherContext = createContext();
@@ -51,5 +51,15 @@ export const useFavoritesDispatch = () => {
     setFavorites(updatedFavorites);
   };
 
-  return { addFavoriteCharacter, removeFavoriteCharacter };
+  const removeAllFavoritesHandler = () => {
+    saveLocalStorage("FAVORITES", []);
+
+    setFavorites([]);
+  };
+
+  return {
+    addFavoriteCharacter,
+    removeFavoriteCharacter,
+    removeAllFavoritesHandler,
+  };
 };

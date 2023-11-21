@@ -1,8 +1,8 @@
 import { useEffect } from "react";
-import { useCharactersDispatch } from "../context/CharactersContext";
 import toast from "react-hot-toast";
-import { usePageId, usePageIdDispatch } from "../context/PageIdContext";
-import getCharactersPagination from "../services/getCharactersPaginationService";
+import { usePageId, usePageIdDispatch } from "../../context/PageIdContext";
+import getCharactersPagination from "../../services/CharacterPage/getCharactersPaginationService";
+import { useCharactersDispatch } from "./../../context/CharacterPage/CharactersContext";
 
 function useFetchCharactersPagination() {
   const charactersDispatch = useCharactersDispatch();

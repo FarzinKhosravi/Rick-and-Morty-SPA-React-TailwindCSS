@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
-import { useEpisodes, useEpisodesDispatch } from "../context/EpisodesContext";
+import {
+  useEpisodes,
+  useEpisodesDispatch,
+} from "./../../context/EpisodePage/EpisodesContext";
 
 function useSortEpisodes() {
   const [sortType, setSortType] = useState("earliest");

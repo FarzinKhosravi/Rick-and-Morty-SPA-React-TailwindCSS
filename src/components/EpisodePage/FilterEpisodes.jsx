@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { usePageId } from "../../context/PageIdContext";
 import getEpisodesPagination from "./../../services/EpisodePage/getEpisodesPaginationService";
-import { useEpisodesDispatch } from "./../../context/EpisodesContext";
+import { useEpisodesDispatch } from "./../../context/EpisodePage/EpisodesContext";
 
 const initialValues = {
   userSearch: "",

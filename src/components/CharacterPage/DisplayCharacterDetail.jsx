@@ -1,14 +1,12 @@
 import { useEffect } from "react";
 import { useLocation, useParams } from "react-router-dom";
-import { useCharacters } from "../../context/CharactersContext";
-import {
-  useCharacterDetail,
-  useCharacterDetailDispatch,
-} from "../../context/CharacterDetailContext";
-import { useEpisodesDispatch } from "../../context/EpisodesContext";
 import { CharacterDetail, EpisodesList } from "./CharacterList";
-import useFetchCharactersPagination from "../../hooks/useFetchCharactersPagination";
 import getAllEpisodes from "./../../services/EpisodePage/getAllEpisodesService";
+import useFetchCharactersPagination from "./../../hooks/CharacterPage/useFetchCharactersPagination";
+import { useCharacters } from "../../context/CharacterPage/CharactersContext";
+import { useCharacterDetail } from "../../context/CharacterPage/CharacterDetailContext";
+import { useCharacterDetailDispatch } from "./../../context/CharacterPage/CharacterDetailContext";
+import { useEpisodesDispatch } from "./../../context/EpisodePage/EpisodesContext";
 
 function DisplayCharacterDetail() {
   const { characterId } = useParams();
@@ -54,7 +52,7 @@ function DisplayCharacterDetail() {
   if (!characterDetail) return;
 
   return (
-    <section className="min-h-screen px-4">
+    <section className="mb-8 min-h-screen px-4 md:mb-16">
       <div className="flex flex-col items-start">
         <div className="mb-8 flex w-full items-center justify-center text-slate-300">
           <h2 className="border-b-2 border-red-600 pb-0.25 text-2xl font-semibold">

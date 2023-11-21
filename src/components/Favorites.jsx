@@ -1,7 +1,7 @@
 import { HeartIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
-import { useFavorites } from "../context/FavoritesContext";
 import Modal from "./Modal";
+import { useFavorites } from "../context/CharacterPage/FavoritesContext";
 
 function Favorites() {
   const favorites = useFavorites();

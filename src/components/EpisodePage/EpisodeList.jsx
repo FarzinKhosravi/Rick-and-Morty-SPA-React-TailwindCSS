@@ -1,17 +1,17 @@
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
-import { useEpisodes } from "../../context/EpisodesContext";
 import useFetchEpisodesPagination from "../../hooks/EpisodePage/useFetchEpisodesPagination";
 import { useState } from "react";
 import {
   useEpisodeDetail,
   useEpisodeDetailDispatch,
 } from "./../../context/EpisodePage/EpisodeDetailContext";
-import getAllCharacters from "./../../services/getAllCharactersService";
+import { Link, useLocation } from "react-router-dom";
+import getAllCharacters from "./../../services/CharacterPage/getAllCharactersService";
+import { useEpisodes } from "../../context/EpisodePage/EpisodesContext";
 import {
   useCharacters,
   useCharactersDispatch,
-} from "../../context/CharactersContext";
-import { Link, useLocation } from "react-router-dom";
+} from "./../../context/CharacterPage/CharactersContext";
 
 function EpisodeList() {
   const [episodeId, setEpisodeId] = useState(null);

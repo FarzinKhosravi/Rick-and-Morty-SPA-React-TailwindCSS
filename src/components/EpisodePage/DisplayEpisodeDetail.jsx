@@ -5,10 +5,10 @@ import {
   useEpisodeDetailDispatch,
 } from "../../context/EpisodePage/EpisodeDetailContext";
 import { useEffect } from "react";
-import { useEpisodes } from "../../context/EpisodesContext";
-import getAllCharacters from "../../services/getAllCharactersService";
-import { useCharactersDispatch } from "../../context/CharactersContext";
 import { ActorsList, EpisodeDetail } from "./EpisodeList";
+import getAllCharacters from "./../../services/CharacterPage/getAllCharactersService";
+import { useEpisodes } from "../../context/EpisodePage/EpisodesContext";
+import { useCharactersDispatch } from "./../../context/CharacterPage/CharactersContext";
 
 function DisplayEpisodeDetail() {
   const { episodeId } = useParams();
@@ -53,7 +53,7 @@ function DisplayEpisodeDetail() {
   if (!episodeDetail) return;
 
   return (
-    <section className="min-h-screen px-4">
+    <section className="mb-8 min-h-screen px-4 md:mb-16">
       <div className="flex flex-col items-start">
         <div className="mb-8 flex w-full items-center justify-center text-slate-300">
           <h2 className="border-b-2 border-red-600 pb-0.25 text-2xl font-semibold">

@@ -6,11 +6,11 @@ import {
 } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import { useCharacters } from "../context/CharactersContext";
 import Favorites from "./Favorites";
-import { useEpisodes } from "../context/EpisodesContext";
 import { useLocations } from "../context/LocationPage/LocationsContext";
 import { useNotFound } from "../context/NotFoundPage/NotFoundContext";
+import { useCharacters } from "../context/CharacterPage/CharactersContext";
+import { useEpisodes } from "../context/EpisodePage/EpisodesContext";
 
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
