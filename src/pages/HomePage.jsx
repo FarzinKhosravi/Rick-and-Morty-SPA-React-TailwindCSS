@@ -6,7 +6,7 @@ function HomePage() {
   const introduction = useFetchIntroductionData("home");
 
   return (
-    <section className="min-h-screen px-4">
+    <section className="mb-12 min-h-screen px-4 md:mb-0">
       <div className="flex flex-col items-start">
         <Introduction introduction={introduction} />
         <StartButton />

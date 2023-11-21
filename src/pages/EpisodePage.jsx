@@ -8,7 +8,7 @@ function EpisodePage() {
   const introduction = useFetchIntroductionData();
 
   return (
-    <section className="min-h-screen px-4">
+    <section className="mb-8 min-h-screen px-4 md:mb-16">
       <div className="flex flex-col">
         <Introduction introduction={introduction} />
         <FilterEpisodes />
