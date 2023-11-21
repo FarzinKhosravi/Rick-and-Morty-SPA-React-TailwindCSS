@@ -107,9 +107,12 @@ function NotFoundPage() {
       <div className="mx-auto flex max-w-screen-xl items-center justify-start md:px-8">
         <div className="mx-auto max-w-lg text-gray-600">
           <div className="mb-8 text-center">
-            <h3 className="mb-4 font-semibold text-red-600 sm:text-xl">
-              404 ERROR
-            </h3>
+            <div className="mb-4 flex items-center justify-center font-semibold text-red-600">
+              <span className="-mt-1 inline-block text-lg md:-mt-2 md:text-2xl">
+                404
+              </span>
+              <span className="ml-1 inline-block md:text-2xl">ERROR</span>
+            </div>
             <p className="mb-5 text-3xl font-semibold text-slate-200 sm:text-5xl">
               Page Not Found
             </p>
@@ -125,7 +128,7 @@ function NotFoundPage() {
                   <div className="flex h-12 w-12 flex-none items-center justify-center rounded-full bg-slate-100 text-slate-900">
                     {navigation.icon}
                   </div>
-                  <div className="space-y-1 border-b-2 border-slate-500 pb-3">
+                  <div className="w-full space-y-1 border-b-2 border-slate-500 pb-3">
                     <h4 className="font-medium text-slate-200">
                       {navigation.title}
                     </h4>

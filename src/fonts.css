@@ -1,0 +1,13 @@
+@font-face {
+  font-family: "vollkorn";
+  font-weight: 400;
+  font-style: normal;
+  src: url("../src/assets/font/Vollkorn-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "vollkorn";
+  font-weight: 700;
+  font-style: normal;
+  src: url("../src/assets/font/Vollkorn-Bold.ttf") format("truetype");
+}

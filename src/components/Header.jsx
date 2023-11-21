@@ -36,7 +36,7 @@ function Header() {
       case "/locations":
         return { title: "Locations", icon: "🗺️", data: locations.length };
       case notFound:
-        return { title: "", icon: "", data: "404 ERROR" };
+        return { title: "", icon: "", data: "ERROR" };
       default:
         return { title: "", icon: "👽", data: "Detail" };
     }
@@ -145,7 +145,7 @@ function Header() {
                     : ""
                 }`}
               >
-                {data}{" "}
+                {data}
               </span>
               <span>{title} </span>
               <span className="hidden 790PX:inline">{icon}</span>
@@ -185,7 +185,7 @@ function Header() {
           >
             <NavLink end to="/?type=home">
               {({ isActive }) => (
-                <div className="flex items-center py-3">
+                <div className="flex py-3">
                   <div>
                     <HomeIcon
                       className={`h-5 w-5 ${
@@ -208,7 +208,7 @@ function Header() {
           >
             <NavLink to="characters?type=characters">
               {({ isActive }) => (
-                <div className="flex items-center py-3">
+                <div className="flex py-3">
                   <div>
                     <UsersIcon
                       className={`h-5 w-5 ${
@@ -231,7 +231,7 @@ function Header() {
           >
             <NavLink to="episodes?type=episodes">
               {({ isActive }) => (
-                <div className="flex items-center py-3">
+                <div className="flex py-3">
                   <div>
                     <FilmIcon
                       className={`h-5 w-5 ${
@@ -254,7 +254,7 @@ function Header() {
           >
             <NavLink to="locations?type=locations">
               {({ isActive }) => (
-                <div className="flex items-center py-3">
+                <div className="flex py-3">
                   <div>
                     <MapIcon
                       className={`h-5 w-5 ${

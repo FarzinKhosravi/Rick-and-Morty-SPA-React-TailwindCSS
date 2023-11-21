@@ -53,6 +53,10 @@ export default {
         },
       },
 
+      fontFamily: {
+        vollkorn: ["vollkorn", "sans-serif"],
+      },
+
       animation: {
         light: "lights 5s 750ms linear infinite",
       },
