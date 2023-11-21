@@ -2,6 +2,7 @@ import { useState } from "react";
 import {
   ChevronDownIcon,
   ArrowUpCircleIcon,
+  ArrowSmallRightIcon,
 } from "@heroicons/react/24/outline";
 import {
   useEpisodes,
@@ -268,9 +269,21 @@ export function CharacterDetail({ pathname, characterId }) {
 
   return (
     <div className="mb-8 ">
-      <h2 className="mb-4 text-xl font-semibold text-slate-300">
-        Character Detail :
-      </h2>
+      <div className="mb-4 flex items-center justify-between">
+        <h2 className="text-xl font-semibold text-slate-300">
+          Character Detail :
+        </h2>
+        <div
+          className={`mr-1 h-7 w-7 items-center justify-center rounded-full bg-slate-200 ${
+            pathname === `/characters/${characterDetail.id}` ? "flex" : "hidden"
+          }`}
+        >
+          <Link to="/characters/?type=characters">
+            <ArrowSmallRightIcon className="h-5 w-5 text-red-600" />
+          </Link>
+        </div>
+      </div>
+
       <div className="md:flex md:overflow-hidden md:rounded-xl md:bg-slate-800">
         <div className="md:max-w-52 hidden w-full md:block">
           <img
