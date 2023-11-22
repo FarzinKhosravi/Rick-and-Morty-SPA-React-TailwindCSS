@@ -3,6 +3,9 @@ import {
   FilmIcon,
   UsersIcon,
   MapIcon,
+  SunIcon,
+  MoonIcon,
+  ComputerDesktopIcon,
 } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
@@ -13,7 +16,12 @@ import { useCharacters } from "../context/CharacterPage/CharactersContext";
 import { useEpisodes } from "../context/EpisodePage/EpisodesContext";
 
 function Header() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpenMenu, setIsOpenMenu] = useState(false);
+
+  const [mode, setMode] = useState({
+    selectedMode: "light",
+    isOpenModePanel: false,
+  });
 
   const { pathname } = useLocation();
 
@@ -22,8 +30,6 @@ function Header() {
   const locations = useLocations();
 
   const notFound = useNotFound();
-
-  // console.log("Not:", notFound);
 
   function displayTotalItem(pathname) {
     switch (pathname) {
@@ -42,10 +48,36 @@ function Header() {
     }
   }
 
+  const showModePanelHandler = () => {
+    setMode({ ...mode, isOpenModePanel: !isOpenModePanel });
+  };
+
+  const setModeHandler = (e) => {
+    // console.log(e.target.value);
+
+    switch (e.target.value) {
+      case "light":
+        setMode({ ...mode, isOpenModePanel: false, selectedMode: "light" });
+        break;
+      case "dark":
+        setMode({ ...mode, isOpenModePanel: false, selectedMode: "dark" });
+        break;
+      case "system":
+        setMode({ ...mode, isOpenModePanel: false, selectedMode: "system" });
+        break;
+
+      default:
+        return;
+    }
+  };
+
   const { title, data, icon } = displayTotalItem(pathname);
+  const { selectedMode, isOpenModePanel } = mode;
+
+  // console.log("Mode:", mode);
 
   return (
-    <header className="mb-8 p-4">
+    <header className="relative mb-8 p-4">
       <nav className="flex flex-wrap gap-x-6 rounded-xl bg-slate-700 px-3 py-4">
         <div className="flex flex-auto items-center">
           <div className="transition-all duration-300 ease-linear hover:rotate-[360deg]">
@@ -66,17 +98,25 @@ function Header() {
               </span>
             </a>
           </div>
-          <div className="ml-2">
-            <div className="flex h-full w-full flex-col items-center justify-center">
-              <a
-                href="https://rickandmortyapi.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <span className="block text-center font-serif text-xs uppercase tracking-1 text-slate-300 outline-none transition-all duration-500 ease-in-out xxs:hover:tracking-5">
-                  Rick And Morty
-                </span>
-              </a>
+          <div className="ml-4">
+            <div>
+              <button onClick={showModePanelHandler} className="block">
+                <SunIcon
+                  className={`h-6 w-6 text-slate-300 ${
+                    selectedMode === "light" ? "block" : "hidden"
+                  }`}
+                />
+                <MoonIcon
+                  className={`h-6 w-6 text-slate-300 ${
+                    selectedMode === "dark" ? "block" : "hidden"
+                  }`}
+                />
+                <ComputerDesktopIcon
+                  className={`h-6 w-6 text-slate-300 ${
+                    selectedMode === "system" ? "block" : "hidden"
+                  }`}
+                />
+              </button>
             </div>
           </div>
         </div>
@@ -154,20 +194,20 @@ function Header() {
           <Favorites />
           {/* Menu in Responsive Mobile Design */}
           <div
-            onClick={() => setIsOpen(!isOpen)}
+            onClick={() => setIsOpenMenu(!isOpenMenu)}
             className="cursor-pointer md:hidden"
           >
             <div
               className={`bar ${
-                isOpen
+                isOpenMenu
                   ? "mx-0 my-2 translate-x-0 translate-y-2.25 rotate-129 bg-red-600"
                   : ""
               }`}
             ></div>
-            <div className={`bar ${isOpen ? "opacity-0" : ""}`}></div>
+            <div className={`bar ${isOpenMenu ? "opacity-0" : ""}`}></div>
             <div
               className={`bar ${
-                isOpen
+                isOpenMenu
                   ? "mx-0 my-2 -translate-y-3.38 translate-x-0.25 rotate-50 bg-red-600"
                   : ""
               }`}
@@ -176,11 +216,11 @@ function Header() {
         </div>
         <ul
           className={`flex w-full flex-col overflow-hidden transition-all duration-75 ease-out md:hidden ${
-            isOpen ? "mt-8 max-h-screen opacity-100" : "max-h-0 opacity-0"
+            isOpenMenu ? "mt-8 max-h-screen opacity-100" : "max-h-0 opacity-0"
           }`}
         >
           <li
-            onClick={() => setIsOpen(false)}
+            onClick={() => setIsOpenMenu(false)}
             className="mb-1 cursor-pointer pl-2 transition-all ease-in-out hover:rounded-md hover:bg-slate-900/30"
           >
             <NavLink end to="/?type=home">
@@ -203,7 +243,7 @@ function Header() {
             </NavLink>
           </li>
           <li
-            onClick={() => setIsOpen(false)}
+            onClick={() => setIsOpenMenu(false)}
             className="mb-1 cursor-pointer pl-2 transition-all ease-in-out hover:rounded-md hover:bg-slate-900/30"
           >
             <NavLink to="characters?type=characters">
@@ -226,7 +266,7 @@ function Header() {
             </NavLink>
           </li>
           <li
-            onClick={() => setIsOpen(false)}
+            onClick={() => setIsOpenMenu(false)}
             className="mb-1 cursor-pointer pl-2 transition-all ease-in-out hover:rounded-md hover:bg-slate-900/30"
           >
             <NavLink to="episodes?type=episodes">
@@ -249,7 +289,7 @@ function Header() {
             </NavLink>
           </li>
           <li
-            onClick={() => setIsOpen(false)}
+            onClick={() => setIsOpenMenu(false)}
             className="mb-1 cursor-pointer pl-2 transition-all ease-in-out hover:rounded-md hover:bg-slate-900/30"
           >
             <NavLink to="locations?type=locations">
@@ -273,6 +313,49 @@ function Header() {
           </li>
         </ul>
       </nav>
+      {/* Mode Control Panel */}
+      <div
+        className={`absolute left-16 top-24 flex w-28 flex-col items-start rounded-xl bg-slate-700 p-2 ${
+          isOpenModePanel ? "flex" : "hidden"
+        }`}
+      >
+        <div className="mb-3 flex">
+          <div>
+            <SunIcon className="h-5 w-5 text-slate-400" />
+          </div>
+          <button
+            onClick={setModeHandler}
+            value="light"
+            className="ml-1 block text-slate-300"
+          >
+            Light
+          </button>
+        </div>
+        <div className="mb-3 flex">
+          <div>
+            <MoonIcon className="h-5 w-5 text-slate-400" />
+          </div>
+          <button
+            onClick={setModeHandler}
+            value="dark"
+            className="ml-1 block text-slate-300"
+          >
+            Dark
+          </button>
+        </div>
+        <div className="flex">
+          <div>
+            <ComputerDesktopIcon className="h-5 w-5 text-slate-400" />
+          </div>
+          <button
+            onClick={setModeHandler}
+            value="system"
+            className="ml-1 block text-slate-300"
+          >
+            System
+          </button>
+        </div>
+      </div>
     </header>
   );
 }
