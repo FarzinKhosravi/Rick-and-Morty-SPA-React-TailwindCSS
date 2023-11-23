@@ -22,7 +22,7 @@ function StartButton() {
     <div>
       <Link to="/characters?type=characters">
         <button
-          className="block w-full cursor-pointer appearance-none rounded-lg border-none bg-slate-300 px-4 py-3 text-center text-black outline-none transition-all duration-300 ease-in-out hover:-translate-y-0.5 active:translate-y-0 active:shadow-none"
+          className="block w-full cursor-pointer appearance-none rounded-lg border-none bg-slate-900 px-4 py-3 text-center text-slate-300 outline-none transition-all duration-300 ease-in-out hover:-translate-y-0.5 active:translate-y-0 active:shadow-none dark:bg-slate-300 dark:text-black"
           type="button"
         >
           Let&apos;s Get to Know 😎

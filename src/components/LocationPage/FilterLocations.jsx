@@ -100,21 +100,23 @@ function FilterLocations() {
     <div className="mb-8">
       <div>
         <div className="mb-2">
-          <h2 className="text-lg font-semibold text-slate-300">
+          <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-300">
             Filter of Locations :
           </h2>
         </div>
         <form
           onSubmit={formik.handleSubmit}
-          className="rounded-xl bg-slate-700 p-5"
+          className="rounded-xl bg-slate-200 p-5 dark:bg-slate-700"
         >
           <div className="mb-5">
             <div className="mb-2">
-              <h3 className="text-lg font-semibold text-slate-300">Search:</h3>
+              <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-300">
+                Search:
+              </h3>
             </div>
             <div className="w-full">
               <input
-                className="block w-full rounded-xl bg-slate-500 text-base text-slate-200  placeholder:text-slate-400"
+                className="block w-full rounded-xl bg-slate-300 text-base text-slate-800 placeholder:text-slate-800 dark:bg-slate-500 dark:text-slate-200  dark:placeholder:text-slate-400"
                 type="text"
                 name="userSearch"
                 value={formik.values.userSearch}
@@ -125,14 +127,16 @@ function FilterLocations() {
           </div>
           <div className="mb-6">
             <div className="mb-2">
-              <h3 className="text-lg font-semibold text-slate-300">Type:</h3>
+              <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-300">
+                Type:
+              </h3>
             </div>
             <div className="w-full">
               <select
                 name="type"
                 value={formik.values.type}
                 onChange={formik.handleChange}
-                className="w-full cursor-pointer rounded-xl bg-slate-600 text-base text-slate-200"
+                className="w-full cursor-pointer rounded-xl bg-slate-300 text-base text-slate-800 dark:bg-slate-600 dark:text-slate-200"
               >
                 <option value="">Select Type:</option>
                 <option value="planet">Planet</option>
@@ -148,7 +152,7 @@ function FilterLocations() {
           </div>
           <div className="mb-6">
             <div className="mb-2">
-              <h3 className="text-lg font-semibold text-slate-300">
+              <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-300">
                 Dimension:
               </h3>
             </div>
@@ -157,7 +161,7 @@ function FilterLocations() {
                 name="dimension"
                 value={formik.values.dimension}
                 onChange={formik.handleChange}
-                className="w-full cursor-pointer rounded-xl bg-slate-600 text-base text-slate-200"
+                className="w-full cursor-pointer rounded-xl bg-slate-300 text-base text-slate-800 dark:bg-slate-600 dark:text-slate-200"
               >
                 <option value="">Select Dimension:</option>
                 <option value="dimensionc-137">Dimension C-137</option>
@@ -178,7 +182,7 @@ function FilterLocations() {
           </div>
           <div>
             <button
-              className="block w-full cursor-pointer appearance-none rounded-xl border-none bg-red-600 px-4 py-3 text-center text-slate-200 outline-none transition-all duration-300 ease-in-out hover:-translate-y-0.5 active:translate-y-0 active:shadow-none disabled:bg-gray-600"
+              className="block w-full cursor-pointer appearance-none rounded-xl border-none bg-red-600 px-4 py-3 text-center text-slate-800 outline-none transition-all duration-300 ease-in-out hover:-translate-y-0.5 active:translate-y-0 active:shadow-none disabled:bg-gray-400 dark:text-slate-200 dark:disabled:bg-gray-600"
               type="submit"
               disabled={type || dimension || userSearch ? false : true}
             >

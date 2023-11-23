@@ -61,14 +61,14 @@ function DisplayLocationDetail() {
   return (
     <section className="mb-8 min-h-screen px-4 md:mb-16">
       <div className="flex flex-col items-start">
-        <div className="mb-8 flex w-full items-center justify-center text-slate-300">
+        <div className="mb-8 flex w-full items-center justify-center text-slate-900 dark:text-slate-300">
           <h2 className="border-b-2 border-red-600 pb-0.25 text-2xl font-semibold">
             {locationDetail.name} Location
           </h2>
         </div>
         <div className="flex w-full flex-col">
           <LocationDetail pathname={pathname} />
-          <ResidentsList />
+          <ResidentsList pathname={pathname} />
         </div>
       </div>
     </section>

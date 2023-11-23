@@ -23,22 +23,22 @@ function Modal({ isShowModal, onHideModal }) {
 
   return (
     <div
-      className={`fixed inset-0 z-10 h-screen items-center justify-center bg-slate-900/50 py-12 ${
+      className={`fixed inset-0 z-10 h-screen items-center justify-center bg-slate-300/50 py-12 dark:bg-slate-900/50 ${
         isShowModal ? "flex" : "hidden"
       }`}
     >
       <div
         onClick={onHideModal}
-        className={`fixed inset-0 h-screen cursor-pointer bg-slate-900/50 ${
+        className={`fixed inset-0 h-screen cursor-pointer bg-slate-300/50 dark:bg-slate-900/50 ${
           isShowModal ? "block" : "hidden"
         }`}
       ></div>
 
       <div className="no-scrollbar h-full w-11/12 overflow-y-auto rounded-lg">
-        <div className="flex flex-col rounded-lg bg-slate-900 shadow-xl shadow-slate-300/30">
-          <div className="sticky left-0 right-0 top-0 z-20 bg-slate-900 p-3">
+        <div className="flex flex-col rounded-lg bg-slate-300 shadow-xl shadow-slate-900/30 dark:bg-slate-900 dark:shadow-slate-300/30">
+          <div className="sticky left-0 right-0 top-0 z-20 bg-slate-300 p-3 dark:bg-slate-900">
             <div className="mb-1 flex items-center justify-between pb-1">
-              <h2 className="text-lg font-semibold text-slate-300">
+              <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-300">
                 List of Favorites
               </h2>
               <div className="flex items-center justify-end">

@@ -63,7 +63,7 @@ function LocationList() {
     return !locations.length ? (
       <div className="flex flex-col items-center justify-center">
         <div className="w-24 translate-x-16 translate-y-0 -rotate-45">
-          <span className="block text-2xl font-black text-yellow-400">
+          <span className="block text-2xl font-black text-slate-800 dark:text-yellow-400">
             Haaa...
           </span>
         </div>
@@ -75,7 +75,7 @@ function LocationList() {
           />
         </div>
         <div className="w-20 -translate-x-16 -translate-y-8 -rotate-45">
-          <span className="block text-2xl font-black text-yellow-400">
+          <span className="block text-2xl font-black text-slate-800 dark:text-yellow-400">
             Nooo
           </span>
         </div>
@@ -90,7 +90,7 @@ function LocationList() {
               onShowLocationData={showLocationDataHandler}
             />
             <div
-              className={`rounded-b-xl bg-slate-800 px-3 md:hidden ${
+              className={`rounded-b-xl bg-slate-200 px-3 dark:bg-slate-800 md:hidden ${
                 location.id === locationId
                   ? "min-h-screen py-4 opacity-100 transition-all"
                   : "max-h-0 overflow-hidden opacity-0 transition-all duration-300"
@@ -109,7 +109,7 @@ function LocationList() {
     return !locations.length ? (
       <div className="flex flex-col items-center justify-center">
         <div className="w-28 translate-x-8 translate-y-0 -rotate-45">
-          <span className="block text-3xl font-black text-yellow-400">
+          <span className="block text-3xl font-black text-slate-800 dark:text-yellow-400">
             Haaa...
           </span>
         </div>
@@ -121,7 +121,7 @@ function LocationList() {
           />
         </div>
         <div className="w-24 -translate-x-16 -translate-y-12 -rotate-45">
-          <span className="block text-3xl font-black text-yellow-400">
+          <span className="block text-3xl font-black text-slate-800 dark:text-yellow-400">
             Nooo
           </span>
         </div>
@@ -145,11 +145,11 @@ function LocationList() {
     <div className="mb-8">
       {/* Title of List : */}
       <div className="flex">
-        <h2 className="mb-4 text-xl font-semibold text-slate-300 md:mb-6">
+        <h2 className="mb-4 text-xl font-semibold text-slate-900 dark:text-slate-300 md:mb-6">
           List of Locations :
         </h2>
         <div className="-mt-3 ml-3 flex items-center justify-center sm:hidden">
-          <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-slate-700 text-xs text-white">
+          <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-slate-400 text-xs text-slate-900 dark:bg-slate-700 dark:text-white">
             {locations.length}
           </span>
         </div>
@@ -175,7 +175,7 @@ export default LocationList;
 function Location({ location, onShowLocationData, locationId = null }) {
   return (
     <div
-      className={`flex cursor-pointer items-center justify-between rounded-xl bg-slate-800 p-3 transition-all duration-200 hover:bg-slate-700 md:p-5 ${
+      className={`flex cursor-pointer items-center justify-between rounded-xl bg-slate-200 p-3 transition-all duration-200 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 md:p-5 ${
         locationId === location.id ? "rounded-b-none" : ""
       }`}
     >
@@ -192,12 +192,12 @@ function Location({ location, onShowLocationData, locationId = null }) {
 
         <div className="flex flex-col justify-between md:flex-row md:pb-2">
           <div className="mb-1">
-            <span className="text-base font-medium text-slate-300">
+            <span className="text-base font-medium text-slate-900 dark:text-slate-300">
               {location.name}
             </span>
           </div>
           <div>
-            <span className="text-base font-normal text-slate-300">
+            <span className="text-base font-normal text-slate-900 dark:text-slate-300">
               {location.type}
             </span>
           </div>
@@ -223,11 +223,11 @@ export function LocationDetail({ pathname }) {
   return (
     <div className="mb-8 ">
       <div className="mb-4 flex items-center justify-between">
-        <h2 className="text-xl font-semibold text-slate-300">
+        <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-300">
           Location Detail :
         </h2>
         <div
-          className={`mr-1 h-7 w-7 items-center justify-center rounded-full bg-slate-200 ${
+          className={`mr-1 h-7 w-7 items-center justify-center rounded-full bg-slate-300 dark:bg-slate-200 ${
             pathname === `/locations/${locationDetail.id}` ? "flex" : "hidden"
           }`}
         >
@@ -237,7 +237,11 @@ export function LocationDetail({ pathname }) {
         </div>
       </div>
 
-      <div className="md:flex md:overflow-hidden md:rounded-xl md:bg-slate-800">
+      <div
+        className={`rounded-xl bg-slate-200 dark:bg-slate-800 md:flex md:overflow-hidden md:rounded-xl md:bg-slate-200 dark:md:bg-slate-800 ${
+          pathname === `/locations/${locationDetail.id}` ? "p-4 md:p-0" : ""
+        }`}
+      >
         <div className="flex flex-col md:ml-4 md:w-full md:py-4">
           <div
             className={`mb-4 flex flex-col md:ml-0 ${
@@ -248,36 +252,36 @@ export function LocationDetail({ pathname }) {
             }`}
           >
             <div className="mb-1">
-              <span className="block text-sm text-slate-500">
+              <span className="block text-sm text-slate-700 dark:text-slate-500">
                 Location Name:
               </span>
             </div>
             <div className="mb-1">
-              <span className="text-sm font-medium text-slate-300 md:text-lg md:font-semibold">
+              <span className="text-sm font-medium text-slate-900 dark:text-slate-300 md:text-lg md:font-semibold">
                 {locationDetail.name}
               </span>
             </div>
           </div>
           <div className="flex flex-col">
             <div className="mb-1">
-              <span className="block text-sm text-slate-500 md:text-base">
+              <span className="block text-sm text-slate-700 dark:text-slate-500 md:text-base">
                 Location Type:
               </span>
             </div>
             <div className="mb-5">
-              <span className="block text-sm font-medium text-slate-300 md:text-base md:font-semibold">
+              <span className="block text-sm font-medium text-slate-900 dark:text-slate-300 md:text-base md:font-semibold">
                 {locationDetail.type}
               </span>
             </div>
           </div>
           <div className="flex flex-col">
             <div className="mb-1">
-              <span className="block text-sm text-slate-500 md:text-base">
+              <span className="block text-sm text-slate-700 dark:text-slate-500 md:text-base">
                 Location Dimension:
               </span>
             </div>
             <div className="mb-5">
-              <span className="block text-sm font-medium text-slate-300 md:text-base md:font-semibold">
+              <span className="block text-sm font-medium text-slate-900 dark:text-slate-300 md:text-base md:font-semibold">
                 {locationDetail.dimension}
               </span>
             </div>
@@ -288,8 +292,11 @@ export function LocationDetail({ pathname }) {
   );
 }
 
-export function ResidentsList() {
+export function ResidentsList({ pathname }) {
   const { characters } = useCharacters();
+  const locationDetail = useLocationDetail();
+
+  if (!locationDetail) return;
 
   function renderResidentsList() {
     return characters.map((resident, index) => {
@@ -298,10 +305,14 @@ export function ResidentsList() {
   }
 
   return (
-    <div className="md:rounded-xl md:bg-slate-800 md:p-4">
+    <div
+      className={`rounded-xl bg-slate-200 dark:bg-slate-800 md:bg-slate-200 dark:md:bg-slate-800 ${
+        pathname === `/locations/${locationDetail.id}` ? "p-4" : ""
+      }`}
+    >
       <div className="mb-6 flex md:mb-9">
         <div>
-          <h2 className="text-xl font-semibold text-slate-300">
+          <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-300">
             List of Residents :
           </h2>
         </div>
@@ -314,8 +325,8 @@ export function ResidentsList() {
 export function Resident({ resident, index }) {
   return (
     <div className="mb-8 flex">
-      <div className="">
-        <span className="mb-3 block w-full font-normal text-slate-300">
+      <div>
+        <span className="mb-3 block w-full font-normal text-slate-900 dark:text-slate-300">
           {String(index + 1).padStart(2, "0")}.
           <span className="ml-1 font-bold">{resident.name}</span>
         </span>
