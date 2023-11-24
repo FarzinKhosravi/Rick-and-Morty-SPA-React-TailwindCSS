@@ -68,11 +68,10 @@ function Header() {
 
   const showModePanelHandler = () => {
     setMode({ ...mode, isOpenModePanel: !isOpenModePanel });
+    setIsOpenMenu(false);
   };
 
   const setModeHandler = (e) => {
-    // console.log(e.target.value);
-
     switch (e.target.value) {
       case "light":
         {
@@ -102,10 +101,14 @@ function Header() {
           setMode({ ...mode, isOpenModePanel: false, selectedMode: "system" });
         }
         break;
-
       default:
         return;
     }
+  };
+
+  const showHamburgerMenuHandler = () => {
+    setIsOpenMenu(!isOpenMenu);
+    setMode({ ...mode, isOpenModePanel: false });
   };
 
   const { title, data, icon } = displayTotalItem(pathname);
@@ -114,7 +117,11 @@ function Header() {
 
   return (
     <header className="relative mb-8 p-4">
-      <nav className="flex flex-wrap gap-x-6 rounded-xl bg-slate-200 px-3 py-4 dark:bg-slate-700">
+      <nav
+        className={`relative flex flex-wrap gap-x-6 rounded-xl bg-slate-200 px-3 py-4 dark:bg-slate-700 ${
+          isOpenMenu ? "rounded-b-none" : ""
+        }`}
+      >
         <div className="flex flex-auto items-center">
           <div className="transition-all duration-300 ease-linear hover:rotate-[360deg]">
             <a
@@ -238,7 +245,7 @@ function Header() {
           <Favorites />
           {/* Menu in Responsive Mobile Design */}
           <div
-            onClick={() => setIsOpenMenu(!isOpenMenu)}
+            onClick={showHamburgerMenuHandler}
             className="cursor-pointer md:hidden"
           >
             <div
@@ -259,8 +266,8 @@ function Header() {
           </div>
         </div>
         <ul
-          className={`flex w-full flex-col overflow-hidden transition-all duration-75 ease-out md:hidden ${
-            isOpenMenu ? "mt-8 max-h-screen opacity-100" : "max-h-0 opacity-0"
+          className={`absolute right-0 top-16 flex w-full flex-col overflow-hidden rounded-xl bg-slate-200 p-2 transition-all duration-75 ease-out dark:bg-slate-700 md:hidden ${
+            isOpenMenu ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
           }`}
         >
           <li
@@ -383,44 +390,50 @@ function Header() {
       </nav>
       {/* Mode Control Panel */}
       <div
-        className={`absolute left-16 top-24 flex w-28 flex-col items-start rounded-xl bg-slate-400 p-2 dark:bg-slate-700 ${
+        className={`absolute left-16 top-24 flex w-28 flex-col items-start overflow-hidden rounded-xl bg-slate-200 dark:bg-slate-700 md:top-28 ${
           isOpenModePanel ? "flex" : "hidden"
         }`}
       >
-        <div className="mb-3 flex">
-          <div>
-            <SunIcon className="h-5 w-5 text-slate-700 dark:text-slate-400" />
-          </div>
+        <div className="mb-1 flex w-full">
           <button
             onClick={setModeHandler}
             value="light"
-            className="ml-1 block text-slate-900 dark:text-slate-300"
+            className="flex w-full cursor-pointer px-2 pt-2"
           >
-            Light
+            <div className="pointer-events-none">
+              <SunIcon className="h-5 w-5 text-slate-700 dark:text-slate-400" />
+            </div>
+            <span className="pointer-events-none ml-1 text-slate-700 dark:text-slate-300">
+              Light
+            </span>
           </button>
         </div>
-        <div className="mb-3 flex">
-          <div>
-            <MoonIcon className="h-5 w-5 text-slate-700 dark:text-slate-400" />
-          </div>
+        <div className="mb-1 flex w-full">
           <button
             onClick={setModeHandler}
             value="dark"
-            className="ml-1 block text-slate-900 dark:text-slate-300"
+            className="flex w-full cursor-pointer px-2 pt-2"
           >
-            Dark
+            <div className="pointer-events-none">
+              <MoonIcon className="h-5 w-5 text-slate-700 dark:text-slate-400" />
+            </div>
+            <span className="pointer-events-none ml-1 text-slate-700 dark:text-slate-300">
+              Dark
+            </span>
           </button>
         </div>
-        <div className="flex">
-          <div>
-            <ComputerDesktopIcon className="h-5 w-5 text-slate-700 dark:text-slate-400" />
-          </div>
+        <div className="flex w-full">
           <button
             onClick={setModeHandler}
             value="system"
-            className="ml-1 block text-slate-900 dark:text-slate-300"
+            className="flex w-full cursor-pointer p-2"
           >
-            System
+            <div className="pointer-events-none">
+              <ComputerDesktopIcon className="h-5 w-5 text-slate-700 dark:text-slate-400" />
+            </div>
+            <span className="pointer-events-none ml-1 text-slate-700 dark:text-slate-300">
+              System
+            </span>
           </button>
         </div>
       </div>
