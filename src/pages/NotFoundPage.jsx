@@ -4,13 +4,41 @@ import { useNotFoundDispatch } from "./../context/NotFoundPage/NotFoundContext";
 
 function NotFoundPage() {
   const setNotFound = useNotFoundDispatch();
-
   const { pathname } = useLocation();
 
   useEffect(() => {
     setNotFound(pathname);
   }, []);
 
+  return (
+    <section className="mb-8 min-h-screen px-4 md:mb-16">
+      <div className="mx-auto flex max-w-screen-xl items-center justify-start md:px-8">
+        <div className="mx-auto max-w-lg text-gray-600">
+          <div className="mb-8 text-center">
+            <div className="mb-4 flex items-center justify-center font-semibold text-red-600">
+              <span className="-mt-1 inline-block text-lg md:-mt-2 md:text-2xl">
+                404
+              </span>
+              <span className="ml-1 inline-block md:text-2xl">ERROR</span>
+            </div>
+            <p className="mb-5 text-3xl font-semibold text-slate-200 sm:text-5xl">
+              Page Not Found
+            </p>
+            <p className="italic text-slate-300">
+              Sorry, The Page You are Looking for Could Not Be Found Or Has Been
+              Removed.
+            </p>
+          </div>
+          <NavigationList />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export default NotFoundPage;
+
+function NavigationList() {
   const navigations = [
     {
       id: 1,
@@ -103,63 +131,44 @@ function NotFoundPage() {
   ];
 
   return (
-    <section className="mb-8 min-h-screen px-4 md:mb-16">
-      <div className="mx-auto flex max-w-screen-xl items-center justify-start md:px-8">
-        <div className="mx-auto max-w-lg text-gray-600">
-          <div className="mb-8 text-center">
-            <div className="mb-4 flex items-center justify-center font-semibold text-red-600">
-              <span className="-mt-1 inline-block text-lg md:-mt-2 md:text-2xl">
-                404
-              </span>
-              <span className="ml-1 inline-block md:text-2xl">ERROR</span>
-            </div>
-            <p className="mb-5 text-3xl font-semibold text-slate-200 sm:text-5xl">
-              Page Not Found
-            </p>
-            <p className="italic text-slate-300">
-              Sorry, The Page You are Looking for Could Not Be Found Or Has Been
-              Removed.
-            </p>
-          </div>
-          <div>
-            <ul>
-              {navigations.map((navigation) => (
-                <li key={navigation.id} className="flex gap-x-4 py-6">
-                  <div className="flex h-12 w-12 flex-none items-center justify-center rounded-full bg-slate-100 text-slate-900">
-                    {navigation.icon}
-                  </div>
-                  <div className="w-full space-y-1 border-b-2 border-slate-500 pb-3">
-                    <h4 className="font-medium text-slate-200">
-                      {navigation.title}
-                    </h4>
-                    <p className="text-slate-400">{navigation.desc}</p>
-                    <Link
-                      to={navigation.href}
-                      className="inline-flex items-center gap-x-1 text-sm font-medium text-yellow-500 duration-150 hover:text-indigo-400"
-                    >
-                      Learn more
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                        className="mt-1 h-5 w-5"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M5 10a.75.75 0 01.75-.75h6.638L10.23 7.29a.75.75 0 111.04-1.08l3.5 3.25a.75.75 0 010 1.08l-3.5 3.25a.75.75 0 11-1.04-1.08l2.158-1.96H5.75A.75.75 0 015 10z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    </Link>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
+    <div>
+      <ul>
+        {navigations.map((navigation) => (
+          <Navigation navigation={navigation} key={navigation.id} />
+        ))}
+      </ul>
+    </div>
   );
 }
 
-export default NotFoundPage;
+function Navigation({ navigation }) {
+  return (
+    <li className="flex gap-x-4 py-6">
+      <div className="flex h-12 w-12 flex-none items-center justify-center rounded-full bg-slate-100 text-slate-900">
+        {navigation.icon}
+      </div>
+      <div className="w-full space-y-1 border-b-2 border-slate-500 pb-3">
+        <h4 className="font-medium text-slate-200">{navigation.title}</h4>
+        <p className="text-slate-400">{navigation.desc}</p>
+        <Link
+          to={navigation.href}
+          className="inline-flex items-center gap-x-1 text-sm font-medium text-yellow-500 duration-150 hover:text-indigo-400"
+        >
+          Learn more
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            className="mt-1 h-5 w-5"
+          >
+            <path
+              fillRule="evenodd"
+              d="M5 10a.75.75 0 01.75-.75h6.638L10.23 7.29a.75.75 0 111.04-1.08l3.5 3.25a.75.75 0 010 1.08l-3.5 3.25a.75.75 0 11-1.04-1.08l2.158-1.96H5.75A.75.75 0 015 10z"
+              clipRule="evenodd"
+            />
+          </svg>
+        </Link>
+      </div>
+    </li>
+  );
+}
