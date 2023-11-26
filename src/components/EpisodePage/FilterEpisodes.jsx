@@ -1,9 +1,21 @@
 import { useFormik } from "formik";
 import { useEffect } from "react";
-import toast from "react-hot-toast";
 import { usePageId } from "../../context/PageIdContext";
 import getEpisodesPagination from "./../../services/EpisodePage/getEpisodesPaginationService";
 import { useEpisodesDispatch } from "./../../context/EpisodePage/EpisodesContext";
+import pagesDataSwitcher from "./../../utils/pagesDataSwitcher";
+import SearchBox from "../../common/SearchBox";
+import SelectOption from "../../common/SelectOption";
+import ResetButton from "../../common/ResetButton";
+import FilterTitle from "./../../common/FilterTitle";
+import itemsSearch from "../../utils/itemsSearch";
+
+const seasonOptions = [
+  { id: 1, label: "Select Season:", value: "" },
+  { id: 2, label: "Season 01", value: "s01" },
+  { id: 3, label: "Season 02", value: "s02" },
+  { id: 4, label: "Season 03", value: "s03" },
+];
 
 const initialValues = {
   userSearch: "",
@@ -17,128 +29,72 @@ const onSubmit = (values, { resetForm }) => {
 function FilterEpisodes() {
   const formik = useFormik({ initialValues, onSubmit });
 
+  const filterEpisodesOptions = Object.values(formik.values);
+
   const setEpisodes = useEpisodesDispatch();
 
   const pageId = usePageId();
 
-  function filterEpisodes(page) {
-    const controller = new AbortController();
-    const signal = controller.signal;
+  function episodesSeasonFilter(data, page, items, formik) {
+    const episodesData = data[page][items].filter(
+      (episode) =>
+        episode.episode.slice(0, 3).toLowerCase() ===
+        formik.values.season.toLowerCase()
+    );
 
+    return episodesData;
+  }
+
+  function getEpisodesPaginationLogic(page, signal, callback) {
     getEpisodesPagination({ signal })
       .then(({ data }) => {
-        const episodesData = data[page].episodes.filter((episode) =>
-          episode.name
-            .toLowerCase()
-            .includes(formik.values.userSearch.toLowerCase())
-        );
-
-        if (episodesData.length === 0) {
-          toast.error("Your Character Not Found 🧐");
-        }
+        const episodesData = callback(data, page, "episodes", formik);
 
         setEpisodes(episodesData);
       })
       .catch((err) => console.log(err));
+  }
 
-    if (formik.values.season !== "") {
-      getEpisodesPagination()
-        .then(({ data }) => {
-          const episodesData = data[page].episodes.filter(
-            (episode) =>
-              episode.episode.slice(0, 3).toLowerCase() ===
-              formik.values.season.toLowerCase()
-          );
+  function filterEpisodes(page, signal) {
+    getEpisodesPaginationLogic(page, signal, itemsSearch);
 
-          setEpisodes(episodesData);
-        })
-        .catch((err) => console.log(err));
-    }
+    if (formik.values.season !== "")
+      getEpisodesPaginationLogic(page, signal, episodesSeasonFilter);
+  }
+
+  useEffect(() => {
+    const controller = new AbortController();
+    const signal = controller.signal;
+
+    pagesDataSwitcher(pageId, filterEpisodes, signal);
 
     return () => {
       controller.abort();
     };
-  }
-
-  useEffect(() => {
-    switch (pageId) {
-      case 1:
-        filterEpisodes("pageOne");
-        break;
-
-      case 2:
-        filterEpisodes("pageTwo");
-        break;
-
-      case 3:
-        filterEpisodes("pageThree");
-        break;
-
-      default:
-        return;
-    }
   }, [formik.values, pageId]);
-
-  const { season, userSearch } = formik.values;
 
   return (
     <div className="mb-8">
       <div>
-        <div className="mb-2">
-          <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-300">
-            Filter of Episodes :
-          </h2>
-        </div>
+        <FilterTitle title="Episodes" />
         <form
           onSubmit={formik.handleSubmit}
           className="rounded-xl bg-slate-200 p-5 dark:bg-slate-700"
         >
-          <div className="mb-5">
-            <div className="mb-2">
-              <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-300">
-                Search:
-              </h3>
-            </div>
-            <div className="w-full">
-              <input
-                className="block w-full rounded-xl bg-slate-300 text-base text-slate-800 placeholder:text-slate-800 dark:bg-slate-500 dark:text-slate-200  dark:placeholder:text-slate-400"
-                type="text"
-                name="userSearch"
-                value={formik.values.userSearch}
-                onChange={formik.handleChange}
-                placeholder="Search Episodes..."
-              />
-            </div>
-          </div>
+          <SearchBox formik={formik} placeholder="Search Episodes..." />
           <div className="mb-6">
             <div className="mb-2">
               <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-300">
                 Season:
               </h3>
             </div>
-            <div className="w-full">
-              <select
-                name="season"
-                value={formik.values.season}
-                onChange={formik.handleChange}
-                className="w-full cursor-pointer rounded-xl bg-slate-300 text-base text-slate-800 dark:bg-slate-600 dark:text-slate-200"
-              >
-                <option value="">Select Season:</option>
-                <option value="s01">Season 01</option>
-                <option value="s02">Season 02</option>
-                <option value="s03">Season 03</option>
-              </select>
-            </div>
+            <SelectOption
+              optionsList={seasonOptions}
+              name="season"
+              formik={formik}
+            />
           </div>
-          <div>
-            <button
-              className="block w-full cursor-pointer appearance-none rounded-xl border-none bg-red-600 px-4 py-3 text-center text-slate-800 outline-none transition-all duration-300 ease-in-out hover:-translate-y-0.5 active:translate-y-0 active:shadow-none disabled:bg-gray-400 dark:text-slate-200 dark:disabled:bg-gray-600"
-              type="submit"
-              disabled={season || userSearch ? false : true}
-            >
-              Reset
-            </button>
-          </div>
+          <ResetButton filterOptions={filterEpisodesOptions} />
         </form>
       </div>
     </div>

@@ -3,6 +3,7 @@ import { usePageId, usePageIdDispatch } from "../../context/PageIdContext";
 import toast from "react-hot-toast";
 import getEpisodesPagination from "../../services/EpisodePage/getEpisodesPaginationService";
 import { useEpisodesDispatch } from "./../../context/EpisodePage/EpisodesContext";
+import pagesDataSwitcher from "../../utils/pagesDataSwitcher";
 
 function useFetchEpisodesPagination() {
   const setEpisodes = useEpisodesDispatch();
@@ -26,22 +27,7 @@ function useFetchEpisodesPagination() {
       }
     };
 
-    switch (pageId) {
-      case 1:
-        fetchEpisodesPagination("pageOne");
-        break;
-
-      case 2:
-        fetchEpisodesPagination("pageTwo");
-        break;
-
-      case 3:
-        fetchEpisodesPagination("pageThree");
-        break;
-
-      default:
-        return;
-    }
+    pagesDataSwitcher(pageId, fetchEpisodesPagination);
   }, [pageId]);
 }
 

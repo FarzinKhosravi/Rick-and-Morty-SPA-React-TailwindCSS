@@ -3,6 +3,7 @@ import toast from "react-hot-toast";
 import { usePageId, usePageIdDispatch } from "../../context/PageIdContext";
 import getCharactersPagination from "../../services/CharacterPage/getCharactersPaginationService";
 import { useCharactersDispatch } from "./../../context/CharacterPage/CharactersContext";
+import pagesDataSwitcher from "./../../utils/pagesDataSwitcher";
 
 function useFetchCharactersPagination() {
   const charactersDispatch = useCharactersDispatch();
@@ -33,22 +34,7 @@ function useFetchCharactersPagination() {
       }
     };
 
-    switch (pageId) {
-      case 1:
-        fetchCharactersPagination("pageOne");
-        break;
-
-      case 2:
-        fetchCharactersPagination("pageTwo");
-        break;
-
-      case 3:
-        fetchCharactersPagination("pageThree");
-        break;
-
-      default:
-        return;
-    }
+    pagesDataSwitcher(pageId, fetchCharactersPagination);
   }, [pageId]);
 }
 

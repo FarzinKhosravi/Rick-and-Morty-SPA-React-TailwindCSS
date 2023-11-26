@@ -82,6 +82,10 @@ export default {
         0.25: "1px",
       },
 
+      margin: {
+        1.5: "6px",
+      },
+
       height: {
         0.75: "3px",
       },

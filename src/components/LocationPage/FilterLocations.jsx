@@ -3,7 +3,39 @@ import { useLocationsDispatch } from "./../../context/LocationPage/LocationsCont
 import { usePageId } from "../../context/PageIdContext";
 import { useEffect } from "react";
 import getLocationsPagination from "./../../services/LocationPage/getLocationsPaginationService";
-import toast from "react-hot-toast";
+import pagesDataSwitcher from "./../../utils/pagesDataSwitcher";
+import SearchBox from "../../common/SearchBox";
+import ResetButton from "../../common/ResetButton";
+import SelectOption from "../../common/SelectOption";
+import FilterTitle from "../../common/FilterTitle";
+import itemsSearch from "./../../utils/itemsSearch";
+
+const typeOptions = [
+  { id: 1, label: "Select Type:", value: "" },
+  { id: 2, label: "Planet", value: "planet" },
+  { id: 3, label: "Cluster", value: "cluster" },
+  { id: 4, label: "Space Station", value: "spacestation" },
+  { id: 5, label: "Microverse", value: "microverse" },
+  { id: 6, label: "TV", value: "tv" },
+  { id: 7, label: "Resort", value: "resort" },
+  { id: 8, label: "Fantasy Town", value: "fantasytown" },
+  { id: 9, label: "Dream", value: "dream" },
+];
+
+const dimensionOptions = [
+  { id: 1, label: "Select Dimension:", value: "" },
+  { id: 2, label: "Dimension C-137", value: "dimensionc-137" },
+  { id: 3, label: "Unknown", value: "unknown" },
+  {
+    id: 4,
+    label: "Post-Apocalyptic Dimension",
+    value: "postapocalypticdimension",
+  },
+  { id: 5, label: "Replacement Dimension", value: "replacementdimension" },
+  { id: 6, label: "Cronenberg Dimension", value: "cronenbergdimension" },
+  { id: 7, label: "Fantasy Dimension", value: "fantasydimension" },
+  { id: 8, label: "Dimension 5-126", value: "dimension5-126" },
+];
 
 const initialValues = {
   userSearch: "",
@@ -18,137 +50,82 @@ const onSubmit = (values, { resetForm }) => {
 function FilterLocations() {
   const formik = useFormik({ initialValues, onSubmit });
 
+  const filterLocationsOptions = Object.values(formik.values);
+
   const setLocations = useLocationsDispatch();
 
   const pageId = usePageId();
 
-  function filterLocations(page) {
-    const controller = new AbortController();
-    const signal = controller.signal;
+  function locationsTypeFilter(data, page, items, formik) {
+    const locationsData = data[page][items].filter(
+      (location) =>
+        location.type.replace(/ +/g, "").toLowerCase() ===
+        formik.values.type.toLowerCase()
+    );
 
+    return locationsData;
+  }
+
+  function locationsDimensionFilter(data, page, items, formik) {
+    const locationsData = data[page][items].filter(
+      (location) =>
+        location.dimension.replace(/ +/g, "").toLowerCase() ===
+        formik.values.dimension.toLowerCase()
+    );
+    return locationsData;
+  }
+
+  function getLocationsPaginationLogic(page, signal, callback) {
     getLocationsPagination({ signal })
       .then(({ data }) => {
-        const locationsData = data[page].locations.filter((location) =>
-          location.name
-            .toLowerCase()
-            .includes(formik.values.userSearch.toLowerCase())
-        );
-
-        if (locationsData.length === 0) {
-          toast.error("Your Character Not Found 🧐");
-        }
+        const locationsData = callback(data, page, "locations", formik);
 
         setLocations(locationsData);
       })
       .catch((err) => console.log(err));
+  }
 
-    if (formik.values.type !== "") {
-      getLocationsPagination()
-        .then(({ data }) => {
-          const locationsData = data[page].locations.filter(
-            (location) =>
-              location.type.replace(/ +/g, "").toLowerCase() ===
-              formik.values.type.toLowerCase()
-          );
+  function filterLocations(page, signal) {
+    getLocationsPaginationLogic(page, signal, itemsSearch);
 
-          setLocations(locationsData);
-        })
-        .catch((err) => console.log(err));
-    }
+    if (formik.values.type !== "")
+      getLocationsPaginationLogic(page, signal, locationsTypeFilter);
 
-    if (formik.values.dimension !== "") {
-      getLocationsPagination()
-        .then(({ data }) => {
-          const locationsData = data[page].locations.filter(
-            (location) =>
-              location.dimension.replace(/ +/g, "").toLowerCase() ===
-              formik.values.dimension.toLowerCase()
-          );
+    if (formik.values.dimension !== "")
+      getLocationsPaginationLogic(page, signal, locationsDimensionFilter);
+  }
 
-          setLocations(locationsData);
-        })
-        .catch((err) => console.log(err));
-    }
+  useEffect(() => {
+    const controller = new AbortController();
+    const signal = controller.signal;
+
+    pagesDataSwitcher(pageId, filterLocations, signal);
 
     return () => {
       controller.abort();
     };
-  }
-
-  useEffect(() => {
-    switch (pageId) {
-      case 1:
-        filterLocations("pageOne");
-        break;
-
-      case 2:
-        filterLocations("pageTwo");
-        break;
-
-      case 3:
-        filterLocations("pageThree");
-        break;
-
-      default:
-        return;
-    }
   }, [formik.values, pageId]);
-
-  const { dimension, type, userSearch } = formik.values;
 
   return (
     <div className="mb-8">
       <div>
-        <div className="mb-2">
-          <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-300">
-            Filter of Locations :
-          </h2>
-        </div>
+        <FilterTitle title="Locations" />
         <form
           onSubmit={formik.handleSubmit}
           className="rounded-xl bg-slate-200 p-5 dark:bg-slate-700"
         >
-          <div className="mb-5">
-            <div className="mb-2">
-              <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-300">
-                Search:
-              </h3>
-            </div>
-            <div className="w-full">
-              <input
-                className="block w-full rounded-xl bg-slate-300 text-base text-slate-800 placeholder:text-slate-800 dark:bg-slate-500 dark:text-slate-200  dark:placeholder:text-slate-400"
-                type="text"
-                name="userSearch"
-                value={formik.values.userSearch}
-                onChange={formik.handleChange}
-                placeholder="Search Locations..."
-              />
-            </div>
-          </div>
+          <SearchBox formik={formik} placeholder="Search Locations..." />
           <div className="mb-6">
             <div className="mb-2">
               <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-300">
                 Type:
               </h3>
             </div>
-            <div className="w-full">
-              <select
-                name="type"
-                value={formik.values.type}
-                onChange={formik.handleChange}
-                className="w-full cursor-pointer rounded-xl bg-slate-300 text-base text-slate-800 dark:bg-slate-600 dark:text-slate-200"
-              >
-                <option value="">Select Type:</option>
-                <option value="planet">Planet</option>
-                <option value="cluster">Cluster</option>
-                <option value="spacestation">Space Station</option>
-                <option value="microverse">Microverse</option>
-                <option value="tv">TV</option>
-                <option value="resort">Resort</option>
-                <option value="fantasytown">Fantasy Town</option>
-                <option value="dream">Dream</option>
-              </select>
-            </div>
+            <SelectOption
+              optionsList={typeOptions}
+              name="type"
+              formik={formik}
+            />
           </div>
           <div className="mb-6">
             <div className="mb-2">
@@ -156,39 +133,13 @@ function FilterLocations() {
                 Dimension:
               </h3>
             </div>
-            <div className="w-full">
-              <select
-                name="dimension"
-                value={formik.values.dimension}
-                onChange={formik.handleChange}
-                className="w-full cursor-pointer rounded-xl bg-slate-300 text-base text-slate-800 dark:bg-slate-600 dark:text-slate-200"
-              >
-                <option value="">Select Dimension:</option>
-                <option value="dimensionc-137">Dimension C-137</option>
-                <option value="unknown">Unknown</option>
-                <option value="postapocalypticdimension">
-                  Post-Apocalyptic Dimension
-                </option>
-                <option value="replacementdimension">
-                  Replacement Dimension
-                </option>
-                <option value="cronenbergdimension">
-                  Cronenberg Dimension
-                </option>
-                <option value="fantasydimension">Fantasy Dimension</option>
-                <option value="dimension5-126">Dimension 5-126</option>
-              </select>
-            </div>
+            <SelectOption
+              optionsList={dimensionOptions}
+              name="dimension"
+              formik={formik}
+            />
           </div>
-          <div>
-            <button
-              className="block w-full cursor-pointer appearance-none rounded-xl border-none bg-red-600 px-4 py-3 text-center text-slate-800 outline-none transition-all duration-300 ease-in-out hover:-translate-y-0.5 active:translate-y-0 active:shadow-none disabled:bg-gray-400 dark:text-slate-200 dark:disabled:bg-gray-600"
-              type="submit"
-              disabled={type || dimension || userSearch ? false : true}
-            >
-              Reset
-            </button>
-          </div>
+          <ResetButton filterOptions={filterLocationsOptions} />
         </form>
       </div>
     </div>

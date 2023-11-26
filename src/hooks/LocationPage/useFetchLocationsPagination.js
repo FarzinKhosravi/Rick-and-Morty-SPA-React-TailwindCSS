@@ -3,6 +3,7 @@ import { usePageId, usePageIdDispatch } from "../../context/PageIdContext";
 import { useLocationsDispatch } from "./../../context/LocationPage/LocationsContext";
 import getLocationsPagination from "./../../services/LocationPage/getLocationsPaginationService";
 import toast from "react-hot-toast";
+import pagesDataSwitcher from "./../../utils/pagesDataSwitcher";
 
 function useFetchLocationsPagination() {
   const setLocations = useLocationsDispatch();
@@ -26,22 +27,7 @@ function useFetchLocationsPagination() {
       }
     };
 
-    switch (pageId) {
-      case 1:
-        fetchLocationsPagination("pageOne");
-        break;
-
-      case 2:
-        fetchLocationsPagination("pageTwo");
-        break;
-
-      case 3:
-        fetchLocationsPagination("pageThree");
-        break;
-
-      default:
-        return;
-    }
+    pagesDataSwitcher(pageId, fetchLocationsPagination);
   }, [pageId]);
 }
 

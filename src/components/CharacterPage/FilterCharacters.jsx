@@ -1,9 +1,34 @@
 import { useFormik } from "formik";
 import { useEffect } from "react";
-import toast from "react-hot-toast";
 import { usePageId } from "../../context/PageIdContext";
 import getCharactersPagination from "./../../services/CharacterPage/getCharactersPaginationService";
 import { useCharactersDispatch } from "./../../context/CharacterPage/CharactersContext";
+import pagesDataSwitcher from "./../../utils/pagesDataSwitcher";
+import SearchBox from "./../../common/SearchBox";
+import CheckBox from "./../../common/CheckBox";
+import RadioButton from "../../common/RadioButton";
+import SelectOption from "./../../common/SelectOption";
+import ResetButton from "../../common/ResetButton";
+import FilterTitle from "../../common/FilterTitle";
+import itemsSearch from "./../../utils/itemsSearch";
+
+const statusOptions = [
+  { id: 1, label: "Alive", value: "alive" },
+  { id: 2, label: "Dead", value: "dead" },
+  { id: 3, label: "Unknown", value: "unknown" },
+];
+
+const speciesOptions = [
+  { id: 1, label: "Human", value: "human" },
+  { id: 2, label: "Alien", value: "alien" },
+];
+
+const genderOptions = [
+  { id: 1, label: "Select Gender:", value: "" },
+  { id: 2, label: "Male", value: "male" },
+  { id: 3, label: "Female", value: "female" },
+  { id: 4, label: "Unknown", value: "unknown" },
+];
 
 const initialValues = {
   userSearch: "",
@@ -19,25 +44,52 @@ const onSubmit = (values, { resetForm }) => {
 function FilterCharacters() {
   const formik = useFormik({ initialValues, onSubmit });
 
+  const filterCharactersOptions = Object.values(formik.values);
+
   const charactersDispatch = useCharactersDispatch();
 
   const pageId = usePageId();
 
-  function filterCharacters(page) {
-    const controller = new AbortController();
-    const signal = controller.signal;
+  const { status, species, gender } = formik.values;
 
+  function charactersStatusFilter(data, page, items, formik) {
+    let charactersData = [];
+
+    formik.values.status.forEach((status) => {
+      const matchedCharactersList = data[page][items].filter((character) => {
+        return character.status.toLowerCase() === status.toLowerCase();
+      });
+
+      charactersData.push(matchedCharactersList);
+    });
+
+    charactersData = charactersData.flat();
+
+    return charactersData;
+  }
+
+  function charactersSpeciesFilter(data, page, items, formik) {
+    const charactersData = data[page][items].filter(
+      (character) =>
+        character.species.toLowerCase() === formik.values.species.toLowerCase()
+    );
+
+    return charactersData;
+  }
+
+  function charactersGenderFilter(data, page, items, formik) {
+    const charactersData = data[page][items].filter(
+      (character) =>
+        character.gender.toLowerCase() === formik.values.gender.toLowerCase()
+    );
+
+    return charactersData;
+  }
+
+  function getCharactersPaginationLogic(page, signal, callback) {
     getCharactersPagination({ signal })
       .then(({ data }) => {
-        const charactersData = data[page].characters.filter((character) =>
-          character.name
-            .toLowerCase()
-            .includes(formik.values.userSearch.toLowerCase())
-        );
-
-        if (charactersData.length === 0) {
-          toast.error("Your Character Not Found 🧐");
-        }
+        const charactersData = callback(data, page, "characters", formik);
 
         charactersDispatch({
           type: "CHARACTERS_SUCCESS",
@@ -45,121 +97,41 @@ function FilterCharacters() {
         });
       })
       .catch((err) => console.log(err));
+  }
 
-    if (formik.values.status.length) {
-      getCharactersPagination()
-        .then(({ data }) => {
-          let charactersData = [];
+  function filterCharacters(page, signal) {
+    getCharactersPaginationLogic(page, signal, itemsSearch);
 
-          formik.values.status.forEach((status) => {
-            const matchedCharactersList = data[page].characters.filter(
-              (character) => {
-                return character.status.toLowerCase() === status.toLowerCase();
-              }
-            );
+    if (status.length)
+      getCharactersPaginationLogic(page, signal, charactersStatusFilter);
 
-            charactersData.push(matchedCharactersList);
-          });
+    if (species !== "")
+      getCharactersPaginationLogic(page, signal, charactersSpeciesFilter);
 
-          charactersData = charactersData.flat();
+    if (gender !== "")
+      getCharactersPaginationLogic(page, signal, charactersGenderFilter);
+  }
 
-          charactersDispatch({
-            type: "CHARACTERS_SUCCESS",
-            payload: charactersData,
-          });
-        })
-        .catch((err) => console.log(err));
-    }
+  useEffect(() => {
+    const controller = new AbortController();
+    const signal = controller.signal;
 
-    if (formik.values.species !== "") {
-      getCharactersPagination()
-        .then(({ data }) => {
-          const charactersData = data[page].characters.filter(
-            (character) =>
-              character.species.toLowerCase() ===
-              formik.values.species.toLowerCase()
-          );
-
-          charactersDispatch({
-            type: "CHARACTERS_SUCCESS",
-            payload: charactersData,
-          });
-        })
-        .catch((err) => console.log(err));
-    }
-
-    if (formik.values.gender !== "") {
-      getCharactersPagination()
-        .then(({ data }) => {
-          const charactersData = data[page].characters.filter(
-            (character) =>
-              character.gender.toLowerCase() ===
-              formik.values.gender.toLowerCase()
-          );
-
-          charactersDispatch({
-            type: "CHARACTERS_SUCCESS",
-            payload: charactersData,
-          });
-        })
-        .catch((err) => console.log(err));
-    }
+    pagesDataSwitcher(pageId, filterCharacters, signal);
 
     return () => {
       controller.abort();
     };
-  }
-
-  useEffect(() => {
-    switch (pageId) {
-      case 1:
-        filterCharacters("pageOne");
-        break;
-
-      case 2:
-        filterCharacters("pageTwo");
-        break;
-
-      case 3:
-        filterCharacters("pageThree");
-        break;
-
-      default:
-        return;
-    }
   }, [formik.values, pageId]);
-
-  const { gender, species, status, userSearch } = formik.values;
 
   return (
     <div className="mb-8">
       <div>
-        <div className="mb-2">
-          <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-300">
-            Filter of Characters :
-          </h2>
-        </div>
+        <FilterTitle title="Characters" />
         <form
           onSubmit={formik.handleSubmit}
           className="rounded-xl bg-slate-200 p-5 dark:bg-slate-700"
         >
-          <div className="mb-5">
-            <div className="mb-2">
-              <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-300">
-                Search:
-              </h3>
-            </div>
-            <div className="w-full">
-              <input
-                className="block w-full rounded-xl bg-slate-300 text-base text-slate-800 placeholder:text-slate-800 dark:bg-slate-500 dark:text-slate-200  dark:placeholder:text-slate-400"
-                type="text"
-                name="userSearch"
-                value={formik.values.userSearch}
-                onChange={formik.handleChange}
-                placeholder="Search Characters..."
-              />
-            </div>
-          </div>
+          <SearchBox formik={formik} placeholder="Search Characters..." />
           <div className="mb-5">
             <div className="mb-2">
               <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-300">
@@ -167,57 +139,17 @@ function FilterCharacters() {
               </h3>
             </div>
             <div className="flex flex-col">
-              <div className="mb-3 flex items-center">
-                <input
-                  type="checkbox"
-                  name="status"
-                  value="alive"
-                  onChange={formik.handleChange}
-                  checked={formik.values["status"].includes("alive")}
-                  id="Alive"
-                  className="cursor-pointer rounded"
-                />
-                <label
-                  className="ml-2 cursor-pointer text-slate-900 dark:text-slate-300"
-                  htmlFor="Alive"
-                >
-                  Alive
-                </label>
-              </div>
-              <div className="mb-3 flex items-center">
-                <input
-                  type="checkbox"
-                  name="status"
-                  value="dead"
-                  onChange={formik.handleChange}
-                  checked={formik.values["status"].includes("dead")}
-                  id="Dead"
-                  className="cursor-pointer rounded"
-                />
-                <label
-                  className="ml-2 cursor-pointer text-slate-900 dark:text-slate-300"
-                  htmlFor="Dead"
-                >
-                  Dead
-                </label>
-              </div>
-              <div className="flex items-center">
-                <input
-                  type="checkbox"
-                  name="status"
-                  value="unknown"
-                  onChange={formik.handleChange}
-                  checked={formik.values["status"].includes("unknown")}
-                  id="Unknown"
-                  className="cursor-pointer rounded"
-                />
-                <label
-                  className="ml-2 cursor-pointer text-slate-900 dark:text-slate-300"
-                  htmlFor="Unknown"
-                >
-                  Unknown
-                </label>
-              </div>
+              {statusOptions.map(({ id, value, label }) => {
+                return (
+                  <CheckBox
+                    key={id}
+                    formik={formik}
+                    name="status"
+                    value={value}
+                    label={label}
+                  />
+                );
+              })}
             </div>
           </div>
           <div className="mb-5">
@@ -227,40 +159,17 @@ function FilterCharacters() {
               </h3>
             </div>
             <div className="flex w-full">
-              <div className="flex items-center">
-                <input
-                  type="radio"
-                  name="species"
-                  value="human"
-                  onChange={formik.handleChange}
-                  checked={formik.values["species"] === "human"}
-                  id="Human"
-                  className="cursor-pointer"
-                />
-                <label
-                  className="ml-2 cursor-pointer text-slate-900 dark:text-slate-300"
-                  htmlFor="Human"
-                >
-                  Human
-                </label>
-              </div>
-              <div className="ml-3 flex items-center">
-                <input
-                  type="radio"
-                  name="species"
-                  value="alien"
-                  onChange={formik.handleChange}
-                  checked={formik.values["species"] === "alien"}
-                  id="Alien"
-                  className="cursor-pointer"
-                />
-                <label
-                  className="ml-2 cursor-pointer text-slate-900 dark:text-slate-300"
-                  htmlFor="Alien"
-                >
-                  Alien
-                </label>
-              </div>
+              {speciesOptions.map(({ id, value, label }) => {
+                return (
+                  <RadioButton
+                    key={id}
+                    value={value}
+                    label={label}
+                    name="species"
+                    formik={formik}
+                  />
+                );
+              })}
             </div>
           </div>
           <div className="mb-6">
@@ -269,31 +178,13 @@ function FilterCharacters() {
                 Gender:
               </h3>
             </div>
-            <div className="w-full">
-              <select
-                name="gender"
-                value={formik.values.gender}
-                onChange={formik.handleChange}
-                className="w-full cursor-pointer rounded-xl bg-slate-300 text-base text-slate-800 dark:bg-slate-600 dark:text-slate-200"
-              >
-                <option value="">Select Gender:</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="unknown">Unknown</option>
-              </select>
-            </div>
+            <SelectOption
+              optionsList={genderOptions}
+              formik={formik}
+              name="gender"
+            />
           </div>
-          <div>
-            <button
-              className="block w-full cursor-pointer appearance-none rounded-xl border-none bg-red-600 px-4 py-3 text-center text-slate-800 outline-none transition-all duration-300 ease-in-out hover:-translate-y-0.5 active:translate-y-0 active:shadow-none disabled:bg-gray-400 dark:text-slate-200 dark:disabled:bg-gray-600"
-              type="submit"
-              disabled={
-                gender || species || status.length || userSearch ? false : true
-              }
-            >
-              Reset
-            </button>
-          </div>
+          <ResetButton filterOptions={filterCharactersOptions} />
         </form>
       </div>
     </div>

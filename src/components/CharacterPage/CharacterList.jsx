@@ -158,6 +158,8 @@ function CharacterList() {
     );
   }
 
+  // console.log(characters);
+
   return (
     <div className="mb-8">
       {/* Title of List : */}
