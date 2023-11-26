@@ -6,7 +6,7 @@ import { useCharactersDispatch } from "./../../context/CharacterPage/CharactersC
 
 function useFetchCharactersPagination() {
   const charactersDispatch = useCharactersDispatch();
-  const setPageId = usePageIdDispatch();
+  const { setPageId } = usePageIdDispatch();
   const pageId = usePageId();
 
   useEffect(() => {

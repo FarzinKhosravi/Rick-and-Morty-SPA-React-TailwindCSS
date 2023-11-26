@@ -19,4 +19,21 @@ function PageIdProvider({ children }) {
 export default PageIdProvider;
 
 export const usePageId = () => useContext(PageIdContext);
-export const usePageIdDispatch = () => useContext(PageIdDispatcherContext);
+export const usePageIdDispatch = () => {
+  const pageId = useContext(PageIdContext);
+  const setPageId = useContext(PageIdDispatcherContext);
+
+  const nextPageHandler = () => {
+    if (pageId === 3) return;
+
+    setPageId((prevPageId) => prevPageId + 1);
+  };
+
+  const previousPageHandler = () => {
+    if (pageId === 1) return;
+
+    setPageId((prevPageId) => prevPageId - 1);
+  };
+
+  return { nextPageHandler, previousPageHandler, setPageId };
+};

@@ -6,7 +6,7 @@ import { useEpisodesDispatch } from "./../../context/EpisodePage/EpisodesContext
 
 function useFetchEpisodesPagination() {
   const setEpisodes = useEpisodesDispatch();
-  const setPageId = usePageIdDispatch();
+  const { setPageId } = usePageIdDispatch();
   const pageId = usePageId();
 
   useEffect(() => {

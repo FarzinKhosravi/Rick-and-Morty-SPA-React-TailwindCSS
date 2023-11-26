@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 
 function useFetchLocationsPagination() {
   const setLocations = useLocationsDispatch();
-  const setPageId = usePageIdDispatch();
+  const { setPageId } = usePageIdDispatch();
   const pageId = usePageId();
 
   useEffect(() => {
