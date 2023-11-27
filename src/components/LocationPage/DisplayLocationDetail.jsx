@@ -7,46 +7,20 @@ import useFetchLocationsPagination from "./../../hooks/LocationPage/useFetchLoca
 import { useEffect } from "react";
 import { LocationDetail, ResidentsList } from "./LocationList";
 import { useLocations } from "../../context/LocationPage/LocationsContext";
-import getAllCharacters from "./../../services/CharacterPage/getAllCharactersService";
-import { useCharactersDispatch } from "./../../context/CharacterPage/CharactersContext";
+import useFetchResidentsList from "./../../hooks/LocationPage/useFetchResidentsList";
 
 function DisplayLocationDetail() {
   const { locationId } = useParams();
   const { pathname } = useLocation();
-
-  // console.log("path:", pathname);
-
   const setLocationDetail = useLocationDetailDispatch();
-  const charactersDispatch = useCharactersDispatch();
   const locations = useLocations();
   const locationDetail = useLocationDetail();
 
   useFetchLocationsPagination();
 
+  const fetchResidentsData = useFetchResidentsList();
+
   useEffect(() => {
-    async function fetchResidentsData(selectedLocation) {
-      const { data } = await getAllCharacters();
-
-      const residentsIdList = selectedLocation.residents.map((resident) => {
-        return resident.split("/").at(-1);
-      });
-
-      let residentsData = [];
-
-      residentsIdList.forEach((id) => {
-        const selectedResident = data.find(
-          (resident) => String(resident.id) === id
-        );
-
-        residentsData.push(selectedResident);
-      });
-
-      charactersDispatch({
-        type: "CHARACTERS_SUCCESS",
-        payload: residentsData,
-      });
-    }
-
     const selectedLocation = locations.find(
       (location) => location.id === Number(locationId)
     );

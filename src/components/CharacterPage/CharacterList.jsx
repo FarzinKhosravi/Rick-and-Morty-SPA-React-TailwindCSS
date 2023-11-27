@@ -2,55 +2,42 @@ import { useState } from "react";
 import {
   ChevronDownIcon,
   ArrowUpCircleIcon,
-  ArrowSmallRightIcon,
 } from "@heroicons/react/24/outline";
 import {
   useEpisodes,
-  useEpisodesDispatch,
+  // useEpisodesDispatch,
 } from "./../../context/EpisodePage/EpisodesContext";
+import {
+  useCharacterDetail,
+  useCharacterDetailDispatch,
+} from "./../../context/CharacterPage/CharacterDetailContext";
 import Loader from "../Loader";
-import getAllEpisodes from "../../services/EpisodePage/getAllEpisodesService";
+// import getAllEpisodes from "../../services/EpisodePage/getAllEpisodesService";
 import { Link, useLocation } from "react-router-dom";
 import useSortEpisodes from "./../../hooks/EpisodePage/useSortEpisodes";
 import useFetchCharactersPagination from "./../../hooks/CharacterPage/useFetchCharactersPagination";
 import { useFavorites } from "../../context/CharacterPage/FavoritesContext";
 import { useFavoritesDispatch } from "./../../context/CharacterPage/FavoritesContext";
 import { useCharacters } from "../../context/CharacterPage/CharactersContext";
-import {
-  useCharacterDetail,
-  useCharacterDetailDispatch,
-} from "./../../context/CharacterPage/CharacterDetailContext";
+import ListTitle from "../../common/ListTitle";
+import Nothing from "./../../common/Nothing";
+import AccordionItems from "../../common/AccordionItems";
+import GridItems from "../../common/GridItems";
+import BackButton from "../../common/BackButton";
+import useFetchEpisodesList from "./../../hooks/EpisodePage/useFetchEpisodesList";
 
 function CharacterList() {
   const [characterId, setCharacterId] = useState(null);
   const setCharacterDetail = useCharacterDetailDispatch();
-  const setEpisodes = useEpisodesDispatch();
+  // const setEpisodes = useEpisodesDispatch();
   const { loading, characters } = useCharacters();
   const { pathname } = useLocation();
 
   useFetchCharactersPagination();
 
+  const fetchEpisodesData = useFetchEpisodesList();
+
   const showCharacterDataHandler = (id) => {
-    async function fetchEpisodesData(selectedCharacter) {
-      const { data } = await getAllEpisodes();
-
-      const episodesIdList = selectedCharacter.episode.map((episode) => {
-        return episode.split("/").at(-1);
-      });
-
-      let episodesData = [];
-
-      episodesIdList.forEach((id) => {
-        const selectedEpisode = data.find(
-          (episode) => String(episode.id) === id
-        );
-
-        episodesData.push(selectedEpisode);
-      });
-
-      setEpisodes(episodesData);
-    }
-
     const selectedCharacter = characters.find(
       (character) => character.id === id
     );
@@ -62,129 +49,65 @@ function CharacterList() {
     setCharacterId(characterId === id ? null : id);
   };
 
-  function renderCharactersInMobile() {
-    return loading ? (
-      <Loader />
-    ) : !characters.length ? (
-      <div className="flex flex-col items-center justify-center">
-        <div className="w-24 translate-x-16 translate-y-0 -rotate-45">
-          <span className="block text-2xl font-black text-slate-800 dark:text-yellow-400">
-            Haaa...
-          </span>
-        </div>
-        <div className="max-w-72">
-          <img
-            className="block w-full"
-            src="../../../public/00.png"
-            alt="Not Found"
-          />
-        </div>
-        <div className="w-20 -translate-x-16 -translate-y-8 -rotate-45">
-          <span className="block text-2xl font-black text-slate-800 dark:text-yellow-400">
-            Nooo
-          </span>
-        </div>
-      </div>
-    ) : (
-      characters.map((character) => {
-        return (
-          <div className="mb-4 last:mb-0" key={character.id}>
-            <Character character={character} characterId={characterId}>
-              <ChevronDownIcon
-                onClick={() => showCharacterDataHandler(character.id)}
-                className={`h-5 w-5 text-red-600 transition-all duration-300 ${
-                  characterId === character.id ? "rotate-180" : ""
-                }`}
-              />
-            </Character>
-            <div
-              className={`rounded-b-xl bg-slate-200 px-3 dark:bg-slate-800 md:hidden ${
-                character.id === characterId
-                  ? "min-h-screen py-4 opacity-100 transition-all"
-                  : "max-h-0 overflow-hidden opacity-0 transition-all duration-300"
+  function renderAccordionCharacters() {
+    if (loading) return <Loader />;
+    if (!characters.length) return <Nothing />;
+
+    return characters.map((character) => {
+      return (
+        <div className="mb-4 last:mb-0" key={character.id}>
+          <Character character={character} characterId={characterId}>
+            <ChevronDownIcon
+              onClick={() => showCharacterDataHandler(character.id)}
+              className={`h-5 w-5 text-red-600 transition-all duration-300 ${
+                characterId === character.id ? "rotate-180" : ""
               }`}
-            >
-              <CharacterDetail pathname={pathname} characterId={characterId} />
-              <EpisodesList pathname={pathname} />
-            </div>
-          </div>
-        );
-      })
-    );
-  }
-
-  function renderCharactersInWeb() {
-    return loading ? (
-      <Loader />
-    ) : !characters.length ? (
-      <div className="flex flex-col items-center justify-center">
-        <div className="w-28 translate-x-8 translate-y-0 -rotate-45">
-          <span className="block text-3xl font-black text-slate-800 dark:text-yellow-400">
-            Haaa...
-          </span>
-        </div>
-        <div className="max-w-100">
-          <img
-            className="block w-full"
-            src="../../../public/00.png"
-            alt="Not Found"
-          />
-        </div>
-        <div className="w-24 -translate-x-16 -translate-y-12 -rotate-45">
-          <span className="block text-3xl font-black text-slate-800 dark:text-yellow-400">
-            Nooo
-          </span>
-        </div>
-      </div>
-    ) : (
-      characters.map((character) => {
-        return (
-          <Link
-            to={`/characters/${character.id}`}
-            key={character.id}
-            className="mb-4"
+            />
+          </Character>
+          <div
+            className={`rounded-b-xl bg-slate-200 px-3 dark:bg-slate-800 md:hidden ${
+              character.id === characterId
+                ? "min-h-screen py-4 opacity-100 transition-all"
+                : "max-h-0 overflow-hidden opacity-0 transition-all duration-300"
+            }`}
           >
-            <Character character={character}>
-              <ChevronDownIcon
-                onClick={() => showCharacterDataHandler(character.id)}
-                className={`h-5 w-5 text-red-600 transition-all duration-300 md:hidden ${
-                  characterId === character.id ? "rotate-180" : ""
-                }`}
-              />
-            </Character>
-          </Link>
-        );
-      })
-    );
+            <CharacterDetail pathname={pathname} characterId={characterId} />
+            <EpisodesList pathname={pathname} />
+          </div>
+        </div>
+      );
+    });
   }
 
-  // console.log(characters);
+  function renderGridCharacters() {
+    if (loading) return <Loader />;
+    if (!characters.length) return <Nothing />;
+
+    return characters.map((character) => {
+      return (
+        <Link
+          to={`/characters/${character.id}`}
+          key={character.id}
+          className="mb-4"
+        >
+          <Character character={character}>
+            <ChevronDownIcon
+              onClick={() => showCharacterDataHandler(character.id)}
+              className={`h-5 w-5 text-red-600 transition-all duration-300 md:hidden ${
+                characterId === character.id ? "rotate-180" : ""
+              }`}
+            />
+          </Character>
+        </Link>
+      );
+    });
+  }
 
   return (
     <div className="mb-8">
-      {/* Title of List : */}
-      <div className="flex">
-        <h2 className="mb-4 text-xl font-semibold text-slate-900 dark:text-slate-300 md:mb-6">
-          List of Characters :
-        </h2>
-        <div className="-mt-4 ml-3 flex items-center justify-center sm:hidden">
-          <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-slate-400 text-xs text-slate-900 dark:bg-slate-700 dark:text-white">
-            {characters.length}
-          </span>
-        </div>
-      </div>
-      {/* Container of Accordions (Characters/Mobile) */}
-      <div className="block md:hidden">{renderCharactersInMobile()}</div>
-      {/* Container of Grid Items (Characters/Web) */}
-      <div
-        className={`container mx-auto hidden grid-cols-2 gap-x-8 gap-y-6 xl:grid-cols-3 2xl:grid-cols-4 ${
-          !characters.length
-            ? "md:flex md:items-center md:justify-center"
-            : "md:grid"
-        }`}
-      >
-        {renderCharactersInWeb()}
-      </div>
+      <ListTitle title="Characters" items={characters} />
+      <AccordionItems renderMobileItems={renderAccordionCharacters} />
+      <GridItems items={characters} renderWebItems={renderGridCharacters} />
     </div>
   );
 }
@@ -255,11 +178,18 @@ export function CharacterDetail({ pathname, characterId }) {
   if (!characterDetail) return;
 
   function favoriteLogic() {
-    return favorites.find((favorite) => favorite.id === characterDetail.id) ? (
-      <div className="text-sm font-semibold text-slate-900 dark:text-slate-300">
-        Already Added To Favorites 😎
-      </div>
-    ) : (
+    const foundFavoriteCharacter = favorites.find(
+      (favorite) => favorite.id === characterDetail.id
+    );
+
+    if (foundFavoriteCharacter)
+      return (
+        <div className="text-sm font-semibold text-slate-900 dark:text-slate-300">
+          Already Added To Favorites 😎
+        </div>
+      );
+
+    return (
       <button
         onClick={() => addFavoriteCharacter(characters, Number(characterId))}
         className="inline-flex cursor-pointer items-center justify-center rounded-3xl bg-white px-3 py-2 text-sm font-medium text-slate-900 transition-all duration-200 hover:bg-slate-700 dark:bg-slate-500 dark:text-slate-100 md:px-4 md:text-base md:font-semibold"
@@ -275,15 +205,11 @@ export function CharacterDetail({ pathname, characterId }) {
         <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-300">
           Character Detail :
         </h2>
-        <div
-          className={`mr-1 h-7 w-7 items-center justify-center rounded-full bg-slate-300 dark:bg-slate-200 ${
-            pathname === `/characters/${characterDetail.id}` ? "flex" : "hidden"
-          }`}
-        >
-          <Link to="/characters/?type=characters">
-            <ArrowSmallRightIcon className="h-5 w-5 text-red-600" />
-          </Link>
-        </div>
+        <BackButton
+          pathname={pathname}
+          path="characters"
+          itemDetail={characterDetail}
+        />
       </div>
 
       <div
@@ -375,7 +301,6 @@ export function CharacterDetail({ pathname, characterId }) {
 
 export function EpisodesList({ pathname }) {
   const episodes = useEpisodes();
-
   const characterDetail = useCharacterDetail();
   const { sortType, sortDateHandler } = useSortEpisodes();
 
@@ -416,7 +341,7 @@ export function EpisodesList({ pathname }) {
 export function Episode({ episode, index }) {
   return (
     <div className="mb-8 flex justify-between">
-      <div className="">
+      <div>
         <span className="mb-3 block w-full font-normal text-slate-900 dark:text-slate-300">
           {String(index + 1).padStart(2, "0")} - {episode.episode} :
           <span className="font-bold">{episode.name}</span>

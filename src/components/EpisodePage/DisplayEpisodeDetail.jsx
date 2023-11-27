@@ -6,41 +6,21 @@ import {
 } from "../../context/EpisodePage/EpisodeDetailContext";
 import { useEffect } from "react";
 import { ActorsList, EpisodeDetail } from "./EpisodeList";
-import getAllCharacters from "./../../services/CharacterPage/getAllCharactersService";
 import { useEpisodes } from "../../context/EpisodePage/EpisodesContext";
-import { useCharactersDispatch } from "./../../context/CharacterPage/CharactersContext";
+import useFetchActorsList from "./../../hooks/EpisodePage/useFetchActorsList";
 
 function DisplayEpisodeDetail() {
   const { episodeId } = useParams();
   const { pathname } = useLocation();
   const setEpisodeDetail = useEpisodeDetailDispatch();
-  const charactersDispatch = useCharactersDispatch();
-
   const episodes = useEpisodes();
-
   const episodeDetail = useEpisodeDetail();
 
   useFetchEpisodesPagination();
 
+  const fetchActorsData = useFetchActorsList();
+
   useEffect(() => {
-    async function fetchActorsData(selectedEpisode) {
-      const { data } = await getAllCharacters();
-
-      const actorsIdList = selectedEpisode.characters.map((actor) => {
-        return actor.split("/").at(-1);
-      });
-
-      let actorsData = [];
-
-      actorsIdList.forEach((id) => {
-        const selectedActor = data.find((actor) => String(actor.id) === id);
-
-        actorsData.push(selectedActor);
-      });
-
-      charactersDispatch({ type: "CHARACTERS_SUCCESS", payload: actorsData });
-    }
-
     const selectedEpisode = episodes.find(
       (episode) => episode.id === Number(episodeId)
     );

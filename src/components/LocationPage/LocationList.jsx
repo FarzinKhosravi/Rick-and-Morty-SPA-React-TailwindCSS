@@ -6,50 +6,26 @@ import {
 } from "./../../context/LocationPage/LocationDetailContext";
 import { useState } from "react";
 import useFetchLocationsPagination from "./../../hooks/LocationPage/useFetchLocationsPagination";
-import {
-  ArrowSmallRightIcon,
-  ChevronDownIcon,
-} from "@heroicons/react/24/outline";
-import getAllCharacters from "./../../services/CharacterPage/getAllCharactersService";
-import {
-  useCharacters,
-  useCharactersDispatch,
-} from "./../../context/CharacterPage/CharactersContext";
+import { useCharacters } from "./../../context/CharacterPage/CharactersContext";
+import { ChevronDownIcon } from "@heroicons/react/24/outline";
+import ListTitle from "../../common/ListTitle";
+import Nothing from "../../common/Nothing";
+import AccordionItems from "../../common/AccordionItems";
+import GridItems from "../../common/GridItems";
+import BackButton from "../../common/BackButton";
+import useFetchResidentsList from "./../../hooks/LocationPage/useFetchResidentsList";
 
 function LocationList() {
   const [locationId, setLocationId] = useState(null);
   const setLocationDetail = useLocationDetailDispatch();
-  const charactersDispatch = useCharactersDispatch();
   const locations = useLocations();
-
   const { pathname } = useLocation();
 
   useFetchLocationsPagination();
 
+  const fetchResidentsData = useFetchResidentsList();
+
   const showLocationDataHandler = (id) => {
-    async function fetchResidentsData(selectedLocation) {
-      const { data } = await getAllCharacters();
-
-      const residentsIdList = selectedLocation.residents.map((resident) => {
-        return resident.split("/").at(-1);
-      });
-
-      let residentsData = [];
-
-      residentsIdList.forEach((id) => {
-        const selectedResident = data.find(
-          (resident) => String(resident.id) === id
-        );
-
-        residentsData.push(selectedResident);
-      });
-
-      charactersDispatch({
-        type: "CHARACTERS_SUCCESS",
-        payload: residentsData,
-      });
-    }
-
     const selectedLocation = locations.find((location) => location.id === id);
 
     fetchResidentsData(selectedLocation);
@@ -59,113 +35,53 @@ function LocationList() {
     setLocationId(locationId === id ? null : id);
   };
 
-  function renderLocationsInMobile() {
-    return !locations.length ? (
-      <div className="flex flex-col items-center justify-center">
-        <div className="w-24 translate-x-16 translate-y-0 -rotate-45">
-          <span className="block text-2xl font-black text-slate-800 dark:text-yellow-400">
-            Haaa...
-          </span>
-        </div>
-        <div className="max-w-72">
-          <img
-            className="block w-full"
-            src="../../../public/00.png"
-            alt="Not Found"
+  function renderAccordionLocations() {
+    if (!locations.length) return <Nothing />;
+
+    return locations.map((location) => {
+      return (
+        <div className="mb-4 last:mb-0" key={location.id}>
+          <Location
+            location={location}
+            locationId={locationId}
+            onShowLocationData={showLocationDataHandler}
           />
-        </div>
-        <div className="w-20 -translate-x-16 -translate-y-8 -rotate-45">
-          <span className="block text-2xl font-black text-slate-800 dark:text-yellow-400">
-            Nooo
-          </span>
-        </div>
-      </div>
-    ) : (
-      locations.map((location) => {
-        return (
-          <div className="mb-4 last:mb-0" key={location.id}>
-            <Location
-              location={location}
-              locationId={locationId}
-              onShowLocationData={showLocationDataHandler}
-            />
-            <div
-              className={`rounded-b-xl bg-slate-200 px-3 dark:bg-slate-800 md:hidden ${
-                location.id === locationId
-                  ? "min-h-screen py-4 opacity-100 transition-all"
-                  : "max-h-0 overflow-hidden opacity-0 transition-all duration-300"
-              }`}
-            >
-              <LocationDetail pathname={pathname} />
-              <ResidentsList />
-            </div>
+          <div
+            className={`rounded-b-xl bg-slate-200 px-3 dark:bg-slate-800 md:hidden ${
+              location.id === locationId
+                ? "min-h-screen py-4 opacity-100 transition-all"
+                : "max-h-0 overflow-hidden opacity-0 transition-all duration-300"
+            }`}
+          >
+            <LocationDetail pathname={pathname} />
+            <ResidentsList />
           </div>
-        );
-      })
-    );
+        </div>
+      );
+    });
   }
 
-  function renderLocationsInWeb() {
-    return !locations.length ? (
-      <div className="flex flex-col items-center justify-center">
-        <div className="w-28 translate-x-8 translate-y-0 -rotate-45">
-          <span className="block text-3xl font-black text-slate-800 dark:text-yellow-400">
-            Haaa...
-          </span>
-        </div>
-        <div className="max-w-100">
-          <img
-            className="block w-full"
-            src="../../../public/00.png"
-            alt="Not Found"
-          />
-        </div>
-        <div className="w-24 -translate-x-16 -translate-y-12 -rotate-45">
-          <span className="block text-3xl font-black text-slate-800 dark:text-yellow-400">
-            Nooo
-          </span>
-        </div>
-      </div>
-    ) : (
-      locations.map((location) => {
-        return (
-          <Link
-            to={`/locations/${location.id}`}
-            key={location.id}
-            className="mb-4"
-          >
-            <Location location={location} />
-          </Link>
-        );
-      })
-    );
+  function renderGridLocations() {
+    if (!locations.length) return <Nothing />;
+
+    return locations.map((location) => {
+      return (
+        <Link
+          to={`/locations/${location.id}`}
+          key={location.id}
+          className="mb-4"
+        >
+          <Location location={location} />
+        </Link>
+      );
+    });
   }
 
   return (
     <div className="mb-8">
-      {/* Title of List : */}
-      <div className="flex">
-        <h2 className="mb-4 text-xl font-semibold text-slate-900 dark:text-slate-300 md:mb-6">
-          List of Locations :
-        </h2>
-        <div className="-mt-4 ml-3 flex items-center justify-center sm:hidden">
-          <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-slate-400 text-xs text-slate-900 dark:bg-slate-700 dark:text-white">
-            {locations.length}
-          </span>
-        </div>
-      </div>
-      {/* Container of Accordions (Episodes/Mobile) */}
-      <div className="block md:hidden">{renderLocationsInMobile()}</div>
-      {/* Container of Grid Items (Episodes/Web) */}
-      <div
-        className={`container mx-auto hidden grid-cols-2 gap-x-8 gap-y-6 xl:grid-cols-3 2xl:grid-cols-4 ${
-          !locations.length
-            ? "md:flex md:items-center md:justify-center"
-            : "md:grid"
-        }`}
-      >
-        {renderLocationsInWeb()}
-      </div>
+      <ListTitle title="Locations" items={locations} />
+      <AccordionItems renderMobileItems={renderAccordionLocations} />
+      <GridItems items={locations} renderWebItems={renderGridLocations} />
     </div>
   );
 }
@@ -180,16 +96,6 @@ function Location({ location, onShowLocationData, locationId = null }) {
       }`}
     >
       <div className="flex gap-x-4 md:w-full md:flex-col">
-        {/* *** Edit Section *** */}
-
-        {/* <div className="md:mb-6">
-            <img
-              className="block h-14 w-14 rounded-2xl md:h-72 md:w-full lg:h-60"
-              src={episode.image}
-              alt={episode.name}
-            />
-          </div> */}
-
         <div className="flex flex-col justify-between md:flex-row md:pb-2">
           <div className="mb-1">
             <span className="text-base font-medium text-slate-900 dark:text-slate-300">
@@ -226,15 +132,11 @@ export function LocationDetail({ pathname }) {
         <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-300">
           Location Detail :
         </h2>
-        <div
-          className={`mr-1 h-7 w-7 items-center justify-center rounded-full bg-slate-300 dark:bg-slate-200 ${
-            pathname === `/locations/${locationDetail.id}` ? "flex" : "hidden"
-          }`}
-        >
-          <Link to="/locations/?type=locations">
-            <ArrowSmallRightIcon className="h-5 w-5 text-red-600" />
-          </Link>
-        </div>
+        <BackButton
+          pathname={pathname}
+          path="locations"
+          itemDetail={locationDetail}
+        />
       </div>
 
       <div
