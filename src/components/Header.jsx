@@ -86,7 +86,7 @@ function Header() {
   };
 
   return (
-    <header className="relative mb-8 p-4">
+    <header className="relative mx-auto mb-8 p-4 2xl:max-w-screen-2xl">
       <nav
         className={`relative flex flex-wrap gap-x-6 rounded-xl bg-slate-200 px-3 py-4 dark:bg-slate-700 ${
           isOpenMenu ? "rounded-b-none" : ""
@@ -153,7 +153,7 @@ function PagesDetail() {
 
   return (
     <div className="mr-2 hidden sm:block lg:mr-4">
-      <span className="text-base font-normal text-slate-900 dark:text-slate-400">
+      <span className="text-sm font-normal text-slate-900 dark:text-slate-400 lg:text-base">
         <span>{`${
           pathname === "/" || pathname === notFound ? "" : "Found "
         }`}</span>
@@ -211,14 +211,14 @@ function HamburgerMenu({ isOpenMenu, setIsOpenMenu }) {
             <div className="flex py-3">
               <div>
                 <HomeIcon
-                  className={`h-5 w-5 ${
+                  className={`h-5 w-5 sm:h-6 sm:w-6 ${
                     isActive
                       ? "text-rose-500"
                       : "text-slate-900 dark:text-slate-300"
                   }`}
                 />
               </div>
-              <div className="ml-1 text-base font-medium text-slate-900 dark:text-slate-200">
+              <div className="ml-1 text-base font-medium text-slate-900 dark:text-slate-200 sm:text-lg">
                 <span
                   className={
                     isActive ? "text-yellow-500 dark:text-yellow-300" : ""
@@ -240,14 +240,14 @@ function HamburgerMenu({ isOpenMenu, setIsOpenMenu }) {
             <div className="flex py-3">
               <div>
                 <UsersIcon
-                  className={`h-5 w-5 ${
+                  className={`h-5 w-5 sm:h-6 sm:w-6 ${
                     isActive
                       ? "text-rose-500"
                       : "text-slate-900 dark:text-slate-300"
                   }`}
                 />
               </div>
-              <div className="ml-1 text-base font-medium text-slate-900 dark:text-slate-200">
+              <div className="ml-1 text-base font-medium text-slate-900 dark:text-slate-200 sm:text-lg">
                 <span
                   className={
                     isActive ? "text-yellow-500 dark:text-yellow-300" : ""
@@ -269,14 +269,14 @@ function HamburgerMenu({ isOpenMenu, setIsOpenMenu }) {
             <div className="flex py-3">
               <div>
                 <FilmIcon
-                  className={`h-5 w-5 ${
+                  className={`h-5 w-5 sm:h-6 sm:w-6 ${
                     isActive
                       ? "text-rose-500"
                       : "text-slate-900 dark:text-slate-300"
                   }`}
                 />
               </div>
-              <div className="ml-1 text-base font-medium text-slate-900 dark:text-slate-200">
+              <div className="ml-1 text-base font-medium text-slate-900 dark:text-slate-200 sm:text-lg">
                 <span
                   className={
                     isActive ? "text-yellow-500 dark:text-yellow-300" : ""
@@ -298,14 +298,14 @@ function HamburgerMenu({ isOpenMenu, setIsOpenMenu }) {
             <div className="flex py-3">
               <div>
                 <MapIcon
-                  className={`h-5 w-5 ${
+                  className={`h-5 w-5 sm:h-6 sm:w-6 ${
                     isActive
                       ? "text-rose-500"
                       : "text-slate-900 dark:text-slate-300"
                   }`}
                 />
               </div>
-              <div className="ml-1 text-base font-medium text-slate-900 dark:text-slate-200">
+              <div className="ml-1 text-base font-medium text-slate-900 dark:text-slate-200 sm:text-lg">
                 <span
                   className={
                     isActive ? "text-yellow-500 dark:text-yellow-300" : ""
@@ -325,7 +325,7 @@ function HamburgerMenu({ isOpenMenu, setIsOpenMenu }) {
 function NavigationMenu() {
   return (
     <div className="mr-2 hidden md:block lg:mr-8">
-      <ul className="flex gap-x-1 lg:gap-x-4">
+      <ul className="flex gap-x-1 lg:gap-x-4 lg:text-lg">
         <li className="transition-all hover:rounded-md hover:bg-slate-900/30">
           <NavLink
             className={({ isActive }) =>

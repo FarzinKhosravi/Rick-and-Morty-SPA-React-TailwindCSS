@@ -8,7 +8,7 @@ function LocationPage() {
   const introduction = useFetchIntroductionData();
 
   return (
-    <section className="mb-8 min-h-screen px-4 md:mb-16">
+    <section className="mx-auto mb-8 min-h-screen px-4 md:mb-16 2xl:max-w-screen-2xl">
       <div className="flex flex-col">
         <Introduction introduction={introduction} />
         <FilterLocations />

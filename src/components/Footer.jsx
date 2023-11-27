@@ -3,7 +3,7 @@ import { BiLogoGithub, BiLogoTelegram, BiSolidHeart } from "react-icons/bi";
 function Footer() {
   return (
     <footer className="mt-auto bg-slate-200 dark:bg-slate-800">
-      <div className="mx-auto flex max-w-lg flex-col px-4 py-8">
+      <div className="mx-auto flex max-w-xl flex-col px-4 py-8">
         <div className="mb-8">
           <div className="mb-3 flex items-center justify-between">
             <span className="text-xs font-medium text-slate-900 dark:text-slate-300 sm:text-sm md:text-base md:font-semibold">

@@ -5,7 +5,7 @@ function SelectOption({ formik, name, optionsList }) {
         name={name}
         value={formik.values[name]}
         onChange={formik.handleChange}
-        className="w-full cursor-pointer rounded-xl bg-slate-300 text-base text-slate-800 dark:bg-slate-600 dark:text-slate-200"
+        className="w-full cursor-pointer rounded-xl bg-slate-300 text-base text-slate-800 dark:bg-slate-600 dark:text-slate-200 lg:text-lg"
       >
         {optionsList.map((option) => {
           return (

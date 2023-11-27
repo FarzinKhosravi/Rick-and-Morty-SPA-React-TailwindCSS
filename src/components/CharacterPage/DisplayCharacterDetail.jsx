@@ -31,7 +31,7 @@ function DisplayCharacterDetail() {
   if (!characterDetail) return;
 
   return (
-    <section className="mb-8 min-h-screen px-4 md:mb-16">
+    <section className="mx-auto mb-8 min-h-screen px-4 md:mb-16 md:max-w-screen-md">
       <div className="flex flex-col items-start">
         <div className="mb-8 flex w-full items-center justify-center text-slate-900 dark:text-slate-300">
           <h2 className="border-b-2 border-red-600 pb-0.25 text-2xl font-semibold">

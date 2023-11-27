@@ -98,12 +98,12 @@ function Location({ location, onShowLocationData, locationId = null }) {
       <div className="flex gap-x-4 md:w-full md:flex-col">
         <div className="flex flex-col justify-between md:flex-row md:pb-2">
           <div className="mb-1">
-            <span className="text-base font-medium text-slate-900 dark:text-slate-300">
+            <span className="text-base font-medium text-slate-900 dark:text-slate-300 lg:text-lg">
               {location.name}
             </span>
           </div>
           <div>
-            <span className="text-base font-normal text-slate-900 dark:text-slate-300">
+            <span className="text-base font-normal text-slate-900 dark:text-slate-300 lg:text-lg">
               {location.type}
             </span>
           </div>
@@ -129,7 +129,7 @@ export function LocationDetail({ pathname }) {
   return (
     <div className="mb-8 ">
       <div className="mb-4 flex items-center justify-between">
-        <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-300">
+        <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-300 lg:text-xl">
           Location Detail :
         </h2>
         <BackButton
@@ -221,7 +221,7 @@ export function ResidentsList({ pathname }) {
     >
       <div className="mb-6 flex md:mb-9">
         <div>
-          <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-300">
+          <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-300 lg:text-xl">
             List of Residents :
           </h2>
         </div>

@@ -75,7 +75,7 @@ function FilterEpisodes() {
 
   return (
     <div className="mb-8">
-      <div>
+      <div className="mx-auto md:max-w-screen-md">
         <FilterTitle title="Episodes" />
         <form
           onSubmit={formik.handleSubmit}
@@ -84,7 +84,7 @@ function FilterEpisodes() {
           <SearchBox formik={formik} placeholder="Search Episodes..." />
           <div className="mb-6">
             <div className="mb-2">
-              <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-300">
+              <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-300 lg:text-xl">
                 Season:
               </h3>
             </div>

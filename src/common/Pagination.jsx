@@ -15,7 +15,7 @@ function Pagination() {
 
   return (
     <div>
-      <div className="rounded-3xl bg-slate-400/50 p-3 dark:bg-slate-800/50">
+      <div className="mx-auto rounded-3xl bg-slate-400/50 p-3 dark:bg-slate-800/50 md:max-w-screen-md">
         <div className="flex items-center justify-between rounded-full bg-slate-100 p-4 dark:bg-slate-900">
           <PagesButton pageNumber="1" onPage={previousPageHandler}>
             <ChevronLeftIcon />

@@ -67,6 +67,11 @@ export default {
         100: "400px",
       },
 
+      fontSize: {
+        5.5: "22px",
+        8: "32px",
+      },
+
       screens: {
         xxs: "380px",
         xs: "620px",
@@ -86,8 +91,13 @@ export default {
         1.5: "6px",
       },
 
+      width: {
+        4.5: "18px",
+      },
+
       height: {
         0.75: "3px",
+        4.5: "18px",
       },
 
       rotate: {

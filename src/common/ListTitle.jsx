@@ -1,7 +1,9 @@
 function ListTitle({ title, items }) {
+  if (!items.length) return;
+
   return (
     <div className="flex">
-      <h2 className="mb-4 text-xl font-semibold text-slate-900 dark:text-slate-300 md:mb-6">
+      <h2 className="mb-4 text-lg font-semibold text-slate-900 dark:text-slate-300 md:mb-6 lg:text-xl">
         List of {title} :
       </h2>
       <div className="-mt-4 ml-3 flex items-center justify-center sm:hidden">

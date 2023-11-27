@@ -125,7 +125,7 @@ function FilterCharacters() {
 
   return (
     <div className="mb-8">
-      <div>
+      <div className="mx-auto md:max-w-screen-md">
         <FilterTitle title="Characters" />
         <form
           onSubmit={formik.handleSubmit}
@@ -134,7 +134,7 @@ function FilterCharacters() {
           <SearchBox formik={formik} placeholder="Search Characters..." />
           <div className="mb-5">
             <div className="mb-2">
-              <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-300">
+              <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-300 lg:text-xl">
                 Status:
               </h3>
             </div>
@@ -154,7 +154,7 @@ function FilterCharacters() {
           </div>
           <div className="mb-5">
             <div className="mb-2">
-              <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-300">
+              <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-300 lg:text-xl">
                 Species:
               </h3>
             </div>
@@ -174,7 +174,7 @@ function FilterCharacters() {
           </div>
           <div className="mb-6">
             <div className="mb-2">
-              <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-300">
+              <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-300 lg:text-lg">
                 Gender:
               </h3>
             </div>

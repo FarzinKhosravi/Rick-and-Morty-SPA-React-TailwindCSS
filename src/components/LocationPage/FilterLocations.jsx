@@ -108,7 +108,7 @@ function FilterLocations() {
 
   return (
     <div className="mb-8">
-      <div>
+      <div className="mx-auto md:max-w-screen-md">
         <FilterTitle title="Locations" />
         <form
           onSubmit={formik.handleSubmit}
@@ -117,7 +117,7 @@ function FilterLocations() {
           <SearchBox formik={formik} placeholder="Search Locations..." />
           <div className="mb-6">
             <div className="mb-2">
-              <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-300">
+              <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-300 lg:text-xl">
                 Type:
               </h3>
             </div>
@@ -129,7 +129,7 @@ function FilterLocations() {
           </div>
           <div className="mb-6">
             <div className="mb-2">
-              <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-300">
+              <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-300 lg:text-xl">
                 Dimension:
               </h3>
             </div>

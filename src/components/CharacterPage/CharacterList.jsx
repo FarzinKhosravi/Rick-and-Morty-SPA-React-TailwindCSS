@@ -3,16 +3,12 @@ import {
   ChevronDownIcon,
   ArrowUpCircleIcon,
 } from "@heroicons/react/24/outline";
-import {
-  useEpisodes,
-  // useEpisodesDispatch,
-} from "./../../context/EpisodePage/EpisodesContext";
+import { useEpisodes } from "./../../context/EpisodePage/EpisodesContext";
 import {
   useCharacterDetail,
   useCharacterDetailDispatch,
 } from "./../../context/CharacterPage/CharacterDetailContext";
 import Loader from "../Loader";
-// import getAllEpisodes from "../../services/EpisodePage/getAllEpisodesService";
 import { Link, useLocation } from "react-router-dom";
 import useSortEpisodes from "./../../hooks/EpisodePage/useSortEpisodes";
 import useFetchCharactersPagination from "./../../hooks/CharacterPage/useFetchCharactersPagination";
@@ -29,7 +25,6 @@ import useFetchEpisodesList from "./../../hooks/EpisodePage/useFetchEpisodesList
 function CharacterList() {
   const [characterId, setCharacterId] = useState(null);
   const setCharacterDetail = useCharacterDetailDispatch();
-  // const setEpisodes = useEpisodesDispatch();
   const { loading, characters } = useCharacters();
   const { pathname } = useLocation();
 
@@ -143,14 +138,16 @@ export function Character({ character, children, characterId = null }) {
           }`}
         >
           <div>
-            <span>{character.gender === "Male" ? "👨🏼" : "👱🏼‍♀️"}</span>
-            <span className="ml-1 text-base font-medium text-slate-900 dark:text-slate-300">
+            <span className="lg:text-xl">
+              {character.gender === "Male" ? "👨🏼" : "👱🏼‍♀️"}
+            </span>
+            <span className="ml-1 text-base font-medium text-slate-900 dark:text-slate-300 lg:text-lg">
               {character.name}
             </span>
           </div>
-          <div>
+          <div className="flex items-center">
             <span
-              className={`inline-block h-3 w-3 rounded-full ${
+              className={`inline-block h-3 w-3 rounded-full lg:h-[0.9rem] lg:w-[0.9rem] ${
                 character.status === "Alive"
                   ? "bg-green-600"
                   : character.status === "Dead"
@@ -158,7 +155,7 @@ export function Character({ character, children, characterId = null }) {
                   : "bg-yellow-400"
               }`}
             ></span>
-            <span className="ml-2 text-base font-normal text-slate-900 dark:text-slate-300">
+            <span className="ml-2 text-base font-normal text-slate-900 dark:text-slate-300 lg:text-lg">
               {`${character.status} - ${character.species}`}
             </span>
           </div>
@@ -202,7 +199,7 @@ export function CharacterDetail({ pathname, characterId }) {
   return (
     <div className="mb-8">
       <div className="mb-4 flex items-center justify-between">
-        <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-300">
+        <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-300 lg:text-xl">
           Character Detail :
         </h2>
         <BackButton
@@ -217,7 +214,7 @@ export function CharacterDetail({ pathname, characterId }) {
           pathname === `/characters/${characterDetail.id}` ? "p-4 md:p-0" : ""
         }`}
       >
-        <div className="md:max-w-52 hidden w-full md:block">
+        <div className="hidden w-full md:block">
           <img
             className="block h-14 w-14 rounded-2xl md:h-full md:w-full md:rounded-none"
             src={characterDetail.image}
@@ -327,7 +324,7 @@ export function EpisodesList({ pathname }) {
     >
       <div className="mb-6 flex items-center justify-between md:mb-9">
         <div>
-          <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-300">
+          <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-300 lg:text-xl">
             List of Episodes :
           </h2>
         </div>

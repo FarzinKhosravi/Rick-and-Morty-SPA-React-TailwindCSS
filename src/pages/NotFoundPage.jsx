@@ -15,16 +15,16 @@ function NotFoundPage() {
       <div className="mx-auto flex max-w-screen-xl items-center justify-start md:px-8">
         <div className="mx-auto max-w-lg text-gray-600">
           <div className="mb-8 text-center">
-            <div className="mb-4 flex items-center justify-center font-semibold text-red-600">
-              <span className="-mt-1 inline-block text-lg md:-mt-2 md:text-2xl">
+            <div className="mb-4 flex items-center justify-center text-xl font-semibold text-red-600 lg:text-3xl">
+              <span className="text-5.5 lg:text-8 -mt-1 inline-block md:-mt-2">
                 404
               </span>
-              <span className="ml-1 inline-block md:text-2xl">ERROR</span>
+              <span className="ml-1 inline-block">ERROR</span>
             </div>
-            <p className="mb-5 text-3xl font-semibold text-slate-200 sm:text-5xl">
+            <p className="mb-5 text-2xl font-semibold text-slate-200 lg:text-4xl">
               Page Not Found
             </p>
-            <p className="italic text-slate-300">
+            <p className="italic text-slate-300 lg:text-xl">
               Sorry, The Page You are Looking for Could Not Be Found Or Has Been
               Removed.
             </p>
@@ -49,7 +49,7 @@ function NavigationList() {
           viewBox="0 0 24 24"
           strokeWidth="1.5"
           stroke="currentColor"
-          className="h-6 w-6"
+          className="h-6 w-6 lg:h-7 lg:w-7"
         >
           <path
             strokeLinecap="round"
@@ -71,7 +71,7 @@ function NavigationList() {
           viewBox="0 0 24 24"
           strokeWidth="1.5"
           stroke="currentColor"
-          className="h-6 w-6"
+          className="h-6 w-6 lg:h-7 lg:w-7"
         >
           <path
             strokeLinecap="round"
@@ -93,7 +93,7 @@ function NavigationList() {
           viewBox="0 0 24 24"
           strokeWidth="1.5"
           stroke="currentColor"
-          className="h-6 w-6"
+          className="h-6 w-6 lg:h-7 lg:w-7"
         >
           <path
             strokeLinecap="round"
@@ -115,7 +115,7 @@ function NavigationList() {
           viewBox="0 0 24 24"
           strokeWidth="1.5"
           stroke="currentColor"
-          className="h-6 w-6"
+          className="h-6 w-6 lg:h-7 lg:w-7"
         >
           <path
             strokeLinecap="round"
@@ -144,15 +144,17 @@ function NavigationList() {
 function Navigation({ navigation }) {
   return (
     <li className="flex gap-x-4 py-6">
-      <div className="flex h-12 w-12 flex-none items-center justify-center rounded-full bg-slate-100 text-slate-900">
+      <div className="flex h-12 w-12 flex-none items-center justify-center rounded-full bg-slate-100 text-slate-900 lg:h-14 lg:w-14">
         {navigation.icon}
       </div>
       <div className="w-full space-y-1 border-b-2 border-slate-500 pb-3">
-        <h4 className="font-medium text-slate-200">{navigation.title}</h4>
-        <p className="text-slate-400">{navigation.desc}</p>
+        <h4 className="font-medium text-slate-200 lg:text-xl">
+          {navigation.title}
+        </h4>
+        <p className="text-slate-400 lg:text-lg">{navigation.desc}</p>
         <Link
           to={navigation.href}
-          className="inline-flex items-center gap-x-1 text-sm font-medium text-yellow-500 duration-150 hover:text-indigo-400"
+          className="inline-flex items-center gap-x-1 font-medium text-yellow-500 duration-150 hover:text-indigo-400 lg:text-lg"
         >
           Learn more
           <svg

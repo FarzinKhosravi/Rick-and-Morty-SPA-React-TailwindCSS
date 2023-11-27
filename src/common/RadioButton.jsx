@@ -8,10 +8,10 @@ function RadioButton({ formik, name, value, label }) {
         onChange={formik.handleChange}
         checked={formik.values[name] === value}
         id={value}
-        className="cursor-pointer"
+        className="lg:h-4.5 lg:w-4.5 cursor-pointer"
       />
       <label
-        className="ml-1.5 cursor-pointer text-slate-900 dark:text-slate-300"
+        className="ml-1.5 mt-1 cursor-pointer text-slate-900 dark:text-slate-300 lg:text-lg"
         htmlFor={value}
       >
         {label}
