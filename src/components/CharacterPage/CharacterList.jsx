@@ -307,6 +307,13 @@ export function EpisodesList({ pathname }) {
   if (!characterDetail) return;
 
   function renderEpisodesList() {
+    if (!episodes.length)
+      return (
+        <div className="text-slate-900 dark:text-slate-300">
+          There Are No Episodes 📍
+        </div>
+      );
+
     return episodes.map((episode, index) => {
       return <Episode index={index} key={episode.id} episode={episode} />;
     });

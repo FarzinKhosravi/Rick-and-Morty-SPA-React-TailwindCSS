@@ -186,6 +186,13 @@ export function ActorsList({ pathname }) {
   if (!episodeDetail) return;
 
   function renderActorsList() {
+    if (!characters.length)
+      return (
+        <div className="text-slate-900 dark:text-slate-300">
+          There Are No Actors 😊
+        </div>
+      );
+
     return characters.map((actor, index) => {
       return <Actor index={index} key={actor.id} actor={actor} />;
     });

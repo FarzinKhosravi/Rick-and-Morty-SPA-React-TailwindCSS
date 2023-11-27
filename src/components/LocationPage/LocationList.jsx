@@ -201,6 +201,13 @@ export function ResidentsList({ pathname }) {
   if (!locationDetail) return;
 
   function renderResidentsList() {
+    if (!characters.length)
+      return (
+        <div className="text-slate-900 dark:text-slate-300">
+          There Are No Residents 👽
+        </div>
+      );
+
     return characters.map((resident, index) => {
       return <Resident index={index} key={resident.id} resident={resident} />;
     });
