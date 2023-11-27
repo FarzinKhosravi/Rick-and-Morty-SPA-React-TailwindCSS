@@ -21,10 +21,10 @@ function NotFoundPage() {
               </span>
               <span className="ml-1 inline-block">ERROR</span>
             </div>
-            <p className="mb-5 text-2xl font-semibold text-slate-200 lg:text-4xl">
+            <p className="mb-5 text-2xl font-semibold  text-slate-900 dark:text-slate-200 lg:text-4xl">
               Page Not Found
             </p>
-            <p className="italic text-slate-300 lg:text-xl">
+            <p className="italic text-slate-900 dark:text-slate-300 lg:text-xl">
               Sorry, The Page You are Looking for Could Not Be Found Or Has Been
               Removed.
             </p>
@@ -49,7 +49,7 @@ function NavigationList() {
           viewBox="0 0 24 24"
           strokeWidth="1.5"
           stroke="currentColor"
-          className="h-6 w-6 lg:h-7 lg:w-7"
+          className="h-6 w-6 text-slate-200 dark:text-slate-900 lg:h-7 lg:w-7"
         >
           <path
             strokeLinecap="round"
@@ -71,7 +71,7 @@ function NavigationList() {
           viewBox="0 0 24 24"
           strokeWidth="1.5"
           stroke="currentColor"
-          className="h-6 w-6 lg:h-7 lg:w-7"
+          className="h-6 w-6 text-slate-200 dark:text-slate-900 lg:h-7 lg:w-7"
         >
           <path
             strokeLinecap="round"
@@ -93,7 +93,7 @@ function NavigationList() {
           viewBox="0 0 24 24"
           strokeWidth="1.5"
           stroke="currentColor"
-          className="h-6 w-6 lg:h-7 lg:w-7"
+          className="h-6 w-6 text-slate-200 dark:text-slate-900 lg:h-7 lg:w-7"
         >
           <path
             strokeLinecap="round"
@@ -115,7 +115,7 @@ function NavigationList() {
           viewBox="0 0 24 24"
           strokeWidth="1.5"
           stroke="currentColor"
-          className="h-6 w-6 lg:h-7 lg:w-7"
+          className="h-6 w-6 text-slate-200 dark:text-slate-900 lg:h-7 lg:w-7"
         >
           <path
             strokeLinecap="round"
@@ -144,17 +144,19 @@ function NavigationList() {
 function Navigation({ navigation }) {
   return (
     <li className="flex gap-x-4 py-6">
-      <div className="flex h-12 w-12 flex-none items-center justify-center rounded-full bg-slate-100 text-slate-900 lg:h-14 lg:w-14">
+      <div className="flex h-12 w-12 flex-none items-center justify-center rounded-full bg-slate-900 dark:bg-slate-100 lg:h-14 lg:w-14">
         {navigation.icon}
       </div>
       <div className="w-full space-y-1 border-b-2 border-slate-500 pb-3">
-        <h4 className="font-medium text-slate-200 lg:text-xl">
+        <h4 className="font-medium text-slate-900 dark:text-slate-200 lg:text-xl">
           {navigation.title}
         </h4>
-        <p className="text-slate-400 lg:text-lg">{navigation.desc}</p>
+        <p className="text-slate-900 dark:text-slate-400 lg:text-lg">
+          {navigation.desc}
+        </p>
         <Link
           to={navigation.href}
-          className="inline-flex items-center gap-x-1 font-medium text-yellow-500 duration-150 hover:text-indigo-400 lg:text-lg"
+          className="inline-flex items-center gap-x-1 font-medium text-yellow-500 duration-150 hover:text-indigo-400 dark:text-yellow-400 lg:text-lg"
         >
           Learn more
           <svg
