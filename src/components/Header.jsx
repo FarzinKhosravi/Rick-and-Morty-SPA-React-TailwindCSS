@@ -330,7 +330,7 @@ function NavigationMenu() {
           <NavLink
             className={({ isActive }) =>
               isActive
-                ? "text-yellow-400"
+                ? "text-yellow-500 dark:text-yellow-400"
                 : "text-slate-900 dark:text-slate-300"
             }
             end
@@ -343,7 +343,7 @@ function NavigationMenu() {
           <NavLink
             className={({ isActive }) =>
               isActive
-                ? "text-yellow-400"
+                ? "text-yellow-500 dark:text-yellow-400"
                 : "text-slate-900 dark:text-slate-300"
             }
             to="characters?type=characters"
@@ -355,7 +355,7 @@ function NavigationMenu() {
           <NavLink
             className={({ isActive }) =>
               isActive
-                ? "text-yellow-400"
+                ? "text-yellow-500 dark:text-yellow-400"
                 : "text-slate-900 dark:text-slate-300"
             }
             to="episodes?type=episodes"
@@ -367,7 +367,7 @@ function NavigationMenu() {
           <NavLink
             className={({ isActive }) =>
               isActive
-                ? "text-yellow-400"
+                ? "text-yellow-500 dark:text-yellow-400"
                 : "text-slate-900 dark:text-slate-300"
             }
             to="locations?type=locations"
