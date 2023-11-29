@@ -44,7 +44,7 @@ npm install
 5. Don't Forget to Start the JSON Server to Create the Local Database, Use the Following Command to Do So :
 
 ```bash
-json-server --watch src/database/db.json
+npm run server
 ```
 
 6. Note that in order to apply Development Server, be sure to enter the following command in the terminal editor:
