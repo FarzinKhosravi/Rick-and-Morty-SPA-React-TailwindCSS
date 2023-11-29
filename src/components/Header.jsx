@@ -7,7 +7,7 @@ import {
   MoonIcon,
   ComputerDesktopIcon,
 } from "@heroicons/react/24/outline";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import Favorites from "./Favorites";
 import { useLocations } from "../context/LocationPage/LocationsContext";
@@ -16,6 +16,7 @@ import { useCharacters } from "../context/CharacterPage/CharactersContext";
 import { useEpisodes } from "../context/EpisodePage/EpisodesContext";
 import saveLocalStorage from "../localStorage/saveLocalStorage";
 import getLocalStorage from "../localStorage/getLocalStorage";
+import useOutsideClick from "./../hooks/useOutsideClick";
 
 function Header() {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
@@ -113,6 +114,8 @@ function Header() {
       <ThemeMenu
         isOpenThemeMenu={isOpenThemeMenu}
         onSetTheme={setThemeHandler}
+        setTheme={setTheme}
+        theme={theme}
       />
     </header>
   );
@@ -175,11 +178,15 @@ function PagesDetail() {
 
 function HamburgerMenuButton({ onShowMenu, isOpenMenu }) {
   return (
-    <div onClick={onShowMenu} className="cursor-pointer md:hidden">
+    <div
+      id="hamburgerMenuButton"
+      onClick={onShowMenu}
+      className="cursor-pointer md:hidden"
+    >
       <div
         className={`bar ${
           isOpenMenu
-            ? "mx-0 my-2 translate-x-0 translate-y-2.25 rotate-129 bg-red-600"
+            ? "mx-0 my-2 translate-x-0 translate-y-2.25 rotate-129 bg-red-600 dark:bg-red-500"
             : ""
         }`}
       ></div>
@@ -187,7 +194,7 @@ function HamburgerMenuButton({ onShowMenu, isOpenMenu }) {
       <div
         className={`bar ${
           isOpenMenu
-            ? "mx-0 my-2 -translate-y-3.38 translate-x-0.25 rotate-50 bg-red-600"
+            ? "mx-0 my-2 -translate-y-3.38 translate-x-0.25 rotate-50 bg-red-600 dark:bg-red-500"
             : ""
         }`}
       ></div>
@@ -196,8 +203,15 @@ function HamburgerMenuButton({ onShowMenu, isOpenMenu }) {
 }
 
 function HamburgerMenu({ isOpenMenu, setIsOpenMenu }) {
+  const hamburgerMenuRef = useRef();
+
+  useOutsideClick(hamburgerMenuRef, "hamburgerMenuButton", () =>
+    setIsOpenMenu(false)
+  );
+
   return (
     <ul
+      ref={hamburgerMenuRef}
       className={`absolute right-0 top-16 flex w-full flex-col overflow-hidden rounded-xl bg-slate-200 p-2 transition-all duration-75 ease-out dark:bg-slate-700 md:hidden ${
         isOpenMenu ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
       }`}
@@ -384,19 +398,19 @@ function ThemeMenuButton({ selectedTheme, onShowThemeMenu }) {
   return (
     <div className="ml-4">
       <div>
-        <button onClick={onShowThemeMenu} className="block">
+        <button id="themeButton" onClick={onShowThemeMenu} className="block">
           <SunIcon
-            className={`h-6 w-6 text-slate-700 dark:text-slate-300 ${
+            className={`pointer-events-none h-6 w-6 text-slate-700 dark:text-slate-300 ${
               selectedTheme === "light" ? "block" : "hidden"
             }`}
           />
           <MoonIcon
-            className={`h-6 w-6 text-slate-700 dark:text-slate-300 ${
+            className={`pointer-events-none h-6 w-6 text-slate-700 dark:text-slate-300 ${
               selectedTheme === "dark" ? "block" : "hidden"
             }`}
           />
           <ComputerDesktopIcon
-            className={`h-6 w-6 text-slate-700 dark:text-slate-300 ${
+            className={`pointer-events-none h-6 w-6 text-slate-700 dark:text-slate-300 ${
               selectedTheme === "system" ? "block" : "hidden"
             }`}
           />
@@ -406,9 +420,16 @@ function ThemeMenuButton({ selectedTheme, onShowThemeMenu }) {
   );
 }
 
-function ThemeMenu({ isOpenThemeMenu, onSetTheme }) {
+function ThemeMenu({ isOpenThemeMenu, onSetTheme, setTheme, theme }) {
+  const themeMenuRef = useRef();
+
+  useOutsideClick(themeMenuRef, "themeButton", () =>
+    setTheme({ ...theme, isOpenThemeMenu: false })
+  );
+
   return (
     <div
+      ref={themeMenuRef}
       className={`absolute left-16 top-24 flex w-28 flex-col items-start overflow-hidden rounded-xl bg-slate-200 dark:bg-slate-700 md:top-28 ${
         isOpenThemeMenu ? "flex" : "hidden"
       }`}
