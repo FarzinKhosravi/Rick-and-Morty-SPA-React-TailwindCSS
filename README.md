@@ -2,6 +2,10 @@
 
 ## [App Live](https://rick-and-morty-spa-react-tailwindcss.netlify.app/)
 
+## App Preview
+
+![preview](./public/Preview-Project.gif)
+
 ---
 
 ## Description 📝
