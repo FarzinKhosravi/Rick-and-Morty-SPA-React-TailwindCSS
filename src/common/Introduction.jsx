@@ -1,5 +1,7 @@
+import Loader from "./../components/Loader";
+
 function Introduction({ introduction }) {
-  if (!introduction) return;
+  if (!introduction) return <Loader />;
 
   const { id, title, description, firstPage, icon } = introduction;
 
