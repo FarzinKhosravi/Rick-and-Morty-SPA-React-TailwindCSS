@@ -45,7 +45,8 @@ function CharacterList() {
   };
 
   function renderAccordionCharacters() {
-    if (loading) return <Loader />;
+    if (loading && !characters.length) return <Loader />;
+
     if (!characters.length) return <Nothing />;
 
     return characters.map((character) => {
@@ -75,7 +76,8 @@ function CharacterList() {
   }
 
   function renderGridCharacters() {
-    if (loading) return <Loader />;
+    if (loading && !characters.length) return <Loader />;
+
     if (!characters.length) return <Nothing />;
 
     return characters.map((character) => {

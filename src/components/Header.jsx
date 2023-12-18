@@ -90,7 +90,7 @@ function Header() {
     <header className="relative mx-auto mb-8 p-4 2xl:max-w-screen-2xl">
       <nav
         className={`relative flex flex-wrap gap-x-6 rounded-xl bg-slate-200 px-3 py-4 dark:bg-slate-700 ${
-          isOpenMenu ? "rounded-b-none" : ""
+          isOpenMenu ? "rounded-b-none md:rounded-xl" : ""
         }`}
       >
         <div className="flex flex-auto items-center">
@@ -212,7 +212,7 @@ function HamburgerMenu({ isOpenMenu, setIsOpenMenu }) {
   return (
     <ul
       ref={hamburgerMenuRef}
-      className={`absolute right-0 top-16 flex w-full flex-col overflow-hidden rounded-xl bg-slate-200 p-2 transition-all duration-75 ease-out dark:bg-slate-700 md:hidden ${
+      className={`absolute right-0 top-16 z-10 flex w-full flex-col overflow-hidden rounded-xl bg-slate-200 p-2 transition-all duration-75 ease-out dark:bg-slate-700 md:hidden ${
         isOpenMenu ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
       }`}
     >
