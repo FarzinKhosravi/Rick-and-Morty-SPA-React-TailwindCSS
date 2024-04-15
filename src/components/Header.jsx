@@ -87,9 +87,9 @@ function Header() {
   };
 
   return (
-    <header className="relative mx-auto mb-8 p-4 2xl:max-w-screen-2xl">
+    <header className="relative mb-8 p-4">
       <nav
-        className={`relative flex flex-wrap gap-x-6 rounded-xl bg-slate-200 px-3 py-4 dark:bg-slate-700 ${
+        className={`relative mx-auto flex flex-wrap gap-x-6 rounded-xl bg-slate-200 px-3 py-4 dark:bg-slate-700 2xl:max-w-screen-2xl ${
           isOpenMenu ? "rounded-b-none md:rounded-xl" : ""
         }`}
       >

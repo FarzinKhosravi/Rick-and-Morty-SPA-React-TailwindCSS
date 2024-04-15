@@ -6,10 +6,12 @@ function HomePage() {
   const introduction = useFetchIntroductionData("home");
 
   return (
-    <section className="mx-auto mb-12 min-h-screen px-4 md:mb-0 2xl:max-w-screen-2xl">
-      <div className="flex flex-col items-start">
-        <Introduction introduction={introduction} />
-        <StartButton />
+    <section className="mb-36 px-4">
+      <div className="mx-auto 2xl:max-w-screen-2xl">
+        <div className="mx-auto flex max-w-7xl flex-col items-start">
+          <Introduction introduction={introduction} />
+          <StartButton />
+        </div>
       </div>
     </section>
   );
